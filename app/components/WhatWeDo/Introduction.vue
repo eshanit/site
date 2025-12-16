@@ -18,14 +18,14 @@ const animatedHighlights = ref(false)
 // small delay to stagger highlights after reveal
 onMounted(() => {
   // add slight stagger for highlight entrance after they become visible
-  const unwatch = useIntersectionObserver(() => document.querySelector('#intro-highlights'),
+  const { stop } = useIntersectionObserver(() => document.querySelector('#intro-highlights') as HTMLElement | null,
     (entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           highlightsVisible.value = true
           // stagger appearance
           setTimeout(() => (animatedHighlights.value = true), 120)
-          unwatch?.()
+          stop?.()
         }
       })
     },
@@ -33,7 +33,7 @@ onMounted(() => {
   )
 
   useIntersectionObserver(
-    () => document.querySelector('#intro-hero'),
+    () => document.querySelector('#intro-hero') as HTMLElement | null,
     (entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {

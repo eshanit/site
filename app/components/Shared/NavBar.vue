@@ -1,38 +1,48 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
+interface MenuItem {
+  name: string;
+  href: string;
+  current: boolean;
+  dropdown?: Array<{ name: string; href: string; }>;
+}
+
 const route = useRoute();
 const activeDropdown = ref<string | null>(null);
 const isMenuOpen = ref(false);
 
 // Navigation menu with dropdown support
-const menuItems = computed(() => [
-  {
-    name: 'Home',
-    href: '/',
-    current: route.path === '/'
-  },
-  {
-    name: 'What We Do',
-    href: '/what-we-do',
-    current: route.path.startsWith('/what-we-do')
-  },
-  {
-    name: 'Who We Are',
-    href: '/about',
-    current: route.path.startsWith('/about'),
-  },
-  {
-    name: 'Where We Work',
-    href: '/locations',
-    current: route.path.startsWith('/locations')
-  },
-  {
-    name: 'Contact',
-    href: '/contact',
-    current: route.path.startsWith('/contact')
-  }
-]);
+const menuItems = computed(() => {
+  const items: MenuItem[] = [
+    {
+      name: 'Home',
+      href: '/',
+      current: route.path === '/'
+    },
+    {
+      name: 'What We Do',
+      href: '/what-we-do',
+      current: route.path.startsWith('/what-we-do')
+    },
+    {
+      name: 'Who We Are',
+      href: '/who-we-are',
+      current: route.path.startsWith('/who-we-are'),
+    },
+    {
+      name: 'Where We Work',
+      href: '/locations',
+      current: route.path.startsWith('/locations')
+    },
+    {
+      name: 'Contact',
+      href: '/contact',
+      current: route.path.startsWith('/contact')
+    }
+  ];
+  return items;
+});
 
 // Social media links
 const socialLinks = ref([
