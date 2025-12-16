@@ -32,8 +32,8 @@ const menuItems = computed(() => {
     },
     {
       name: 'Where We Work',
-      href: '/locations',
-      current: route.path.startsWith('/locations')
+      href: '/where-we-work',
+      current: route.path.startsWith('/where-we-work')
     },
     {
       name: 'Contact',
