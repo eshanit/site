@@ -1,200 +1,434 @@
 <script setup lang="ts">
-// Icons are handled via NuxtIcon (Iconify)
+import { ref } from 'vue'
 
-// Social media icons - using Heroicons where available
-const socialIcons = [
-    {
-        icon: 'facebook',
-        href: '#',
-        label: 'Facebook Link',
-        title: 'Facebook'
-    },
-    {
-        icon: 'instagram',
-        href: '#',
-        label: 'Instagram Link',
-        title: 'Instagram'
-    },
-    {
-        icon: 'linkedin',
-        href: '#',
-        label: 'LinkedIn Link',
-        title: 'LinkedIn'
-    },
-    {
-        icon: 'youtube',
-        href: '#',
-        label: 'YouTube Link',
-        title: 'YouTube'
-    },
-    {
-        icon: 'flickr',
-        href: '#',
-        label: 'Flickr Link',
-        title: 'Flickr'
-    }
+// Social media links matching the navbar
+const socialLinks = [
+  {
+    name: 'Twitter',
+    href: '#',
+    icon: 'i-heroicons-x-mark',
+    color: 'hover:bg-black/10 hover:text-black'
+  },
+  {
+    name: 'LinkedIn',
+    href: '#',
+    icon: 'i-heroicons-user-group',
+    color: 'hover:bg-blue-50 hover:text-blue-600'
+  },
+  {
+    name: 'YouTube',
+    href: '#',
+    icon: 'i-heroicons-play',
+    color: 'hover:bg-red-50 hover:text-red-600'
+  },
+  {
+    name: 'Instagram',
+    href: '#',
+    icon: 'i-heroicons-photo',
+    color: 'hover:bg-pink-50 hover:text-pink-600'
+  }
 ]
 
-// Footer links
-const joinItems = [
-    { text: 'For Students', href: '#' },
-    { text: 'For Employers', href: '#' },
-    { text: 'Volunteer', href: '#' },
-    { text: 'Partner With Us', href: '#' },
-    { text: 'Careers', href: '#' }
+// Quick links
+const quickLinks = [
+  { name: 'Program Overview', href: '/program' },
+  { name: 'Our Partners', href: '/who-we-are' },
+  { name: 'Where We Work', href: '/where-we-work' },
+  { name: 'Research & Evidence', href: '/research' },
+  { name: 'Get Involved', href: '/contact' },
+  { name: 'Privacy Policy', href: '#' }
 ]
 
-const footerLinks = [
-    { text: 'Privacy Policy', href: '#' },
-    { text: 'Terms of Service', href: '#' },
-    { text: 'Accessibility', href: '#' }
+// Contact information
+const contactInfo = [
+  {
+    icon: 'i-heroicons-envelope',
+    title: 'General Inquiries',
+    value: 'info@pegisus.org',
+    href: 'mailto:info@pegisus.org'
+  },
+  {
+    icon: 'i-heroicons-academic-cap',
+    title: 'Research Partnerships',
+    value: 'research@pegisus.org',
+    href: 'mailto:research@pegisus.org'
+  },
+  {
+    icon: 'i-heroicons-phone',
+    title: 'Contact Number',
+    value: '+27 21 123 4567',
+    href: 'tel:+27211234567'
+  }
 ]
 
-// Simple SVG icons for social media
-const SocialIcon = ({ icon }: { icon: string }) => {
-  const icons: Record<string, string> = {
-    facebook: `
-      <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
-    `,
-    instagram: `
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-    `,
-    linkedin: `
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-    `,
-    youtube: `
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-    `,
-    flickr: `
-      <path d="M0 12c0 3.074 2.49 5.564 5.564 5.564 3.074 0 5.564-2.49 5.564-5.564S8.638 6.436 5.564 6.436C2.49 6.436 0 8.926 0 12zm12.872 0c0 3.074 2.49 5.564 5.564 5.564s5.564-2.49 5.564-5.564S21.51 6.436 18.436 6.436C15.362 6.436 12.872 8.926 12.872 12z"/>
-    `
-  };
+// Partner institutions
+const partnerInstitutions = [
+  'University Hospital Basel',
+  'South African Medical Research Council',
+  'University of Zambia',
+  'SolidarMed Zambia',
+  'SolidarMed Zimbabwe'
+]
 
-  return icons[icon] || '';
-};
+// Newsletter subscription
+const email = ref('')
+const isSubscribed = ref(false)
+const isSubmitting = ref(false)
+
+const handleSubscribe = async () => {
+  if (!email.value.trim()) return
+
+  isSubmitting.value = true
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  isSubscribed.value = true
+  email.value = ''
+  isSubmitting.value = false
+
+  // Reset success message after 5 seconds
+  setTimeout(() => {
+    isSubscribed.value = false
+  }, 5000)
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
-    <!-- Footer -->
-    <footer class="bg-linear-to-br from-cyan-500 to-blue-900 text-white pt-16 pb-8 relative overflow-hidden">
-      <!-- Animated Background Elements -->
-      <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-cyan-500 animate-pulse"></div>
-        <div class="absolute bottom-10 right-20 w-40 h-40 rounded-full bg-blue-700 animate-ping animation-delay-1000"></div>
-        <div class="absolute top-1/3 right-1/4 w-24 h-24 bg-amber-400 rounded-full animate-bounce animation-delay-500"></div>
-      </div>
-      
-      <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <!-- Main Footer Content -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <!-- About Section -->
-          <div class="space-y-6">
-            <h3 class="text-3xl font-bold">
-              <span class="text-cyan-300">Youth</span> <span class="text-amber-300">Pegisus</span>
-            </h3>
-            <p class="text-blue-100 text-lg">
-              Empowering young people in Southern Africa through education, skills development, and community building.
-            </p>
-            <div class="flex space-x-4">
-              <NuxtLink
-                v-for="(social, index) in socialIcons" 
-                :key="index"
-                :href="social.href"
-                class="text-blue-200 hover:text-white transition-colors bg-blue-800/50 p-2 rounded-full hover:bg-linear-to-r from-cyan-500 to-blue-700 hover:scale-110 duration-300"
-                :title="social.title"
-              >
-                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <g v-html="SocialIcon({ icon: social.icon })"></g>
-                </svg>
+  <footer class="bg-gradient-to-b from-gray-900 to-gray-950 text-white relative overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 opacity-5">
+      <div 
+        v-for="i in 8" 
+        :key="i"
+        class="absolute rounded-full bg-gradient-to-r from-cyan-500 to-blue-900"
+        :style="{
+          width: `${Math.random() * 200 + 50}px`,
+          height: `${Math.random() * 200 + 50}px`,
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          filter: 'blur(40px)',
+          animation: `float ${Math.random() * 10 + 10}s ease-in-out infinite`,
+          animationDelay: `${Math.random() * 5}s`
+        }"
+      ></div>
+    </div>
+
+    <!-- Main footer content -->
+    <div class="relative z-10">
+      <!-- Top section -->
+      <div class="border-b border-gray-800/50">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-12">
+            <!-- Logo and description -->
+            <div class="space-y-6">
+              <NuxtLink to="/" class="inline-block">
+                <div class="flex items-center space-x-3 group">
+                  <div class="relative">
+                    <div class="absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-900 opacity-20 blur group-hover:opacity-30 transition-opacity duration-500"></div>
+                    <div class="relative bg-white rounded-xl p-2.5 shadow-lg border border-gray-100">
+                      <!-- <AppFooterLogo size="md" /> -->
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                      PEGISUS
+                    </div>
+                    <div class="text-sm text-gray-400 font-medium tracking-wider">
+                      Southern Africa
+                    </div>
+                  </div>
+                </div>
               </NuxtLink>
+
+              <p class="text-gray-400 leading-relaxed text-sm max-w-sm">
+                Peer Education for Gender Inclusion and Substance Use in Southern Africa — 
+                Empowering youth through evidence-based programs and vocational integration.
+              </p>
+
+              <!-- Social links -->
+              <div class="pt-4">
+                <div class="text-sm text-gray-400 font-semibold mb-3">FOLLOW US</div>
+                <div class="flex space-x-2">
+                  <NuxtLink
+                    v-for="social in socialLinks"
+                    :key="social.name"
+                    :href="social.href"
+                    :title="social.name"
+                    :class="[
+                      'p-2.5 rounded-xl bg-gray-800/50 backdrop-blur-sm text-gray-400 transition-all duration-300 transform hover:scale-110',
+                      social.color
+                    ]"
+                  >
+                    <UIcon :name="social.icon" class="w-4 h-4" />
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick links -->
+            <div class="space-y-6">
+              <h3 class="text-lg font-bold text-white flex items-center">
+                <UIcon name="i-heroicons-link" class="w-5 h-5 mr-2 text-cyan-400" />
+                Quick Links
+              </h3>
+              <ul class="space-y-3">
+                <li v-for="link in quickLinks" :key="link.name">
+                  <NuxtLink
+                    :to="link.href"
+                    class="text-gray-400 hover:text-cyan-300 transition-colors duration-300 flex items-center group"
+                  >
+                    <UIcon 
+                      name="i-heroicons-chevron-right" 
+                      class="w-3 h-3 mr-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" 
+                    />
+                    {{ link.name }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Contact info -->
+            <div class="space-y-6">
+              <h3 class="text-lg font-bold text-white flex items-center">
+                <UIcon name="i-heroicons-chat-bubble-left-right" class="w-5 h-5 mr-2 text-cyan-400" />
+                Get in Touch
+              </h3>
+              <div class="space-y-4">
+                <a
+                  v-for="contact in contactInfo"
+                  :key="contact.title"
+                  :href="contact.href"
+                  class="flex items-start space-x-3 text-gray-400 hover:text-cyan-300 transition-colors duration-300 group"
+                >
+                  <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-900/20 flex items-center justify-center flex-shrink-0 group-hover:from-cyan-500/30 group-hover:to-blue-900/30 transition-all">
+                    <UIcon :name="contact.icon" class="w-4 h-4 text-cyan-400" />
+                  </div>
+                  <div>
+                    <div class="text-sm font-medium text-white">{{ contact.title }}</div>
+                    <div class="text-sm mt-0.5">{{ contact.value }}</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="space-y-6">
+              <h3 class="text-lg font-bold text-white flex items-center">
+                <UIcon name="i-heroicons-newspaper" class="w-5 h-5 mr-2 text-cyan-400" />
+                Stay Updated
+              </h3>
+              
+              <p class="text-gray-400 text-sm">
+                Subscribe to our newsletter for the latest research, program updates, and impact stories.
+              </p>
+
+              <!-- Success message -->
+              <div 
+                v-if="isSubscribed"
+                class="bg-gradient-to-r from-green-500/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-4"
+              >
+                <div class="flex items-center space-x-3">
+                  <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <div>
+                    <div class="font-semibold text-green-300">Subscribed!</div>
+                    <div class="text-sm text-green-400/80 mt-1">
+                      Thank you for subscribing to our newsletter.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Newsletter form -->
+              <form @submit.prevent="handleSubscribe" class="space-y-3">
+                <div class="relative">
+                  <input
+                    v-model="email"
+                    type="email"
+                    placeholder="Your email address"
+                    required
+                    class="w-full px-4 py-3 pl-11 rounded-xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 text-white placeholder-gray-500 transition-all"
+                  />
+                  <UIcon 
+                    name="i-heroicons-envelope" 
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" 
+                  />
+                </div>
+                <button
+                  type="submit"
+                  :disabled="isSubmitting"
+                  class="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span>{{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}</span>
+                  <UIcon 
+                    :name="isSubmitting ? 'i-heroicons-arrow-path' : 'i-heroicons-arrow-right'" 
+                    class="w-4 h-4" 
+                    :class="isSubmitting ? 'animate-spin' : ''"
+                  />
+                </button>
+              </form>
             </div>
           </div>
-
-          <!-- Join Us Section -->
-          <div class="space-y-6">
-            <h4 class="text-xl font-bold uppercase tracking-wider text-cyan-300">Join Us</h4>
-            <ul class="space-y-3">
-              <li v-for="(item, index) in joinItems" :key="index">
-                <NuxtLink :to="item.href" class="text-blue-100 hover:text-amber-300 transition-colors flex items-center group">
-                  <NuxtIcon name="heroicons:arrow-right" class="mr-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {{ item.text }}
-                </NuxtLink>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Contact Section -->
-          <div class="space-y-6">
-            <h4 class="text-xl font-bold uppercase tracking-wider text-cyan-300">Contact Us</h4>
-            <address class="not-italic space-y-3 text-blue-100">
-              <div class="flex items-start">
-                <NuxtIcon name="heroicons:map-pin" class="w-6 h-6 mt-0.5 mr-3 shrink-0 text-cyan-300" />
-                <span>123 Youth Avenue, Masvingo, Zimbabwe</span>
-              </div>
-              <div class="flex items-center">
-                <NuxtIcon name="heroicons:phone" class="w-6 h-6 mr-3 shrink-0 text-cyan-300" />
-                <span>+263 123 456 789</span>
-              </div>
-              <div class="flex items-center">
-                <NuxtIcon name="heroicons:envelope" class="w-6 h-6 mr-3 shrink-0 text-cyan-300" />
-                <span>info@youthpegasus.org</span>
-              </div>
-            </address>
-          </div>
-
-          <!-- Newsletter Section -->
-          <div class="space-y-6">
-            <h4 class="text-xl font-bold uppercase tracking-wider text-cyan-300">Stay Updated</h4>
-            <p class="text-blue-100">
-              Subscribe to our newsletter for the latest programs and success stories.
-            </p>
-            <form class="space-y-3" @submit.prevent="">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
-                class="w-full px-4 py-3 rounded-lg bg-blue-800/50 backdrop-blur-sm border border-blue-700 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-white placeholder-blue-300"
-                required
-              >
-              <button 
-                type="submit" 
-                class="w-full px-6 py-3 bg-linear-to-r from-cyan-500 to-blue-700 hover:from-blue-700 hover:to-cyan-500 text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
         </div>
+      </div>
 
-        <!-- Divider -->
-        <div class="border-t border-blue-800 my-12"></div>
-
-        <!-- Bottom Footer -->
-        <div class="flex flex-col md:flex-row justify-between items-center">
-          <p class="text-blue-300 text-sm">
-            © 2025 Youth Pegasus. All rights reserved.
-          </p>
-          <div class="flex space-x-6 mt-4 md:mt-0">
-            <NuxtLink 
-              v-for="(link, index) in footerLinks" 
-              :key="index"
-              :to="link.href"
-              class="text-blue-300 hover:text-amber-300 text-sm transition-colors"
-            >
-              {{ link.text }}
-            </NuxtLink>
+      <!-- Middle section - Partner institutions -->
+      <div class="border-b border-gray-800/50">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="text-center mb-6">
+            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              In Partnership With
+            </h4>
+            <div class="flex flex-wrap justify-center items-center gap-8">
+              <span 
+                v-for="institution in partnerInstitutions" 
+                :key="institution"
+                class="text-gray-400 hover:text-cyan-300 transition-colors duration-300 text-sm"
+              >
+                {{ institution }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </footer>
+
+      <!-- Bottom section -->
+      <div class="py-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <!-- Copyright -->
+            <div class="text-gray-500 text-sm">
+              © {{ new Date().getFullYear() }} PEGISUS Program. All rights reserved.
+            </div>
+
+            <!-- Legal links -->
+            <div class="flex items-center space-x-6">
+              <NuxtLink 
+                to="#"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
+              >
+                Privacy Policy
+              </NuxtLink>
+              <NuxtLink 
+                to="#"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
+              >
+                Terms of Service
+              </NuxtLink>
+              <NuxtLink 
+                to="#"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
+              >
+                Accessibility
+              </NuxtLink>
+              <NuxtLink 
+                to="#"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
+              >
+                Sitemap
+              </NuxtLink>
+            </div>
+
+            <!-- Back to top -->
+            <button
+              @click="scrollToTop"
+              class="flex items-center space-x-2 text-gray-500 hover:text-cyan-300 transition-colors duration-300 group"
+            >
+              <span class="text-sm">Back to top</span>
+              <UIcon 
+                name="i-heroicons-arrow-up" 
+                class="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform" 
+              />
+            </button>
+          </div>
+
+          <!-- Additional info -->
+          <div class="text-center mt-6">
+            <p class="text-xs text-gray-600">
+              PEGISUS is a research-based initiative implemented across Southern Africa.
+              All content and images are protected by copyright laws.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
-/* Custom animation delays */
-.animation-delay-500 {
-  animation-delay: 500ms;
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  66% {
+    transform: translateY(10px) translateX(-10px);
+  }
 }
 
-.animation-delay-1000 {
-  animation-delay: 1000ms;
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, 
+                      opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #1e40af 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Custom scrollbar for the footer */
+footer {
+  scrollbar-width: none;
+}
+
+footer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Focus styles for accessibility */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Smooth backdrop blur */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .max-w-8xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>
