@@ -96,7 +96,7 @@ const SocialIcon = ({ icon }: { icon: string }) => {
               Empowering young people in Southern Africa through education, skills development, and community building.
             </p>
             <div class="flex space-x-4">
-              <a 
+              <NuxtLink
                 v-for="(social, index) in socialIcons" 
                 :key="index"
                 :href="social.href"
@@ -106,7 +106,7 @@ const SocialIcon = ({ icon }: { icon: string }) => {
                 <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                   <g v-html="SocialIcon({ icon: social.icon })"></g>
                 </svg>
-              </a>
+              </NuxtLink>
             </div>
           </div>
 

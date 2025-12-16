@@ -14,25 +14,13 @@ const menuItems = computed(() => [
   },
   {
     name: 'What We Do',
-    href: '/programs',
-    current: route.path.startsWith('/programs'),
-    dropdown: [
-      { name: 'Youth Programs', href: '/programs/youth' },
-      { name: 'Education', href: '/programs/education' },
-      { name: 'Health & Wellness', href: '/programs/health' },
-      { name: 'Skills Development', href: '/programs/skills' }
-    ]
+    href: '/what-we-do',
+    current: route.path.startsWith('/what-we-do')
   },
   {
     name: 'Who We Are',
     href: '/about',
     current: route.path.startsWith('/about'),
-    dropdown: [
-      { name: 'Our Story', href: '/about/story' },
-      { name: 'Team', href: '/about/team' },
-      { name: 'Partners', href: '/about/partners' },
-      { name: 'Impact', href: '/about/impact' }
-    ]
   },
   {
     name: 'Where We Work',
@@ -112,9 +100,9 @@ const closeMobileMenu = () => {
           <NuxtLink to="/" class="flex items-center space-x-4 group">
             <!-- Animated Border Container -->
             <div class="relative p-1 rounded-2xl bg-transparent">
-              <!-- Animated gradient border - UPDATED to cyan-500 to blue-900 -->
+              <!-- Animated gradient border -->
               <div
-                class="absolute inset-0 rounded-2xl bg-linear-to-r from-cyan-500 via-blue-700 to-cyan-500 bg-size-[200%_100%] animate-border-rotate">
+                class="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-700 to-cyan-500 bg-[length:200%_100%] animate-border-rotate">
               </div>
 
               <!-- Logo container with white background -->
@@ -122,13 +110,6 @@ const closeMobileMenu = () => {
                 <AppLogo size="navbar" />
               </div>
             </div>
-
-            <!-- Optional text - you can uncomment if needed -->
-            <!-- <div class="hidden sm:block">
-              <div class="font-extrabold text-2xl text-blue-700 group-hover:text-cyan-600 transition-colors">
-                PEGISUS
-              </div>
-            </div> -->
           </NuxtLink>
         </div>
 
@@ -143,7 +124,7 @@ const closeMobileMenu = () => {
                 : 'text-gray-700 hover:text-cyan-600 hover:bg-gray-50 hover:shadow-sm'
             ]">
               <span class="text-lg">{{ item.name }}</span>
-              <UIcon v-if="item.dropdown" name="i-heroicons-outline-chevron-down" :class="[
+              <UIcon v-if="item.dropdown" name="i-heroicons-chevron-down" :class="[
                 'w-4 h-4 transition-transform duration-200',
                 activeDropdown === item.name ? 'rotate-180' : ''
               ]" />
@@ -165,35 +146,19 @@ const closeMobileMenu = () => {
         <div class="flex items-center space-x-6">
           <!-- Social Links - Larger and more spaced -->
           <div class="hidden md:flex items-center space-x-3">
-            <a v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
+            <NuxtLink v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
               class="p-3 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all duration-200 group transform hover:scale-110">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                 <path :d="social.icon" />
               </svg>
-            </a>
+            </NuxtLink>
           </div>
-
-          <!-- Action Buttons - Commented out but kept for reference -->
-          <!-- <div class="hidden md:flex items-center space-x-4">
-            <NuxtLink
-              to="/donate"
-              class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 text-lg"
-            >
-              Donate
-            </NuxtLink>
-            <NuxtLink
-              to="/get-involved"
-              class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 text-lg"
-            >
-              Take Action!
-            </NuxtLink>
-          </div> -->
 
           <!-- Mobile menu button - Larger -->
           <button @click="toggleMenu"
             class="lg:hidden p-3 rounded-xl text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 transition-all duration-200 transform hover:scale-110">
-            <UIcon v-if="!isMenuOpen" name="i-heroicons-outline-bars-3" class="w-7 h-7" />
-            <UIcon v-else name="i-heroicons-outline-x-mark" class="w-7 h-7" />
+            <UIcon v-if="!isMenuOpen" name="i-heroicons-bars-3" class="w-7 h-7" />
+            <UIcon v-else name="i-heroicons-x-mark" class="w-7 h-7" />
           </button>
         </div>
       </div>
@@ -211,28 +176,14 @@ const closeMobileMenu = () => {
             {{ item.name }}
           </NuxtLink>
 
-          <!-- Mobile Action Buttons - Commented out but kept for reference -->
-          <!-- <div class="flex space-x-4 px-8 pt-6">
-            <NuxtLink to="/donate"
-              class="flex-1 px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold rounded-xl text-center shadow-lg hover:shadow-xl transition-all duration-200 text-lg"
-              @click="closeMobileMenu">
-              Donate
-            </NuxtLink>
-            <NuxtLink to="/get-involved"
-              class="flex-1 px-6 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl text-center shadow-lg hover:shadow-xl transition-all duration-200 text-lg"
-              @click="closeMobileMenu">
-              Take Action!
-            </NuxtLink>
-          </div> -->
-
           <!-- Mobile Social Links -->
           <div class="flex justify-center space-x-6 px-8 pt-6 pb-4">
-            <a v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
+            <NuxtLink v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
               class="p-4 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all duration-200 transform hover:scale-110">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                 <path :d="social.icon" />
               </svg>
-            </a>
+            </NuxtLink>
           </div>
         </div>
       </div>

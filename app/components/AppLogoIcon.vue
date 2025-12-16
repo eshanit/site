@@ -19,7 +19,7 @@ const sizeClasses = {
 </script>
 
 <template>
-  <NuxtLink :to="href" class="inline-block">
+  <component :is="href ? 'NuxtLink' : 'div'" :to="href || undefined" class="inline-block">
     <!-- In Nuxt, public files are served from /public directory -->
     <NuxtImg
       src="/img/pegi_logo2.png"
@@ -27,5 +27,5 @@ const sizeClasses = {
       :class="[sizeClasses[size], 'w-auto', className]"
       v-bind="$attrs"
     />
-  </NuxtLink>
+  </component>
 </template>
