@@ -132,9 +132,10 @@ onMounted(() => {
                 <div class="space-y-20">
                     <WhoWeAreSolidarMedZambia />
                     <WhoWeAreSolidarMedZimbabwe />
+                    <WhoWeAreUniversityOfZambia />
                     <WhoWeAreUniversityHospitalBasel />
                     <WhoWeAreSAMRC />
-                    <WhoWeAreUniversityOfZambia />
+
                 </div>
             </div>
         </section>
