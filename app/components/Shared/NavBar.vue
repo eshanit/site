@@ -5,281 +5,500 @@ interface MenuItem {
   name: string;
   href: string;
   current: boolean;
-  dropdown?: Array<{ name: string; href: string; }>;
+  icon?: string;
+  description?: string;
 }
 
 const route = useRoute();
-const activeDropdown = ref<string | null>(null);
 const isMenuOpen = ref(false);
+const isScrolled = ref(false);
 
-// Navigation menu with dropdown support
+// Handle scroll effect
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    isScrolled.value = window.scrollY > 20;
+    scrollProgress.value = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1);
+  });
+});
+
+// Navigation menu with enhanced structure
 const menuItems = computed(() => {
   const items: MenuItem[] = [
     {
       name: 'Home',
       href: '/',
-      current: route.path === '/'
+      current: route.path === '/',
+      icon: 'i-heroicons-home',
+      description: 'Welcome to PEGISUS'
     },
-    {
-      name: 'What We Do',
-      href: '/what-we-do',
-      current: route.path.startsWith('/what-we-do')
-    },
+    // {
+    //   name: 'Program',
+    //   href: '/program',
+    //   current: route.path.startsWith('/program'),
+    //   icon: 'i-heroicons-academic-cap',
+    //   description: 'Our 8-session intervention'
+    // },
     {
       name: 'Who We Are',
       href: '/who-we-are',
       current: route.path.startsWith('/who-we-are'),
+      icon: 'i-heroicons-user-group',
+      description: 'Meet our partners'
     },
     {
       name: 'Where We Work',
       href: '/where-we-work',
-      current: route.path.startsWith('/where-we-work')
+      current: route.path.startsWith('/where-we-work'),
+      icon: 'i-heroicons-map',
+      description: 'Our impact across Southern Africa'
     },
+    // {
+    //   name: 'Research',
+    //   href: '/research',
+    //   current: route.path.startsWith('/research'),
+    //   icon: 'i-heroicons-beaker',
+    //   description: 'Evidence & publications'
+    // },
     {
       name: 'Contact',
       href: '/contact',
-      current: route.path.startsWith('/contact')
+      current: route.path.startsWith('/contact'),
+      icon: 'i-heroicons-envelope',
+      description: 'Get in touch'
     }
   ];
   return items;
 });
 
-// Social media links
+// Social media links with updated icons
 const socialLinks = ref([
   {
-    name: 'Facebook',
+    name: 'Twitter',
     href: '#',
-    icon: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z'
-  },
-  {
-    name: 'Instagram',
-    href: '#',
-    icon: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'
+    icon: 'i-heroicons-x-mark',
+    color: 'hover:bg-black/5 hover:text-black'
   },
   {
     name: 'LinkedIn',
     href: '#',
-    icon: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'
+    icon: 'i-heroicons-user-group',
+    color: 'hover:bg-blue-50 hover:text-blue-600'
   },
   {
     name: 'YouTube',
     href: '#',
-    icon: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'
+    icon: 'i-heroicons-play',
+    color: 'hover:bg-red-50 hover:text-red-600'
+  },
+  {
+    name: 'Instagram',
+    href: '#',
+    icon: 'i-heroicons-photo',
+    color: 'hover:bg-pink-50 hover:text-pink-600'
   }
 ]);
 
+// CTA button for partnership
+const ctaButton = {
+  text: 'Partner With Us',
+  href: '/contact',
+  icon: 'i-heroicons-handshake'
+};
+
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
-  if (isMenuOpen.value) {
-    activeDropdown.value = null;
-  }
 };
 
-const showDropdown = (menu: string) => {
-  activeDropdown.value = menu;
-};
-
-const hideDropdown = () => {
-  setTimeout(() => {
-    if (!document.querySelector('.dropdown-container:hover')) {
-      activeDropdown.value = null;
-    }
-  }, 100);
-};
-
-const hideDropdownImmediately = () => {
-  activeDropdown.value = null;
-};
-
-// Close mobile menu when route changes
 const closeMobileMenu = () => {
   isMenuOpen.value = false;
-  activeDropdown.value = null;
 };
+
+// Animation for logo gradient
+const logoAnimation = ref(false);
+const scrollProgress = ref(0);
+
+onMounted(() => {
+  setTimeout(() => {
+    logoAnimation.value = true;
+  }, 300);
+});
 </script>
 
 <template>
-  <nav
-    class="bg-white/95 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50 shadow-sm transition-all duration-300 w-full">
+  <nav 
+    :class="[
+      'sticky top-0 z-50 transition-all duration-500 backdrop-blur-xl',
+      isScrolled 
+        ? 'bg-white/95 border-b border-gray-200/50 shadow-lg' 
+        : 'bg-white/90 border-b border-white/20'
+    ]"
+  >
     <!-- Full width container with generous padding -->
-    <div class="w-full px-8 xl:px-12 2xl:px-16">
+    <div class="w-full px-4 sm:px-6 lg:px-8 max-w-8xl mx-auto">
       <!-- Main Navigation Bar -->
       <div class="flex justify-between items-center h-20">
-        <!-- Logo Section - More prominent -->
+        <!-- Logo Section - Modernized -->
         <div class="shrink-0 flex items-center">
-          <NuxtLink to="/" class="flex items-center space-x-4 group">
-            <!-- Animated Border Container -->
-            <div class="relative p-1 rounded-2xl bg-transparent">
-              <!-- Animated gradient border -->
-              <div
-                class="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-700 to-cyan-500 bg-[length:200%_100%] animate-border-rotate">
+          <NuxtLink 
+            to="/" 
+            class="flex items-center space-x-4 group relative"
+            @mouseenter="logoAnimation = true"
+            @mouseleave="logoAnimation = false"
+          >
+            <!-- Enhanced Logo Container -->
+            <div class="relative">
+              <!-- Animated gradient ring -->
+              <div 
+                :class="[
+                  'absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-900 opacity-20 blur transition-all duration-700',
+                  logoAnimation ? 'scale-110' : 'scale-100'
+                ]"
+                aria-hidden="true"
+              ></div>
+              
+              <!-- Logo with gradient border -->
+              <div class="relative bg-white rounded-xl p-2.5 shadow-lg border border-gray-100">
+                <div class="relative">
+                  <AppLogo size="navbar" />
+                  <!-- Subtle shine effect -->
+                  <div 
+                    class="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    aria-hidden="true"
+                  ></div>
+                </div>
               </div>
+            </div>
 
-              <!-- Logo container with white background -->
-              <div class="relative bg-white rounded-xl p-2">
-                <AppLogo size="navbar" />
+            <!-- Logo Text -->
+            <div class="hidden lg:block">
+              <div class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-800 bg-clip-text text-transparent">
+                PEGISUS
+              </div>
+              <div class="text-xs text-gray-500 font-medium tracking-wider">
+                Southern Africa
               </div>
             </div>
           </NuxtLink>
         </div>
 
-        <!-- Desktop Navigation Menu - More spacing -->
-        <div class="hidden lg:flex items-center space-x-2">
-          <div v-for="item in menuItems" :key="item.name" class="relative dropdown-container"
-            @mouseenter="item.dropdown ? showDropdown(item.name) : null" @mouseleave="hideDropdown">
-            <NuxtLink :to="item.href" :class="[
-              'px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center space-x-2',
-              item.current
-                ? 'text-cyan-600 bg-cyan-50 shadow-md'
-                : 'text-gray-700 hover:text-cyan-600 hover:bg-gray-50 hover:shadow-sm'
-            ]">
-              <span class="text-lg">{{ item.name }}</span>
-              <UIcon v-if="item.dropdown" name="i-heroicons-chevron-down" :class="[
-                'w-4 h-4 transition-transform duration-200',
-                activeDropdown === item.name ? 'rotate-180' : ''
-              ]" />
+        <!-- Desktop Navigation Menu - Enhanced -->
+        <div class="hidden lg:flex items-center space-x-1">
+          <div 
+            v-for="item in menuItems" 
+            :key="item.name" 
+            class="relative group"
+          >
+            <NuxtLink 
+              :to="item.href" 
+              :class="[
+                'px-4 py-2.5 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 relative overflow-hidden',
+                item.current
+                  ? 'text-cyan-600 bg-gradient-to-r from-cyan-50 to-blue-50 shadow-sm border border-cyan-100'
+                  : 'text-gray-700 hover:text-cyan-600 hover:bg-gray-50/80'
+              ]"
+            >
+              <!-- Icon -->
+              <UIcon 
+                :name="item.icon" 
+                class="w-4 h-4 transition-transform group-hover:scale-110" 
+              />
+              
+              <!-- Text -->
+              <span class="text-sm font-semibold tracking-tight">
+                {{ item.name }}
+              </span>
+
+              <!-- Active indicator -->
+              <div 
+                v-if="item.current"
+                class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 rounded-full"
+              ></div>
+
+              <!-- Hover indicator -->
+              <div 
+                class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                aria-hidden="true"
+              ></div>
             </NuxtLink>
 
-            <!-- Dropdown Menu -->
-            <div v-if="item.dropdown && activeDropdown === item.name"
-              class="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200/50 backdrop-blur-md py-3 z-50 animate-in fade-in-0 zoom-in-95">
-              <NuxtLink v-for="dropdownItem in item.dropdown" :key="dropdownItem.name" :to="dropdownItem.href"
-                class="block px-6 py-3 text-gray-700 hover:text-cyan-600 hover:bg-cyan-50 transition-all duration-200 first:rounded-t-2xl last:rounded-b-2xl font-medium"
-                @click="hideDropdownImmediately">
-                {{ dropdownItem.name }}
-              </NuxtLink>
+            <!-- Tooltip description -->
+            <div 
+              v-if="item.description"
+              class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-50"
+            >
+              {{ item.description }}
+              <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
             </div>
           </div>
+
+          <!-- Divider -->
+          <div class="w-px h-6 bg-gray-200 mx-2"></div>
+
+          <!-- CTA Button -->
+          <NuxtLink
+            :to="ctaButton.href"
+            class="ml-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold text-sm tracking-tight shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center space-x-2 group"
+          >
+            <UIcon :name="ctaButton.icon" class="w-4 h-4" />
+            <span>{{ ctaButton.text }}</span>
+            <UIcon 
+              name="i-heroicons-arrow-right" 
+              class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" 
+            />
+          </NuxtLink>
         </div>
 
         <!-- Right Section - Social Links & Actions -->
-        <div class="flex items-center space-x-6">
-          <!-- Social Links - Larger and more spaced -->
-          <div class="hidden md:flex items-center space-x-3">
-            <NuxtLink v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
-              class="p-3 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all duration-200 group transform hover:scale-110">
-              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                <path :d="social.icon" />
-              </svg>
+        <div class="flex items-center space-x-3">
+          <!-- Social Links - Modernized -->
+          <div class="hidden md:flex items-center space-x-1">
+            <NuxtLink 
+              v-for="social in socialLinks" 
+              :key="social.name" 
+              :href="social.href" 
+              :title="social.name"
+              :class="[
+                'p-2.5 text-gray-500 rounded-xl transition-all duration-300 transform hover:scale-110',
+                social.color
+              ]"
+            >
+              <UIcon :name="social.icon" class="w-4 h-4" />
             </NuxtLink>
           </div>
 
-          <!-- Mobile menu button - Larger -->
-          <button @click="toggleMenu"
-            class="lg:hidden p-3 rounded-xl text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 transition-all duration-200 transform hover:scale-110">
-            <UIcon v-if="!isMenuOpen" name="i-heroicons-bars-3" class="w-7 h-7" />
-            <UIcon v-else name="i-heroicons-x-mark" class="w-7 h-7" />
+          <!-- Language Selector (Optional) -->
+          <div class="hidden md:block">
+            <div class="flex items-center space-x-1 px-3 py-2 rounded-xl bg-gray-50/80 text-gray-600 text-sm font-medium cursor-pointer hover:bg-gray-100 transition-colors">
+              <UIcon name="i-heroicons-language" class="w-4 h-4" />
+              <span>EN</span>
+              <UIcon name="i-heroicons-chevron-down" class="w-3 h-3" />
+            </div>
+          </div>
+
+          <!-- Mobile menu button - Enhanced -->
+          <button 
+            @click="toggleMenu"
+            :class="[
+              'lg:hidden p-3 rounded-xl transition-all duration-300 transform hover:scale-110',
+              isMenuOpen 
+                ? 'bg-gradient-to-r from-cyan-500 to-blue-900 text-white' 
+                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+            ]"
+            :aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
+          >
+            <UIcon 
+              v-if="!isMenuOpen" 
+              name="i-heroicons-bars-3" 
+              class="w-5 h-5" 
+            />
+            <UIcon 
+              v-else 
+              name="i-heroicons-x-mark" 
+              class="w-5 h-5" 
+            />
           </button>
         </div>
       </div>
 
-      <!-- Mobile Navigation Menu - Full width -->
-      <div v-show="isMenuOpen"
-        class="lg:hidden border-t border-gray-200/50 bg-white/95 backdrop-blur-md rounded-b-2xl shadow-xl animate-in slide-in-from-top-2 duration-300 mx-0">
-        <div class="py-6 space-y-3">
-          <NuxtLink v-for="item in menuItems" :key="item.name" :to="item.href" :class="[
-            'block px-8 py-4 text-xl font-semibold transition-all duration-200 rounded-xl mx-2',
-            item.current
-              ? 'text-cyan-600 bg-cyan-50 shadow-md'
-              : 'text-gray-700 hover:text-cyan-600 hover:bg-cyan-50'
-          ]" @click="closeMobileMenu">
-            {{ item.name }}
-          </NuxtLink>
+      <!-- Mobile Navigation Menu - Enhanced -->
+      <Transition
+        enter-active-class="transition-all duration-300 ease-out"
+        enter-from-class="opacity-0 -translate-y-4"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition-all duration-200 ease-in"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-4"
+      >
+        <div 
+          v-show="isMenuOpen"
+          class="lg:hidden bg-white/95 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl mt-2 mb-4 overflow-hidden"
+        >
+          <div class="py-4 space-y-1">
+            <NuxtLink 
+              v-for="item in menuItems" 
+              :key="item.name" 
+              :to="item.href" 
+              :class="[
+                'flex items-center space-x-3 px-6 py-4 text-base font-medium transition-all duration-200 group',
+                item.current
+                  ? 'bg-gradient-to-r from-cyan-50 to-blue-50 text-cyan-600 border-l-4 border-cyan-500'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-cyan-600 hover:border-l-4 hover:border-gray-200'
+              ]" 
+              @click="closeMobileMenu"
+            >
+              <!-- Mobile icon -->
+              <UIcon 
+                :name="item.icon" 
+                :class="[
+                  'w-5 h-5 transition-transform group-hover:scale-110',
+                  item.current ? 'text-cyan-500' : 'text-gray-400 group-hover:text-cyan-500'
+                ]" 
+              />
+              
+              <div class="flex-1">
+                <div class="font-semibold">{{ item.name }}</div>
+                <div 
+                  v-if="item.description"
+                  class="text-xs text-gray-500 group-hover:text-cyan-400 mt-0.5"
+                >
+                  {{ item.description }}
+                </div>
+              </div>
 
-          <!-- Mobile Social Links -->
-          <div class="flex justify-center space-x-6 px-8 pt-6 pb-4">
-            <NuxtLink v-for="social in socialLinks" :key="social.name" :href="social.href" :title="social.name"
-              class="p-4 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all duration-200 transform hover:scale-110">
-              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                <path :d="social.icon" />
-              </svg>
+              <!-- Chevron indicator -->
+              <UIcon 
+                name="i-heroicons-chevron-right" 
+                class="w-4 h-4 text-gray-300 group-hover:text-cyan-400 transition-colors" 
+              />
             </NuxtLink>
+
+            <!-- Mobile CTA -->
+            <div class="px-6 py-4">
+              <NuxtLink
+                :to="ctaButton.href"
+                class="w-full px-5 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold text-sm tracking-tight shadow-lg flex items-center justify-center space-x-2 group"
+                @click="closeMobileMenu"
+              >
+                <UIcon :name="ctaButton.icon" class="w-4 h-4" />
+                <span>{{ ctaButton.text }}</span>
+                <UIcon 
+                  name="i-heroicons-arrow-right" 
+                  class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" 
+                />
+              </NuxtLink>
+            </div>
+
+            <!-- Mobile Social Links -->
+            <div class="flex justify-center space-x-4 px-6 py-4 border-t border-gray-200/50">
+              <NuxtLink 
+                v-for="social in socialLinks" 
+                :key="social.name" 
+                :href="social.href" 
+                :title="social.name"
+                :class="[
+                  'p-3 text-gray-400 rounded-xl transition-all duration-300 transform hover:scale-110',
+                  social.color
+                ]"
+              >
+                <UIcon :name="social.icon" class="w-5 h-5" />
+              </NuxtLink>
+            </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
+
+    <!-- Progress bar for scroll -->
+    <div
+      v-if="isScrolled"
+      class="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-cyan-500 to-blue-900 origin-left transition-transform duration-300"
+      :style="{ transform: `scaleX(${scrollProgress})` }"
+    ></div>
   </nav>
 </template>
 
 <style scoped>
-/* Animated border rotation */
-@keyframes borderRotate {
-  0% {
-    background-position: 0% 0%;
-  }
-
-  100% {
-    background-position: 200% 0%;
-  }
+/* Custom scrollbar for the nav */
+nav {
+  scrollbar-width: none; /* Firefox */
 }
 
-.animate-border-rotate {
-  animation: borderRotate 4s linear infinite;
-}
-
-/* Ensure smooth transitions */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-/* Custom animations for dropdown */
-.animate-in {
-  animation-duration: 200ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fade-in-0 {
-  animation-name: fadeIn;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.zoom-in-95 {
-  animation-name: zoomIn;
-}
-
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.slide-in-from-top-2 {
-  animation-name: slideInFromTop;
-}
-
-@keyframes slideInFromTop {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+nav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 /* Smooth transitions for all interactive elements */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, 
+                      opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
+}
+
+/* Gradient text animation for hover effects */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Floating animation for logo */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.logo-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow effect for active items */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+/* Smooth backdrop blur transition */
+.backdrop-blur-xl {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Ensure z-index stacking */
+nav {
+  z-index: 9999;
+}
+
+/* Custom focus styles */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .backdrop-blur-xl {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* Dark mode support (optional future enhancement) */
+@media (prefers-color-scheme: dark) {
+  nav {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+    border-bottom-color: rgba(55, 65, 81, 0.5) !important;
+  }
+  
+  .bg-white {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+  }
+  
+  .text-gray-700 {
+    color: #d1d5db !important;
+  }
+  
+  .bg-gray-50 {
+    background-color: rgba(31, 41, 55, 0.5) !important;
+  }
 }
 </style>

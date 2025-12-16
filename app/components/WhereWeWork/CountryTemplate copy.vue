@@ -21,7 +21,7 @@
                 <img 
                   :src="svgIcon" 
                   :alt="`${country} flag`"
-                  class="country-flag w-full h-full object-contain"
+                  class="w-full h-full object-contain"
                 />
               </div>
             </div>
@@ -139,7 +139,7 @@ interface Props {
   images: [string, string]
   stats: Stat[]
   communities?: string[]
-  svgIcon: string
+  svgIcon: string  // Changed from icon to svgIcon
   isReversed?: boolean
 }
 
@@ -165,8 +165,8 @@ const countryColors = {
   }
 }
 
-/* Target only the flag image so community photos remain unaffected */
-.country-flag {
+/* SVG styling - ensures the SVG appears white on gradient background */
+img {
   filter: brightness(0) invert(1);
 }
 
