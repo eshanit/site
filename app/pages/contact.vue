@@ -129,7 +129,7 @@ const contactInfo = [
     description: 'For academic collaborations and research partnerships'
   },
   {
-    icon: 'i-heroicons-handshake',
+    icon: 'i-heroicons-cube-transparent',
     title: 'Partnerships',
     value: 'partners@pegisus.org',
     description: 'For vocational training programs and community partners'
