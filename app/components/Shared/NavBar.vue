@@ -39,6 +39,13 @@ const menuItems = computed(() => {
     //   description: 'Our 8-session intervention'
     // },
     {
+      name: 'What We Do',
+      href: '/what-we-do',
+      current: route.path.startsWith('/what-we-do '),
+      icon: 'i-heroicons-wrench-screwdriver',
+      description: 'What we do'
+    },
+    {
       name: 'Who We Are',
       href: '/who-we-are',
       current: route.path.startsWith('/who-we-are'),
