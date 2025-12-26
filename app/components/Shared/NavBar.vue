@@ -41,7 +41,7 @@ const menuItems = computed(() => {
     {
       name: 'What We Do',
       href: '/what-we-do',
-      current: route.path.startsWith('/what-we-do '),
+      current: route.path.startsWith('/what-we-do'),
       icon: 'i-heroicons-wrench-screwdriver',
       description: 'What we do'
     },
@@ -155,16 +155,16 @@ onMounted(() => {
             <!-- Enhanced Logo Container -->
             <div class="relative">
               <!-- Animated gradient ring -->
-              <div 
+              <!-- <div 
                 :class="[
                   'absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-900 opacity-20 blur transition-all duration-700',
                   logoAnimation ? 'scale-110' : 'scale-100'
                 ]"
                 aria-hidden="true"
-              ></div>
+              ></div> -->
               
               <!-- Logo with gradient border -->
-              <div class="relative bg-white rounded-xl p-2.5 shadow-lg border border-gray-100">
+              <div class="relative bg-white rounded-xl p-2.5 border border-white">
                 <div class="relative">
                   <AppLogo size="navbar" />
                   <!-- Subtle shine effect -->
@@ -177,14 +177,14 @@ onMounted(() => {
             </div>
 
             <!-- Logo Text -->
-            <div class="hidden lg:block">
+            <!-- <div class="hidden lg:block">
               <div class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-800 bg-clip-text text-transparent">
                 PEGISUS
               </div>
               <div class="text-xs text-gray-500 font-medium tracking-wider">
                 Southern Africa
               </div>
-            </div>
+            </div> -->
           </NuxtLink>
         </div>
 
@@ -195,12 +195,12 @@ onMounted(() => {
             :key="item.name" 
             class="relative group"
           >
-            <NuxtLink 
-              :to="item.href" 
+            <NuxtLink
+              :to="item.href"
               :class="[
                 'px-4 py-2.5 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 relative overflow-hidden',
                 item.current
-                  ? 'text-cyan-600 bg-gradient-to-r from-cyan-50 to-blue-50 shadow-sm border border-cyan-100'
+                  ? 'text-cyan-600'
                   : 'text-gray-700 hover:text-cyan-600 hover:bg-gray-50/80'
               ]"
             >
@@ -211,7 +211,7 @@ onMounted(() => {
               />
               
               <!-- Text -->
-              <span class="text-sm font-semibold tracking-tight">
+              <span class="text-sm text-center font-semibold tracking-tight">
                 {{ item.name }}
               </span>
 
@@ -228,14 +228,6 @@ onMounted(() => {
               ></div>
             </NuxtLink>
 
-            <!-- Tooltip description -->
-            <div 
-              v-if="item.description"
-              class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-50"
-            >
-              {{ item.description }}
-              <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
-            </div>
           </div>
 
           <!-- Divider -->
@@ -244,7 +236,7 @@ onMounted(() => {
           <!-- CTA Button -->
           <NuxtLink
             :to="ctaButton.href"
-            class="ml-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold text-sm tracking-tight shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center space-x-2 group"
+            class="ml-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 hover:from-cyan-600 hover:to-blue-800 text-white font-semibold text-sm tracking-tight shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center space-x-2 group"
           >
             <UIcon :name="ctaButton.icon" class="w-4 h-4" />
             <span>{{ ctaButton.text }}</span>
@@ -258,7 +250,7 @@ onMounted(() => {
         <!-- Right Section - Social Links & Actions -->
         <div class="flex items-center space-x-3">
           <!-- Social Links - Modernized -->
-          <div class="hidden md:flex items-center space-x-1">
+          <!-- <div class="hidden md:flex items-center space-x-1">
             <NuxtLink 
               v-for="social in socialLinks" 
               :key="social.name" 
@@ -271,7 +263,7 @@ onMounted(() => {
             >
               <UIcon :name="social.icon" class="w-4 h-4" />
             </NuxtLink>
-          </div>
+          </div> -->
 
           <!-- Language Selector (Optional) -->
           <div class="hidden md:block">
@@ -489,23 +481,5 @@ nav {
   }
 }
 
-/* Dark mode support (optional future enhancement) */
-@media (prefers-color-scheme: dark) {
-  nav {
-    background-color: rgba(17, 24, 39, 0.95) !important;
-    border-bottom-color: rgba(55, 65, 81, 0.5) !important;
-  }
-  
-  .bg-white {
-    background-color: rgba(17, 24, 39, 0.95) !important;
-  }
-  
-  .text-gray-700 {
-    color: #d1d5db !important;
-  }
-  
-  .bg-gray-50 {
-    background-color: rgba(31, 41, 55, 0.5) !important;
-  }
-}
+/* Dark mode support disabled */
 </style>
