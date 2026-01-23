@@ -88,13 +88,14 @@ onMounted(() => {
                     <!-- Right Column: Map/Visual -->
                     <div class="relative">
                         <div
-                            class="bg-gradient-to-br from-cyan-500/10 to-blue-900/10 rounded-3xl p-8 h-full min-h-[400px]">
+                            class="rounded-3xl p-8 h-full min-h-[400px]"
+                            style="background-image: url('/img/countries/map.png'); background-size: cover; background-position: center;">
                             <div class="relative h-full">
                                 <!-- Simple map visualization -->
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="relative w-full h-full max-w-lg mx-auto">
                                         <!-- South Africa -->
-                                        <div class="absolute top-1/4 right-1/4">
+                                        <div class="absolute top-56 left-1/2">
                                             <div
                                                 class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-900 rounded-full flex items-center justify-center text-white font-bold shadow-xl">
                                                 SA
@@ -105,7 +106,7 @@ onMounted(() => {
                                         </div>
 
                                         <!-- Zimbabwe -->
-                                        <div class="absolute top-1/3 left-2/3">
+                                        <div class="absolute top-20 left-3/5">
                                             <div
                                                 class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-900 rounded-full flex items-center justify-center text-white font-bold shadow-xl">
                                                 ZW
@@ -116,7 +117,7 @@ onMounted(() => {
                                         </div>
 
                                         <!-- Zambia -->
-                                        <div class="absolute bottom-1/3 left-1/3">
+                                        <div class="absolute top-5 left-1/3">
                                             <div
                                                 class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-900 rounded-full flex items-center justify-center text-white font-bold shadow-xl">
                                                 ZM

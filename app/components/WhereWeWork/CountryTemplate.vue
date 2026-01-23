@@ -12,18 +12,15 @@
         <div class="space-y-6">
           <!-- Country Header -->
           <div class="flex items-center gap-4 mb-6">
-            <div 
+            <div
               class="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
-              :class="countryColors.bg"
             >
               <!-- SVG Icon -->
-              <div class="w-8 h-8 flex items-center justify-center">
-                <img 
-                  :src="svgIcon" 
-                  :alt="`${country} flag`"
-                  class="country-flag w-full h-full object-contain"
-                />
-              </div>
+              <img
+                :src="svgIcon"
+                :alt="`${country} flag`"
+                class="w-full h-full object-cover rounded-2xl"
+              />
             </div>
             <div>
               <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ country }}</h3>
@@ -144,11 +141,6 @@ interface Props {
 }
 
 defineProps<Props>()
-
-const countryColors = {
-  bg: 'bg-gradient-to-br from-cyan-500 to-blue-900',
-  text: 'text-white'
-}
 </script>
 
 <style scoped>
@@ -166,9 +158,7 @@ const countryColors = {
 }
 
 /* Target only the flag image so community photos remain unaffected */
-.country-flag {
-  filter: brightness(0) invert(1);
-}
+/* Removed filter to show colored flag */
 
 @media (prefers-reduced-motion: reduce) {
   .country-section {
