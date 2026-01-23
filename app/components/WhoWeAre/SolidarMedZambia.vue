@@ -11,7 +11,7 @@ const team = [
   <WhoWeAreStakeholderTemplate
     institution="SolidarMed Zambia"
     country="Zambia"
-    :team-members="5"
+    :team-members="4"
     description="A public health organisation that works to ensure better access to quality healthcare for marginalised rural areas."
     :team="team"
     icon="i-heroicons-plus-circle"
