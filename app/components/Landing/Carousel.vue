@@ -1,62 +1,26 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-
-const images = [
-  '/img/youth.jpg',
-  '/img/5H2A4440.jpg',
-  '/img/youth2.jpg'
-]
-
-const actionWords = [
-  { text: 'thrive', color: 'text-sky-500' },
-  { text: 'succeed', color: 'text-emerald-500' },
-  { text: 'flourish', color: 'text-amber-500' }
-]
-
-const currentIndex = ref(0)
-
-onMounted(() => {
-  const interval = setInterval(() => {
-    currentIndex.value = (currentIndex.value + 1) % images.length
-  }, 6000)
-
-  onUnmounted(() => clearInterval(interval))
-})
+// Static component - no animations or carousel
 </script>
 
 <template>
   <div class="py-20 px-10 bg-linear-to-br from-indigo-50 to-blue-50">
     <div class="grid lg:grid-cols-2 gap-10">
-      <!-- Image carousel -->
+      <!-- Static image -->
       <div class="relative h-[500px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(6,182,212,0.3)]">
-        <!-- Floating shapes background -->
-        <div class="absolute inset-0 z-0">
-          <div class="absolute w-40 h-40 rounded-full bg-blue-400 opacity-20 -top-10 -left-10"></div>
-          <div class="absolute w-60 h-60 rounded-full bg-cyan-400 opacity-15 bottom-10 right-20"></div>
-        </div>
-
-        <Transition name="bounce" mode="out-in">
-          <NuxtImg 
-            :key="images[currentIndex]" 
-            :src="images[currentIndex]" 
-            class="z-10 rounded-3xl absolute inset-0 w-full h-full object-cover"
-            alt="Youth programs"
-          />
-        </Transition>
+        <NuxtImg
+          src="/img/youth.jpg"
+          class="rounded-3xl absolute inset-0 w-full h-full object-cover"
+          alt="Youth programs"
+        />
       </div>
 
       <!-- Text content -->
       <div class="relative">
         <h1 class="text-6xl font-bold text-gray-900 mb-6 leading-tight">
           Creating pathways for youth to
-          <Transition name="jump" mode="out-in">
-            <span 
-              :key="actionWords[currentIndex]?.text"
-              :class="['inline-block', actionWords[currentIndex]?.color, 'font-extrabold']"
-            >
-              {{ actionWords[currentIndex]?.text }}
-            </span>
-          </Transition>
+          <span class="inline-block text-sky-500 font-extrabold">
+            thrive
+          </span>
           in a rapidly changing world.
         </h1>
 
@@ -83,20 +47,13 @@ onMounted(() => {
             Watch Video
           </button>
         </div>
-
-        <!-- Animated floating elements -->
-        <div class="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-green-400 opacity-30 animate-pulse"></div>
-        <div class="absolute bottom-0 -left-10 w-16 h-16 rotate-45 bg-blue-400 opacity-40 animate-bounce"></div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* New animations */
-.bounce-enter-active {
-  animation: bounce-in 2.4s;
-}
+/* No animations needed for static component */
 
 .bounce-leave-active {
   animation: bounce-in 2.4s reverse;

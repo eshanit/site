@@ -124,10 +124,11 @@ const storiesData = {
 </script>
 <template>
     <div>
-        <LandingCarousel />
+        <LandingFirst />
         <LandingYouthFuture v-bind="youthFutureData" />
-        <LandingSupport v-bind="supportData" />
+        <LandingFundedby />
+        <!-- <LandingSupport v-bind="supportData" />
         <LandingUpcomingEventsPlaceholder />
-        <LandingStories v-bind="storiesData" />
+        <LandingStories v-bind="storiesData" /> -->
     </div>
 </template>
