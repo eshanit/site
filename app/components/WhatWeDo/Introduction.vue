@@ -14,7 +14,6 @@ const heroVisible = ref(false)
 const highlightsVisible = ref(false)
 const animatedHighlights = ref(false)
 
-
 // small delay to stagger highlights after reveal
 onMounted(() => {
   // add slight stagger for highlight entrance after they become visible
@@ -48,85 +47,197 @@ onMounted(() => {
 
 <template>
   <section id="intro-hero" class="py-16 md:py-20 px-4 md:px-10">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <!-- Text -->
       <div class="max-w-2xl mx-auto lg:mx-0">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-          <span class="relative inline-block">
+        <div class="mb-6">
+          <div class="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 mb-4"></div>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
             Peer Education for Gender Inclusion
-            <span class="underline-accent" aria-hidden="true"></span>
-          </span>
-          <span class="block mt-4">and Substance Use in Southern Africa</span>
-        </h2>
+            <span class="block mt-4 bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
+              and Substance Use in Southern Africa
+            </span>
+          </h2>
+        </div>
 
-        <p class="text-lg md:text-xl leading-relaxed text-gray-700">
+        <p class="text-lg md:text-xl leading-relaxed text-gray-700 mb-6">
           PEGISUS represents a groundbreaking approach to youth development, combining substance use prevention
           with gender equity education through peer-led, community-embedded programming.
         </p>
+
+        <!-- Quick stats -->
+        <div class="grid grid-cols-2 gap-4 mt-8">
+          <div class="border border-gray-200 p-4">
+            <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
+              3
+            </div>
+            <div class="text-sm font-medium text-gray-900">Countries</div>
+            <div class="text-xs text-gray-600">Zambia, Zimbabwe, South Africa</div>
+          </div>
+          <div class="border border-gray-200 p-4">
+            <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
+              500+
+            </div>
+            <div class="text-sm font-medium text-gray-900">Youth Impacted</div>
+            <div class="text-xs text-gray-600">Active participants</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Images: simplified overlap with CSS polka dots via pseudo-elements -->
+      <!-- Images with side-by-side layout -->
       <div
-        class="relative rounded-3xl min-h-[340px] md:min-h-[420px] overflow-visible"
+        class="relative h-[360px] md:h-[400px]"
         :class="heroVisible ? 'intro-revealed' : 'intro-hidden'"
         aria-hidden="false"
       >
-        <div class="image-stack" role="img" aria-label="Photos from PEGISUS program">
-          <!-- Primary image (front) - moved even further down -->
-          <div class="image-card image-front">
-            <NuxtImg
-              src="/img/pegisus_program_1.jpg"
-              alt="PEGISUS session"
-              class="card-img"
-              width="420"
-              height="315"
-              sizes="(max-width: 1024px) 60vw, 420px"
-              loading="lazy"
-              priority="false"
-              placeholder="blur"
-            />
+        <!-- Container for both images -->
+        <div class="relative w-full h-full flex gap-4">
+          <!-- Main image (larger, on left) -->
+          <div class="relative flex-1 border-4 border-white shadow-lg overflow-hidden h-full">
+            <div class="absolute inset-0">
+              <NuxtImg
+                src="/img/pegisus_program_1.jpg"
+                alt="PEGISUS program session with youth participants engaged in discussion"
+                class="w-full h-full object-cover transform transition-transform duration-700"
+                :class="heroVisible ? 'scale-105' : 'scale-100'"
+                width="450"
+                height="350"
+                sizes="(max-width: 768px) 50vw, 450px"
+                loading="lazy"
+                format="webp"
+                quality="85"
+              />
+            </div>
+            
+            <!-- Overlay gradient for main image -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+            
+            <!-- Text overlay for main image -->
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+              <div class="text-white">
+                <div class="text-sm font-bold mb-1">Peer-led Sessions</div>
+                <div class="text-xs opacity-90">Interactive group discussions</div>
+              </div>
+            </div>
+            
+            <!-- Badge for main image -->
+            <div class="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-3 py-1 shadow">
+              <span class="text-xs font-bold">Program Session</span>
+            </div>
           </div>
 
-          <!-- Secondary image (back) - moved even further left, same size -->
-          <div class="image-card image-back">
-            <NuxtImg
-              src="/img/pegisus_program_2.jpg"
-              alt="Peer group activity"
-              class="card-img"
-              width="420" 
-              height="315" 
-              sizes="(max-width: 1024px) 60vw, 420px"
-              loading="lazy"
-              priority="false"
-              placeholder="blur"
-            />
+          <!-- Secondary image (smaller, on right) -->
+          <div class="relative w-1/3 flex-none border-4 border-white shadow-lg overflow-hidden self-end mb-8 h-full">
+            <div class="absolute inset-0">
+              <NuxtImg
+                src="/img/pegisus_program_2.jpg"
+                alt="Youth participating in hands-on group activity"
+                class="w-full h-full object-cover transform transition-transform duration-700"
+                :class="heroVisible ? 'scale-105' : 'scale-100'"
+                width="200"
+                height="280"
+                sizes="(max-width: 768px) 30vw, 200px"
+                loading="lazy"
+                format="webp"
+                quality="85"
+              />
+            </div>
+            
+            <!-- Overlay for secondary image -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            
+            <!-- Label for secondary image -->
+            <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+              <div class="text-white text-xs font-bold">Group Activity</div>
+            </div>
+            
+            <!-- Corner accent for secondary image -->
+            <div class="absolute top-0 right-0 bg-white px-2 py-1">
+              <UIcon name="i-heroicons-users" class="w-3 h-3 text-cyan-600" />
+            </div>
           </div>
-
-          <!-- soft glow center -->
-          <div class="center-glow" aria-hidden="true"></div>
         </div>
+
+        <!-- Background accent line -->
+        <div class="absolute -bottom-4 -right-4 w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 transform -rotate-45"></div>
       </div>
     </div>
 
     <!-- Highlights -->
-    <div id="intro-highlights" class="mt-16 md:mt-20">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    <div id="intro-highlights" class="mt-16 md:mt-24">
+      <div class="mb-8 text-center">
+        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          Program <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Highlights</span>
+        </h3>
+        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <div
           v-for="(h, i) in highlights"
           :key="i"
-          class="highlight-item rounded-2xl p-6 text-center relative overflow-hidden bg-white/80 backdrop-blur-sm shadow-lg border border-gray-200/50"
+          class="highlight-item border border-gray-200 p-6 text-center relative overflow-hidden bg-white shadow-sm hover:shadow transition-all duration-300 group"
           :class="{
             'revealed': highlightsVisible,
             'animate-visible': animatedHighlights
           }"
           :style="`transition-delay: ${i * 80}ms`"
         >
+          <!-- Top accent bar -->
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500/20 to-blue-900/20 group-hover:from-cyan-500 group-hover:to-blue-900 transition-all duration-300"></div>
+          
           <div class="z-10 relative">
-            <div class="number-badge mb-3">
-              <span class="number-text">{{ h.number }}</span>
+            <!-- Number/Text display -->
+            <div class="mb-4">
+              <div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-2">
+                {{ h.number }}
+              </div>
+              <div class="h-0.5 w-8 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto mb-3"></div>
             </div>
-            <div class="text-lg font-semibold text-gray-900 mb-1">{{ h.label }}</div>
-            <div class="text-sm text-gray-600">{{ h.description }}</div>
+            
+            <div class="text-lg font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition-colors duration-300">
+              {{ h.label }}
+            </div>
+            <div class="text-sm text-gray-600 leading-relaxed">
+              {{ h.description }}
+            </div>
+          </div>
+          
+          <!-- Bottom accent -->
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500/10 to-blue-900/10"></div>
+          
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 to-blue-900/0 group-hover:from-cyan-500/5 group-hover:to-blue-900/5 transition-all duration-300 pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="mt-16 md:mt-24 text-center">
+      <div class="border-t border-b border-gray-200 py-8 md:py-12">
+        <div class="max-w-3xl mx-auto">
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            Ready to <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Empower Youth</span> in Your Community?
+          </h3>
+          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join our mission to create sustainable change through evidence-based, peer-led interventions.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <NuxtLink
+              to="/contact"
+              class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold shadow hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group"
+            >
+              <UIcon name="i-heroicons-envelope" class="w-5 h-5 transform group-hover:scale-110 transition-transform" />
+              <span>Contact Our Team</span>
+              <UIcon name="i-heroicons-arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+            </NuxtLink>
+            <NuxtLink
+              to="/what-we-do"
+              class="px-8 py-3 bg-white text-cyan-600 border-2 border-cyan-500 font-bold shadow hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group"
+            >
+              <UIcon name="i-heroicons-information-circle" class="w-5 h-5 transform group-hover:scale-110 transition-transform" />
+              <span>Learn More</span>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -135,6 +246,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* Remove all border-radius globally */
+* {
+  border-radius: 0 !important;
+}
+
 /* Core transitions */
 * {
   transition: background-color .28s cubic-bezier(.4,0,.2,1),
@@ -143,202 +259,128 @@ onMounted(() => {
               opacity .28s cubic-bezier(.4,0,.2,1);
 }
 
-/* Underline accent */
-.underline-accent {
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  height: 6px;
-  width: 5.5rem;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-  opacity: 0.95;
+/* Intro reveal animation */
+.intro-hidden .relative > div:first-child {
+  opacity: 0;
+  transform: translateX(20px);
 }
 
-/* Image stack container */
-.image-stack {
-  --card-radius: 18px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
+.intro-hidden .relative > div:first-child > div:first-child {
+  opacity: 0;
+  transform: translateX(30px);
 }
 
-/* Cards share base styles - BOTH SAME SIZE NOW */
-.image-card {
-  position: absolute;
-  border-radius: var(--card-radius);
-  overflow: hidden;
-  box-shadow: 0 12px 40px rgba(20, 23, 27, 0.12);
-  transform-origin: center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-  width: clamp(240px, 48%, 420px); /* Same width for both */
-  height: auto;
+.intro-hidden .relative > div:first-child > div:last-child {
+  opacity: 0;
+  transform: translateX(40px);
 }
 
-/* front image - moved EVEN further down */
-.image-front {
-  z-index: 30;
-  /* Changed: Keep right but move EVEN further down */
-  transform: translate(30%, 35%) rotate(2deg) scale(1.02);
-  transition: transform .6s cubic-bezier(.2,.9,.3,1), box-shadow .4s, opacity .4s;
+.intro-revealed .relative > div:first-child {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-/* back image - moved EVEN further left, same size */
-.image-back {
-  z-index: 20;
-  /* Changed: Even more left (more negative X) */
-  transform: translate(-55%, -15%) rotate(-2deg) scale(0.98); /* Changed scale to 0.98 (was 0.96) */
+.intro-revealed .relative > div:first-child > div:first-child {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 100ms;
 }
 
-/* image element fills card */
-.card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.intro-revealed .relative > div:first-child > div:last-child {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 200ms;
 }
 
-/* center soft glow */
-.center-glow {
-  position: absolute;
-  z-index: 10;
-  width: 14rem;
-  height: 14rem;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 30% 30%, rgba(6,182,212,0.10), transparent 35%),
-              radial-gradient(circle at 70% 70%, rgba(139,92,246,0.08), transparent 30%);
-  filter: blur(18px);
-  pointer-events: none;
-  transform: translateY(6%);
-}
-
-/* Reveal states (controlled by heroVisible) */
-/* Hidden: start positions (closer to center) */
-.intro-hidden .image-front { 
-  transform: translate(15%, 15%) rotate(2deg) scale(0.98); 
-  opacity: 0; 
-}
-.intro-hidden .image-back { 
-  transform: translate(-30%, -8%) rotate(-2deg) scale(0.96); 
-  opacity: 0; 
-}
-
-/* Revealed: final positions (EVEN MORE separated) */
-.intro-revealed .image-front { 
-  transform: translate(30%, 35%) rotate(0.6deg) scale(1); 
-  opacity: 1; 
-}
-.intro-revealed .image-back { 
-  transform: translate(-55%, -15%) rotate(-1.5deg) scale(0.98); 
-  opacity: 1; 
-}
-
-/* Polka dots via pseudo elements on the image container to reduce DOM */
-#intro-hero > .max-w-7xl > .relative::before,
-#intro-hero > .max-w-7xl > .relative::after {
-  content: "";
-  position: absolute;
-  z-index: 5;
-  width: 48%;
-  height: 48%;
-  border-radius: 1rem;
-  pointer-events: none;
-  opacity: 0.28;
-  background-size: 24px 24px;
-}
-
-/* cyan polka on top-right */
-#intro-hero > .max-w-7xl > .relative::before {
-  top: 0;
-  right: 0;
-  background-image: radial-gradient(#06b6d4 2.5px, transparent 2.5px);
-  background-position: 0 0;
-  transform: translate(6%, -6%);
-}
-
-/* purple polka on bottom-left */
-#intro-hero > .max-w-7xl > .relative::after {
-  bottom: 0;
-  left: 0;
-  background-image: radial-gradient(#8b5cf6 2.5px, transparent 2.5px);
-  background-position: 0 0;
-  transform: translate(-6%, 6%);
-}
-
-/* Highlights grid */
+/* Highlights animation */
 .highlight-item {
-  transition: transform .48s cubic-bezier(.2,.9,.3,1), opacity .38s, box-shadow .28s;
+  transition: transform .48s cubic-bezier(.2,.9,.3,1), opacity .38s, box-shadow .28s, border-color .28s;
   transform-origin: center;
   opacity: 0;
-  transform: translateY(18px) scale(.995);
+  transform: translateY(18px);
 }
-.highlight-item.revealed { opacity: 1; transform: translateY(12px) scale(1); }
-.highlight-item.animate-visible { transform: translateY(0) scale(1); }
 
-/* number badge with subtle gradient */
-.number-badge {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 8px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(90deg, rgba(6,182,212,0.12), rgba(139,92,246,0.12));
-  box-shadow: inset 0 -6px 14px rgba(0,0,0,0.03);
+.highlight-item.revealed { 
+  opacity: 1; 
+  transform: translateY(12px); 
 }
-.number-text {
-  font-weight: 800;
-  font-size: 1.35rem;
-  background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+.highlight-item.animate-visible { 
+  transform: translateY(0); 
+}
+
+/* Hover effect for highlights */
+.highlight-item:hover {
+  border-color: #06b6d4;
+  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.12);
+}
+
+/* Image hover effects */
+.relative > div:first-child > div:first-child:hover img,
+.relative > div:first-child > div:last-child:hover img {
+  transform: scale(1.08);
 }
 
 /* Responsive tweaks */
 @media (max-width: 1024px) {
-  .center-glow { 
-    width: 11rem; 
-    height: 11rem; 
-    filter: blur(14px); 
-  }
-  
-  /* Adjust for smaller screens - less extreme movement but same size */
-  .image-card {
-    width: clamp(240px, 50%, 420px); /* Same size on mobile */
-  }
-  
-  .image-front { 
-    transform: translate(15%, 20%) rotate(2deg) scale(1); 
-  }
-  .image-back { 
-    transform: translate(-30%, -10%) rotate(-1.5deg) scale(0.98); 
-  }
-  
-  .intro-hidden .image-front { 
-    transform: translate(8%, 10%) rotate(2deg) scale(0.98); 
-  }
-  .intro-hidden .image-back { 
-    transform: translate(-15%, -5%) rotate(-1.5deg) scale(0.96); 
-  }
-  
-  .intro-revealed .image-front { 
-    transform: translate(15%, 20%) rotate(0.6deg) scale(1); 
-  }
-  .intro-revealed .image-back { 
-    transform: translate(-30%, -10%) rotate(-1.2deg) scale(0.98); 
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  #intro-hero > .max-w-7xl > .relative::before,
-  #intro-hero > .max-w-7xl > .relative::after { 
-    display: none; 
+  .relative.h-\[360px\] {
+    height: 300px;
+  }
+
+  .relative > div:first-child {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .relative > div:first-child > div:first-child {
+    width: 100%;
+    height: 250px;
+  }
+
+  .relative > div:first-child > div:last-child {
+    width: 60%;
+    height: 180px;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-lg\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .max-w-2xl {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .gap-4 > * {
+    width: 100%;
+  }
+
+  .relative.h-\[360px\] {
+    height: 280px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .relative > div:first-child > div:last-child {
+    width: 50%;
+    height: 160px;
   }
 }
 
@@ -346,6 +388,13 @@ onMounted(() => {
   * { 
     transition: none !important; 
     animation: none !important; 
+  }
+  
+  .intro-hidden .relative > div:first-child,
+  .intro-revealed .relative > div:first-child,
+  .highlight-item {
+    opacity: 1;
+    transform: none;
   }
 }
 </style>

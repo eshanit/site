@@ -127,8 +127,8 @@ const scrollToTop = () => {
               <NuxtLink to="/" class="inline-block">
                 <div class="flex items-center space-x-3 group">
                   <div class="relative">
-                    <div class="absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-900 opacity-20 blur group-hover:opacity-30 transition-opacity duration-500"></div>
-                    <div class="relative bg-white rounded-xl p-2.5 shadow-lg border border-gray-100">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-900 opacity-20 blur group-hover:opacity-30 transition-opacity duration-500"></div>
+                    <div class="relative bg-white p-2.5 shadow-lg border border-gray-100">
                       <!-- <AppFooterLogo size="md" /> -->
                     </div>
                   </div>
@@ -158,7 +158,7 @@ const scrollToTop = () => {
                     :href="social.href"
                     :title="social.name"
                     :class="[
-                      'p-2.5 rounded-xl bg-gray-800/50 backdrop-blur-sm text-gray-400 transition-all duration-300 transform hover:scale-110',
+                      'p-2.5 bg-gray-800/50 backdrop-blur-sm text-gray-400 transition-all duration-300 transform hover:scale-110',
                       social.color
                     ]"
                   >
@@ -203,7 +203,7 @@ const scrollToTop = () => {
                   :href="contact.href"
                   class="flex items-start space-x-3 text-gray-400 hover:text-cyan-300 transition-colors duration-300 group"
                 >
-                  <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-900/20 flex items-center justify-center flex-shrink-0 group-hover:from-cyan-500/30 group-hover:to-blue-900/30 transition-all">
+                  <div class="w-8 h-8 bg-gradient-to-br from-cyan-500/20 to-blue-900/20 flex items-center justify-center flex-shrink-0 group-hover:from-cyan-500/30 group-hover:to-blue-900/30 transition-all">
                     <UIcon :name="contact.icon" class="w-4 h-4 text-cyan-400" />
                   </div>
                   <div>
@@ -228,7 +228,7 @@ const scrollToTop = () => {
               <!-- Success message -->
               <div 
                 v-if="isSubscribed"
-                class="bg-gradient-to-r from-green-500/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-4"
+                class="bg-gradient-to-r from-green-500/20 to-emerald-600/20 border border-green-500/30 p-4"
               >
                 <div class="flex items-center space-x-3">
                   <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-green-400 flex-shrink-0" />
@@ -249,7 +249,7 @@ const scrollToTop = () => {
                     type="email"
                     placeholder="Your email address"
                     required
-                    class="w-full px-4 py-3 pl-11 rounded-xl bg-gray-800/50 backdrop-blur-sm border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 text-white placeholder-gray-500 transition-all"
+                    class="w-full px-4 py-3 pl-11 bg-gray-800/50 backdrop-blur-sm border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 text-white placeholder-gray-500 transition-all"
                   />
                   <UIcon 
                     name="i-heroicons-envelope" 
@@ -259,7 +259,7 @@ const scrollToTop = () => {
                 <button
                   type="submit"
                   :disabled="isSubmitting"
-                  class="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="w-full px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>{{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}</span>
                   <UIcon 
@@ -415,7 +415,6 @@ footer::-webkit-scrollbar {
 :focus-visible {
   outline: 2px solid #06b6d4;
   outline-offset: 2px;
-  border-radius: 0.5rem;
 }
 
 /* Smooth backdrop blur */

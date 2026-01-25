@@ -1,163 +1,299 @@
 <script setup lang="ts">
-// Accordion items
-const accordionItems = [
+// Program information items
+const programItems = [
   {
     id: 'pegisus-overview',
     label: 'What is the PEGISUS Program?',
     icon: 'i-heroicons-academic-cap',
-    content: `Peer Education for Gender Inclusion and Substance Use in Southern Africa (PEGISUS) is an 8-session program to help young people aged 16 to 24 lead healthier lives now and better prepare them for the future. PEGISUS is built upon two other science-backed programs: RAD-PAL to reduce alcohol and drug use and Manhood 2.0 to develop more flexible and equitable beliefs about gender.`
+    content: `Peer Education for Gender Inclusion and Substance Use in Southern Africa (PEGISUS) is an 8-session program to help young people aged 16 to 24 lead healthier lives now and better prepare them for the future. PEGISUS is built upon two other science-backed programs: RAD-PAL to reduce alcohol and drug use and Manhood 2.0 to develop more flexible and equitable beliefs about gender.`,
+    color: 'from-cyan-500 to-blue-600'
   },
   {
     id: 'sustainable-change',
     label: 'Sustainable Change Through Peer Groups',
     icon: 'i-heroicons-users',
-    content: `Importantly, we want these changes to be sustainable. To accomplish this, we deliver PEGISUS to peer groups. Young people and friends from their community take part in the program together so they can support each other as they make healthier lifestyle changes.`
+    content: `Importantly, we want these changes to be sustainable. To accomplish this, we deliver PEGISUS to peer groups. Young people and friends from their community take part in the program together so they can support each other as they make healthier lifestyle changes.`,
+    color: 'from-blue-500 to-cyan-600'
   },
   {
     id: 'vocational-integration',
     label: 'Integration with Vocational Training',
     icon: 'i-heroicons-briefcase',
-    content: `Because we know how important employment is for a healthy and prosperous future, we deliver PEGISUS within vocational training programs. Vocational training programs help people learn practical job skills, making it easier to find employment. We train existing staff who work at these vocational programs in how to deliver PEGISUS.`
+    content: `Because we know how important employment is for a healthy and prosperous future, we deliver PEGISUS within vocational training programs. Vocational training programs help people learn practical job skills, making it easier to find employment. We train existing staff who work at these vocational programs in how to deliver PEGISUS.`,
+    color: 'from-cyan-600 to-blue-700'
   },
   {
     id: 'rad-pal',
     label: 'RAD-PAL Program',
     icon: 'i-heroicons-heart',
-    content: `RAD-PAL is a substance use reduction program designed for younger South African adolescents, developed by team member Dr. Tara Carney. The program teaches behavioral skills to help young people identify their own motivation for reducing substance use, what triggers their use, and problem-solving to identify alternative behaviors outside of using substances.`
+    content: `RAD-PAL is a substance use reduction program designed for younger South African adolescents, developed by team member Dr. Tara Carney. The program teaches behavioral skills to help young people identify their own motivation for reducing substance use, what triggers their use, and problem-solving to identify alternative behaviors outside of using substances.`,
+    color: 'from-blue-600 to-cyan-700'
   },
   {
     id: 'manhood-2',
     label: 'Manhood 2.0 Program',
     icon: 'i-heroicons-scale',
-    content: `Manhood 2.0 is a gender-transformative program designed to help adolescent boys and young men develop flexible and equitable beliefs about gender. The program covers topics such as: gender and gender identity, power and relationships, understanding emotions, and overall healthy living. The program is highly interactive with hands-on activities for participants to engage with these topics.`
+    content: `Manhood 2.0 is a gender-transformative program designed to help adolescent boys and young men develop flexible and equitable beliefs about gender. The program covers topics such as: gender and gender identity, power and relationships, understanding emotions, and overall healthy living. The program is highly interactive with hands-on activities for participants to engage with these topics.`,
+    color: 'from-cyan-700 to-blue-800'
   },
   {
     id: 'development-process',
     label: 'Program Development Process',
     icon: 'i-heroicons-beaker',
-    content: `To turn RAD-PAL and Manhood 2.0 into PEGISUS, we solicited feedback using focus group discussions with young people living in the local community and from our youth advisory boards. We received feedback on the program's content, activities, and language to make sure it was appropriate for young people aged 16 – 24 and their peers.`
+    content: `To turn RAD-PAL and Manhood 2.0 into PEGISUS, we solicited feedback using focus group discussions with young people living in the local community and from our youth advisory boards. We received feedback on the program's content, activities, and language to make sure it was appropriate for young people aged 16 – 24 and their peers.`,
+    color: 'from-blue-700 to-cyan-800'
   },
   {
     id: 'clinical-trial',
     label: 'Clinical Trial & Testing',
     icon: 'i-heroicons-chart-bar',
-    content: `We are conducting a clinical trial to test whether PEGISUS has a positive impact. Half of the young people and their peers will be randomly selected to receive the standard training of their vocational training program (mostly training in employment skills) and the other half will receive the standard vocational training program plus PEGISUS. We will compare the two groups on their substance use, beliefs about gender, and employment potential once both programs have been completed.`
+    content: `We are conducting a clinical trial to test whether PEGISUS has a positive impact. Half of the young people and their peers will be randomly selected to receive the standard training of their vocational training program (mostly training in employment skills) and the other half will receive the standard vocational training program plus PEGISUS. We will compare the two groups on their substance use, beliefs about gender, and employment potential once both programs have been completed.`,
+    color: 'from-cyan-800 to-blue-900'
   }
 ];
+
+// Program stats
+const programStats = [
+  { value: '8', label: 'Sessions', description: 'Complete program structure' },
+  { value: '16-24', label: 'Age Range', description: 'Target youth demographic' },
+  { value: '3', label: 'Countries', description: 'Active implementation' },
+  { value: 'Peer', label: 'Delivery Model', description: 'Community-driven approach' }
+];
+
+// Interactive state
+const activeItem = ref(programItems[0]);
 </script>
 
 <template>
-  <section class="py-20 px-6 md:px-12 lg:px-20">
-    <div class="max-w-7xl mx-auto grid gap-12 lg:grid-cols-2 items-start">
-      <!-- Left Intro / Stats / Visual -->
-      <div class="space-y-6">
-        <div class="rounded-3xl p-8 bg-gradient-to-br from-cyan-500 to-blue-900 text-white shadow-2xl">
-          <h3 class="text-3xl md:text-4xl font-extrabold leading-tight">Program Details</h3>
-          <p class="mt-3 text-lg opacity-95 leading-relaxed max-w-xl">
-            PEGISUS uses peer-delivered sessions to combine substance-use prevention, gender inclusion work, and vocational integration — designed to be interactive, evidence-led, and youth-facing.
-          </p>
+  <section class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16 md:mb-20">
+        <div class="inline-flex items-center gap-3 mb-4">
+          <div class="w-3 h-3 bg-cyan-500"></div>
+          <span class="text-sm font-semibold text-cyan-700 uppercase tracking-wider">Program Details</span>
+        </div>
+        
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Understanding the <span class="bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">PEGISUS Framework</span>
+        </h2>
 
-          <div class="mt-6 grid grid-cols-2 gap-4">
-            <div class="flex items-start space-x-3">
-              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white">
-                <UIcon name="i-heroicons-users" class="w-5 h-5" />
-              </div>
-              <div>
-                <div class="text-sm font-medium opacity-90">Peer Groups</div>
-                <div class="text-lg font-bold">Cohorts</div>
+        <div class="h-1 w-20 bg-linear-to-r from-cyan-500 to-blue-900 mx-auto mb-8"></div>
+        
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          A comprehensive approach combining substance use prevention, gender inclusion, and vocational training
+        </p>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <!-- Left Column - Interactive Selection -->
+        <div class="space-y-6">
+          <!-- Program Stats -->
+          <div class="border border-gray-200 p-6 bg-white">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">Program Overview</h3>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+              <div v-for="stat in programStats" :key="stat.label"
+                class="text-center p-4 border border-gray-200 bg-gray-50">
+                <div class="text-2xl md:text-3xl font-bold bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-1">
+                  {{ stat.value }}
+                </div>
+                <div class="text-sm font-semibold text-gray-900">{{ stat.label }}</div>
+                <div class="text-xs text-gray-600 mt-1">{{ stat.description }}</div>
               </div>
             </div>
-
-            <div class="flex items-start space-x-3">
-              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white">
-                <UIcon name="i-heroicons-briefcase" class="w-5 h-5" />
+            
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-4 h-4 bg-linear-to-r from-cyan-500 to-blue-600"></div>
+                <span class="text-sm text-gray-700">Peer-delivered sessions</span>
               </div>
-              <div>
-                <div class="text-sm font-medium opacity-90">Work Integration</div>
-                <div class="text-lg font-bold">Vocational</div>
+              <div class="flex items-center gap-3">
+                <div class="w-4 h-4 bg-linear-to-r from-blue-600 to-cyan-700"></div>
+                <span class="text-sm text-gray-700">Integrated with vocational training</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-4 h-4 bg-linear-to-r from-cyan-700 to-blue-800"></div>
+                <span class="text-sm text-gray-700">Evidence-based methodologies</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Program Components List -->
+          <div class="border border-gray-200 p-6 bg-white">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">Core Components</h3>
+            
+            <div class="space-y-4">
+              <div 
+                v-for="item in programItems" 
+                :key="item.id"
+                class="border border-gray-200 p-4 transition-all duration-200 cursor-pointer hover:border-cyan-300 hover:shadow-sm"
+                :class="activeItem?.id === item.id ? 'border-cyan-400 bg-linear-to-r from-cyan-50 to-blue-50' : 'bg-white'"
+                @click="activeItem = item"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center transition-all duration-200"
+                    :class="activeItem?.id === item.id ? 'bg-linear-to-r ' + item.color + ' text-white' : 'bg-gray-100 text-gray-600'"
+                  >
+                    <UIcon :name="item.icon" class="w-5 h-5" />
+                  </div>
+                  
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-gray-900" :class="activeItem?.id === item.id ? 'text-cyan-700' : ''">
+                      {{ item.label }}
+                    </h4>
+                    <div class="text-sm text-gray-600 mt-1">
+                      {{ item.content.substring(0, 80) }}...
+                    </div>
+                  </div>
+                  
+                  <UIcon
+                    name="i-heroicons-chevron-right"
+                    class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                    :class="activeItem?.id === item.id ? 'rotate-90 text-cyan-600' : ''"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Visual card / quote -->
-        <div class="rounded-2xl p-6 bg-white shadow-lg">
-          <blockquote class="text-gray-800 italic leading-relaxed">
-            "PEGISUS helps young people build healthier habits, stronger peer support, and practical skills to succeed in life and work."
-          </blockquote>
-          <footer class="mt-4 text-sm text-gray-500">— Program team</footer>
-        </div>
+        <!-- Right Column - Detailed View -->
+        <div class="space-y-6">
+          <!-- Active Item Display -->
+          <div class="border border-gray-200 p-8 bg-white">
+            <!-- Header -->
+            <div class="flex items-start gap-4 mb-8">
+              <div class="w-14 h-14 bg-linear-to-r from-cyan-500 to-blue-900 flex items-center justify-center">
+                <UIcon :name="activeItem?.icon" class="w-6 h-6 text-white" />
+              </div>
 
-        <!-- CTA -->
-        <div class="flex flex-col sm:flex-row gap-4">
-          <NuxtLink
-            to="/contact"
-            class="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white text-cyan-600 font-semibold shadow-md hover:shadow-xl transition-all"
-          >
-            Partner With Us
-            <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
-          </NuxtLink>
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ activeItem?.label }}</h3>
+                <div class="flex items-center gap-4">
+                  <div class="h-1 w-12 bg-linear-to-r from-cyan-500 to-blue-900"></div>
+                  <span class="text-sm text-gray-600">PEGISUS Program Component</span>
+                </div>
+              </div>
+            </div>
 
-          <UButton
-            variant="solid"
-            color="neutral"
-            class="px-6 py-3 rounded-full border border-gray-100 bg-white/10 text-white hover:bg-white/20 shadow-sm transition-all"
-          >
-            Download Overview
-          </UButton>
+            <!-- Content -->
+            <div class="space-y-6">
+              <p class="text-gray-700 text-lg leading-relaxed">
+                {{ activeItem?.content }}
+              </p>
+              
+              <!-- Key Points -->
+              <div class="border-t border-b border-gray-200 py-6">
+                <h4 class="font-bold text-gray-900 mb-4">Key Aspects</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="flex items-start gap-3">
+                    <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-cyan-600 mt-0.5 flex-shrink-0" />
+                    <span class="text-sm text-gray-700">Evidence-based methodology</span>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-cyan-600 mt-0.5 flex-shrink-0" />
+                    <span class="text-sm text-gray-700">Peer-delivered approach</span>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-cyan-600 mt-0.5 flex-shrink-0" />
+                    <span class="text-sm text-gray-700">Youth-focused design</span>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-cyan-600 mt-0.5 flex-shrink-0" />
+                    <span class="text-sm text-gray-700">Sustainable impact focus</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Related Information -->
+              <div class="space-y-4">
+                <h4 class="font-bold text-gray-900">Related Information</h4>
+                <div class="flex flex-wrap gap-3">
+                  <span class="px-3 py-1 bg-linear-to-r from-cyan-50 to-blue-50 text-cyan-700 text-sm font-medium border border-cyan-100">
+                    Peer Education
+                  </span>
+                  <span class="px-3 py-1 bg-linear-to-r from-cyan-50 to-blue-50 text-cyan-700 text-sm font-medium border border-cyan-100">
+                    Youth Development
+                  </span>
+                  <span class="px-3 py-1 bg-linear-to-r from-cyan-50 to-blue-50 text-cyan-700 text-sm font-medium border border-cyan-100">
+                    Evidence-based
+                  </span>
+                  <span class="px-3 py-1 bg-linear-to-r from-cyan-50 to-blue-50 text-cyan-700 text-sm font-medium border border-cyan-100">
+                    Southern Africa
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Section -->
+          <div class="bg-linear-to-r from-cyan-500 to-blue-900 p-8">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div class="text-white">
+                <h4 class="text-xl font-bold mb-2">Ready to Learn More?</h4>
+                <p class="text-white/90">
+                  Access detailed program materials, research papers, and implementation guides
+                </p>
+              </div>
+              
+              <div class="flex flex-col sm:flex-row gap-4">
+                <NuxtLink
+                  to="/contact"
+                  class="px-6 py-3 bg-white text-cyan-700 font-bold hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-2"
+                >
+                  <UIcon name="i-heroicons-envelope" class="w-5 h-5" />
+                  <span>Contact Team</span>
+                </NuxtLink>
+                
+                <button class="px-6 py-3 bg-transparent text-white border-2 border-white font-bold hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2">
+                  <UIcon name="i-heroicons-document-arrow-down" class="w-5 h-5" />
+                  <span>Download PDF</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quote -->
+          <div class="border border-gray-200 p-6 bg-white">
+            <div class="flex items-start gap-4">
+              <UIcon name="i-heroicons-chat-bubble-left-right" class="w-8 h-8 text-cyan-600 flex-shrink-0 mt-1" />
+              <div>
+                <blockquote class="text-gray-800 italic leading-relaxed mb-4">
+                  "PEGISUS helps young people build healthier habits, stronger peer support, and practical skills to succeed in life and work."
+                </blockquote>
+                <div class="text-sm text-gray-600 font-semibold">— Program Implementation Team</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Modern Accordion -->
-      <div>
-        <div class="bg-white rounded-3xl shadow-2xl p-4 md:p-6">
-          <div class="px-4 md:px-6 py-3 border-b border-gray-100">
-            <h4 class="text-lg font-bold text-gray-800">In depth</h4>
-            <p class="mt-1 text-sm text-gray-500">Explore program components, research and how PEGISUS is delivered.</p>
+      <!-- Bottom Navigation -->
+      <div class="mt-16 pt-8 border-t border-gray-200">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h5 class="font-bold text-gray-900 mb-2">Program Resources</h5>
+            <p class="text-sm text-gray-600">Complete documentation and implementation materials</p>
           </div>
-
-          <div class="p-4 md:p-6">
-            <UAccordion
-              :items="accordionItems"
-              variant="ghost"
-              size="lg"
-              :ui="{ root: 'space-y-4', item: 'p-0' }"
-            >
-              <template #default="{ item, open }">
-                <UButton
-                  :aria-expanded="open"
-                  variant="ghost"
-                  color="neutral"
-                  size="lg"
-                  class="w-full flex items-center justify-between gap-4 rounded-2xl px-4 py-4 text-left hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 transition-shadow duration-200"
-                  :class="open ? 'shadow-md bg-white' : 'bg-white/0'"
-                >
-                  <div class="flex items-center gap-4">
-                    <div
-                      class="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center"
-                      :class="open ? 'bg-gradient-to-r from-cyan-500 to-blue-900 text-white shadow' : 'bg-gray-50 text-cyan-600'"
-                    >
-                      <UIcon :name="item.icon" class="w-5 h-5" />
-                    </div>
-
-                    <div class="text-base font-semibold text-gray-800">
-                      {{ item.label }}
-                    </div>
-                  </div>
-<!-- 
-                  <UIcon
-                    :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
-                    class="w-5 h-5 text-gray-400"
-                  /> -->
-                </UButton>
-              </template>
-
-              <template #content="{ item }">
-                <div class="mt-3 pl-16 pr-4 text-gray-700 leading-relaxed">
-                  <p class="text-base">{{ item.content }}</p>
-                </div>
-              </template>
-            </UAccordion>
+          
+          <div class="flex items-center gap-6">
+            <div class="text-center">
+              <div class="text-lg font-bold bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">7</div>
+              <div class="text-xs text-gray-600">Core Components</div>
+            </div>
+            <div class="h-6 w-px bg-gray-300"></div>
+            <div class="text-center">
+              <div class="text-lg font-bold bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">8</div>
+              <div class="text-xs text-gray-600">Session Modules</div>
+            </div>
+            <div class="h-6 w-px bg-gray-300"></div>
+            <div class="text-center">
+              <div class="text-lg font-bold bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">3</div>
+              <div class="text-xs text-gray-600">Countries Active</div>
+            </div>
           </div>
         </div>
       </div>
@@ -166,28 +302,48 @@ const accordionItems = [
 </template>
 
 <style scoped>
-/* Focus-visible improvement for keyboard users */
-:focus {
-  outline: none;
-}
-[focus-visible] {
-  outline: none;
-}
-
-/* Smooth global transitions kept light to not clash with reduced motion preferences */
+/* Remove all border-radius globally */
 * {
-  transition-property: background-color, color, transform, box-shadow, opacity;
-  transition-duration: 220ms;
-  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  border-radius: 0 !important;
 }
 
-/* Slight hover lift for CTA area */
-section > div > div > .rounded-3xl:hover {
-  transform: translateY(-2px);
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, 
+                      opacity, box-shadow, transform, filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
-/* Helpful small shadow for the accordion content */
-.u-accordion-content {
-  will-change: opacity, transform;
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-4xl {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 475px) {
+  .text-5xl {
+    font-size: 2rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+  
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
 }
 </style>

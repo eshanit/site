@@ -166,9 +166,9 @@ onUnmounted(() => {
       <div class="timeline-line absolute top-0 bottom-0 w-0.5 bg-gray-200 z-0"></div>
       
       <!-- Moving Dot (follows the vertical line) -->
-      <div
+      <div 
         class="timeline-dot absolute w-5 h-5 rounded-full border-4 border-white shadow-xl transform -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300"
-        :class="pillars[activePillar]!.dotColor"
+        :class="pillars[activePillar].dotColor"
         :style="{
           /* generic formula that supports any number of pillars */
           top: `${(activePillar + pillarProgress) * (100 / pillars.length)}%`
@@ -180,7 +180,7 @@ onUnmounted(() => {
         <div
           v-for="(pillar, index) in pillars"
           :key="index"
-          :ref="el => (pillarRefs[index] = el as HTMLElement)"
+          :ref="el => (pillarRefs[index] = el)"
           class="pillar-item mb-32 opacity-30 transition-all duration-700"
           :class="{
             'opacity-100': index <= activePillar,
@@ -199,8 +199,8 @@ onUnmounted(() => {
           <div class="title-column absolute left-0 pr-8 pl-4">
             <div class="flex flex-col items-end">
               <!-- Icon -->
-              <div
-                :class="`w-16 h-16 bg-gradient-to-r ${pillar.color} flex items-center justify-center shadow-lg mb-6 transition-all duration-500`"
+              <div 
+                :class="`w-16 h-16 bg-gradient-to-r ${pillar.color} rounded-2xl flex items-center justify-center shadow-lg mb-6 transition-all duration-500`"
                 :style="{
                   opacity: index <= activePillar ? 1 : 0.4,
                   transform: index === activePillar ? 'translateX(0) scale(1.1)' : 'translateX(-20px) scale(1)'

@@ -79,7 +79,7 @@ onMounted(() => {
               </p>
 
               <!-- Quick stats - straight edges -->
-              <div class="grid grid-cols-3 gap-4 pt-4">
+              <!-- <div class="grid grid-cols-3 gap-4 pt-4">
                 <div v-for="(stat, index) in animatedNumbers" :key="index"
                   class="text-center p-4 bg-white/80 border border-gray-200 shadow-sm">
                   <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
@@ -87,7 +87,7 @@ onMounted(() => {
                   </div>
                   <div class="text-sm text-gray-600 font-medium">{{ stat.label }}</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <!-- Action buttons - no rounding -->

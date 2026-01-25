@@ -173,7 +173,7 @@ onMounted(() => {
       </div>
 
       <!-- Mission Statement -->
-      <div class="border-t border-b border-gray-200 py-12 transform transition-all duration-700 delay-400"
+      <div class="border-t  border-gray-200 py-12 transform transition-all duration-700 delay-400"
            :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
         <div class="max-w-4xl mx-auto text-center">
           <div class="mb-6">
@@ -184,7 +184,7 @@ onMounted(() => {
           </blockquote>
           <div class="flex items-center justify-center gap-3">
             <div class="h-px w-12 bg-gradient-to-r from-cyan-500 to-blue-900"></div>
-            <span class="text-lg font-semibold text-cyan-700">— PEGISUS Mission</span>
+            <span class="text-lg font-semibold text-cyan-700">PEGISUS Mission</span>
             <div class="h-px w-12 bg-gradient-to-r from-blue-900 to-cyan-500"></div>
           </div>
         </div>
