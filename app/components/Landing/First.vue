@@ -130,7 +130,7 @@ onMounted(() => {
             <!-- Main image with straight edges -->
             <div class="relative group">
               <!-- Main image container -->
-              <div class="relative overflow-hidden border-4 border-white shadow-2xl">
+              <div class="relative overflow-hidden shadow-2xl">
                 <NuxtImg
                   :src="backgroundImage"
                   class="w-full h-[500px] object-cover transform group-hover:scale-105 transition-transform duration-700"
