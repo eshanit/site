@@ -67,11 +67,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="intro-hero" class="py-16 md:py-20 px-4 md:px-10">
+  <section id="intro-hero" class="py-24 md:py-36 px-4 md:px-10">
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <!-- Text -->
       <div class="max-w-2xl mx-auto lg:mx-0">
-        <div class="mb-8">
+        <div class="mb-24">
           <div class="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 mb-4"></div>
           <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
             Peer Education for Gender Inclusion
@@ -87,7 +87,7 @@ onMounted(() => {
         </p>
 
         <!-- Quick stats -->
-        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8">
+        <div class="grid grid-cols-2 gap-8 md:gap-12 mt-8">
           <div
             v-for="(stat, i) in quickStats"
             :key="i"
@@ -100,8 +100,8 @@ onMounted(() => {
                  :class="`${highlightGradients[i % highlightGradients.length]}`"></div>
             
             <!-- Main card -->
-            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-md group-hover:shadow-xl transition-all duration-500 p-6 overflow-hidden"
-                 :class="quickStatHovered === i ? 'border-cyan-300' : ''">
+            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-md group-hover:shadow-xl transition-all duration-500 p-10 overflow-hidden h-full"
+                  :class="quickStatHovered === i ? 'border-cyan-300' : ''">
               
               <!-- Background icon glow -->
               <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
@@ -187,15 +187,15 @@ onMounted(() => {
     </div>
 
     <!-- Highlights -->
-    <div id="intro-highlights" class="mt-20 md:mt-28">
-      <div class="mb-10 text-center">
+    <div id="intro-highlights" class="mt-24 md:mt-36">
+      <div class="mb-24 text-center">
         <h3 class="text-2xl font-bold text-gray-900 mb-4">
           Program <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Highlights</span>
         </h3>
         <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto"></div>
       </div>
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
         <div
           v-for="(h, i) in highlights"
           :key="i"
@@ -208,8 +208,8 @@ onMounted(() => {
                :class="getHighlightGradient(i)"></div>
           
           <!-- Main card -->
-          <div class="relative bg-white backdrop-blur-sm rounded-none border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden h-full flex flex-col"
-               :class="highlightHovered === i ? 'border-cyan-300' : ''">
+          <div class="relative bg-white backdrop-blur-sm rounded-none border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-12 overflow-hidden h-full flex flex-col"
+                :class="highlightHovered === i ? 'border-cyan-300' : ''">
             
             <!-- Background icon glow -->
             <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
@@ -250,8 +250,8 @@ onMounted(() => {
     </div>
     
     <!-- Call to Action -->
-    <div class="mt-20 md:mt-28 text-center">
-      <div class="border-t border-b border-gray-200 py-10 md:py-14">
+    <div class="mt-24 md:mt-36 text-center">
+      <div class="border-t border-b border-gray-200 py-12 md:py-16">
         <div class="max-w-3xl mx-auto">
           <h3 class="text-2xl font-bold text-gray-900 mb-8">
             Ready to <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Empower Youth</span> in Your Community?

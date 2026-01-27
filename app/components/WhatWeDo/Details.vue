@@ -78,10 +78,10 @@ const componentHovered = ref<number | null>(null);
 </script>
 
 <template>
-  <section class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+  <section class="py-24 md:py-36 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <!-- Section Header -->
-      <div class="text-center mb-20 md:mb-24">
+      <div class="text-center mb-24 md:mb-36">
         <div class="inline-flex items-center gap-3 mb-4">
           <div class="w-3 h-3 bg-cyan-500"></div>
           <span class="text-sm font-semibold text-cyan-700 uppercase tracking-wider">Program Details</span>
@@ -99,7 +99,7 @@ const componentHovered = ref<number | null>(null);
       </div>
 
       <!-- Core Components Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         <div
           v-for="(component, i) in coreComponents"
           :key="i"
@@ -112,8 +112,8 @@ const componentHovered = ref<number | null>(null);
                :class="`${componentGradients[i % componentGradients.length]}`"></div>
           
           <!-- Main card -->
-          <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden h-full flex flex-col"
-               :class="componentHovered === i ? 'border-cyan-300' : ''">
+          <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-12 overflow-hidden h-full flex flex-col"
+                :class="componentHovered === i ? 'border-cyan-300' : ''">
             
             <!-- Background icon glow -->
             <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
@@ -156,7 +156,7 @@ const componentHovered = ref<number | null>(null);
       <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
         <!-- Left Column - Program Components List -->
         <div class="lg:col-span-1">
-          <div class="border border-gray-200 p-6 bg-white sticky top-20">
+          <div class="border border-gray-200 p-10 bg-white sticky top-20">
             <h3 class="text-xl font-bold text-gray-900 mb-4">Explore Components</h3>
             <p class="text-sm text-gray-600 mb-6">Click on any component below to view detailed information.</p>
 
@@ -263,7 +263,7 @@ const componentHovered = ref<number | null>(null);
       </div>
 
       <!-- CTA Section -->
-      <div class="bg-linear-to-r from-cyan-500 to-blue-900 p-8 mt-12">
+      <div class="bg-linear-to-r from-cyan-500 to-blue-900 p-12 mt-12">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
           <div class="text-white">
             <h4 class="text-xl font-bold mb-2">Ready to Learn More?</h4>
@@ -290,7 +290,7 @@ const componentHovered = ref<number | null>(null);
       </div>
 
       <!-- Quote -->
-      <div class="mt-12 border border-gray-200 p-6 bg-white">
+      <div class="mt-12 border border-gray-200 p-10 bg-white">
         <div class="flex items-start gap-4">
           <UIcon name="i-heroicons-chat-bubble-left-right" class="w-8 h-8 text-cyan-600 flex-shrink-0 mt-1" />
           <div>

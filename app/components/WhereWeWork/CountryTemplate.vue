@@ -4,8 +4,8 @@
   >
     <div class="grid lg:grid-cols-2 gap-0">
       <!-- Left Column: Content -->
-      <div 
-        class="p-8 md:p-10"
+      <div
+        class="p-10 md:p-12"
         :class="isReversed ? 'lg:order-2' : ''"
       >
         <div class="space-y-8">
@@ -35,7 +35,7 @@
           </div>
 
           <!-- Stats Cards -->
-          <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="grid grid-cols-2 gap-8 mb-12">
             <div 
               v-for="(stat, idx) in stats" 
               :key="stat.label"
@@ -53,7 +53,7 @@
               ></div>
               
               <!-- Card -->
-              <div class="relative backdrop-blur-sm bg-white/10 border border-white/20 p-4 rounded-lg shadow-lg transition-all duration-300 group-hover:bg-white/15">
+              <div class="relative backdrop-blur-sm bg-white/10 border border-white/20 p-8 rounded-lg shadow-lg transition-all duration-300 group-hover:bg-white/15">
                 <div class="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">{{ stat.label }}</div>
                 <div class="text-2xl font-bold bg-gradient-to-r" :class="getCountryGradient(idx) + ' bg-clip-text text-transparent'">{{ stat.value }}</div>
                 
@@ -74,7 +74,7 @@
             </p>
             
             <!-- Partner Info -->
-            <div class="border border-cyan-200 p-6 bg-gradient-to-r from-cyan-50/50 to-blue-50/50">
+            <div class="border border-cyan-200 p-10 bg-gradient-to-r from-cyan-50/50 to-blue-50/50">
               <div class="flex items-start gap-4 mb-4">
                 <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-900 flex items-center justify-center">
                   <UIcon name="i-heroicons-handshake" class="w-6 h-6 text-white" />
@@ -88,7 +88,7 @@
           </div>
 
           <!-- Communities List -->
-          <div v-if="communities && communities.length > 0" class="mt-8 pt-8 border-t border-gray-200">
+          <div v-if="communities && communities.length > 0" class="mt-12 pt-12 border-t border-gray-200">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-10 h-10 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 flex items-center justify-center">
                 <UIcon name="i-heroicons-building-office" class="w-5 h-5 text-cyan-600" />
@@ -111,9 +111,9 @@
           </div>
 
           <!-- Implementation Details -->
-          <div class="border-t border-gray-200 pt-8">
+          <div class="border-t border-gray-200 pt-12">
             <h4 class="font-bold text-gray-900 mb-4">Program Implementation</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div class="flex items-start gap-3">
                 <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-cyan-600 mt-0.5 flex-shrink-0" />
                 <span class="text-sm text-gray-700">Peer-led sessions delivered</span>
@@ -200,7 +200,7 @@
 
     <!-- Bottom Border -->
     <div class="border-t border-gray-200">
-      <div class="flex items-center justify-between p-6">
+      <div class="flex items-center justify-between p-10">
         <div class="text-sm text-gray-600">
           Part of the PEGISUS regional implementation network
         </div>

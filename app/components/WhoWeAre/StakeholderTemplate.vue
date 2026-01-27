@@ -42,7 +42,7 @@ const getTeamGradient = (index: number) => {
 </script>
 
 <template>
-  <div 
+  <div
     :class="[
       'stakeholder-section border border-gray-200 p-6 md:p-8',
       isEven ? 'bg-gray-50' : 'bg-white'

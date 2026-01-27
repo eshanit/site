@@ -149,9 +149,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="py-20 px-4 md:px-10 overflow-hidden">
+  <div ref="containerRef" class="py-24 px-4 md:px-10 overflow-hidden">
     <!-- Heading -->
-    <div class="text-center mb-20 max-w-4xl mx-auto">
+    <div class="text-center mb-24 max-w-4xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
         Our Pillars of Change
       </h2>
@@ -181,7 +181,7 @@ onUnmounted(() => {
           v-for="(pillar, index) in pillars"
           :key="index"
           :ref="el => (pillarRefs[index] = el as HTMLElement)"
-          class="pillar-item mb-32 opacity-30 transition-all duration-700"
+          class="pillar-item mb-36 opacity-30 transition-all duration-700"
           :class="{
             'opacity-100': index <= activePillar,
             'pillar-active': index === activePillar,
