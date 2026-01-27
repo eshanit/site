@@ -111,7 +111,7 @@ onMounted(() => {
                                 <span class="text-sm font-semibold text-cyan-700 uppercase tracking-wider">Our Network</span>
                             </div>
                             
-                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                                 <span class="block">Who We Are</span>
                                 <span
                                     class="block mt-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-900">
@@ -121,7 +121,7 @@ onMounted(() => {
 
                             <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 my-6"></div>
 
-                            <p class="text-lg md:text-xl text-gray-700 leading-relaxed max-w-2xl">
+                            <p class="text-lg text-gray-700 leading-relaxed max-w-2xl">
                                 PEGISUS represents a groundbreaking collaboration between leading institutions across
                                 three nations,
                                 united by a common vision for youth empowerment and health equity in Southern Africa.
@@ -311,7 +311,7 @@ onMounted(() => {
             <div class="max-w-4xl mx-auto">
                 <div class="bg-gradient-to-r from-cyan-500 to-blue-900 p-8 md:p-10 text-white">
                     <div class="text-center">
-                        <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                        <h3 class="text-2xl font-bold mb-6">
                             Join Our Collaborative Effort
                         </h3>
                         

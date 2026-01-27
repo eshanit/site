@@ -71,9 +71,9 @@ onMounted(() => {
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <!-- Text -->
       <div class="max-w-2xl mx-auto lg:mx-0">
-        <div class="mb-6">
+        <div class="mb-8">
           <div class="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 mb-4"></div>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
             Peer Education for Gender Inclusion
             <span class="block mt-4 bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
               and Substance Use in Southern Africa
@@ -81,7 +81,7 @@ onMounted(() => {
           </h2>
         </div>
 
-        <p class="text-lg md:text-xl leading-relaxed text-gray-700 mb-6">
+        <p class="text-lg leading-relaxed text-gray-700 mb-8">
           PEGISUS represents a groundbreaking approach to youth development, combining substance use prevention
           with gender equity education through peer-led, community-embedded programming.
         </p>
@@ -115,7 +115,7 @@ onMounted(() => {
               
               <!-- Value -->
               <div class="relative z-10">
-                <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-1"
+                <div class="text-2xl md:text-3xl font-bold transition-all duration-300 mb-1"
                      :class="quickStatHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${highlightGradients[i % highlightGradients.length]}` : 'text-gray-900'">
                   {{ stat.value }}
                 </div>
@@ -187,9 +187,9 @@ onMounted(() => {
     </div>
 
     <!-- Highlights -->
-    <div id="intro-highlights" class="mt-16 md:mt-24">
-      <div class="mb-8 text-center">
-        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+    <div id="intro-highlights" class="mt-20 md:mt-28">
+      <div class="mb-10 text-center">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">
           Program <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Highlights</span>
         </h3>
         <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto"></div>
@@ -223,7 +223,7 @@ onMounted(() => {
             
             <!-- Number/Label with animation -->
             <div class="relative z-10 flex-1">
-              <div class="text-4xl md:text-5xl font-bold transition-all duration-300 mb-2"
+              <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
                    :class="highlightHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent scale-105 ` + getHighlightGradient(i) : 'text-gray-900'">
                 {{ h.number }}
               </div>
@@ -250,13 +250,13 @@ onMounted(() => {
     </div>
     
     <!-- Call to Action -->
-    <div class="mt-16 md:mt-24 text-center">
-      <div class="border-t border-b border-gray-200 py-8 md:py-12">
+    <div class="mt-20 md:mt-28 text-center">
+      <div class="border-t border-b border-gray-200 py-10 md:py-14">
         <div class="max-w-3xl mx-auto">
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+          <h3 class="text-2xl font-bold text-gray-900 mb-8">
             Ready to <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Empower Youth</span> in Your Community?
           </h3>
-          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
             Join our mission to create sustainable change through evidence-based, peer-led interventions.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">

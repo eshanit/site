@@ -50,7 +50,7 @@ onMounted(() => {
 
             <!-- Main heading with gradient text -->
             <div class="space-y-4">
-              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 Creating pathways for youth to
                 <span class="relative">
                   <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent font-extrabold">
@@ -60,15 +60,15 @@ onMounted(() => {
                 </span>
                 in a rapidly changing world.
               </h1>
-              
+
               <!-- Underline -->
               <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-900 transform transition-all duration-500 hover:w-32"></div>
             </div>
 
             <!-- Description with highlighted countries -->
             <div class="space-y-4">
-              <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Integrating a peer group intervention for substance use and gender beliefs into vocational training programs across 
+              <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                Integrating a peer group intervention for substance use and gender beliefs into vocational training programs across
                 <span class="relative inline-block">
                   <span class="font-bold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
                     Zambia, Zimbabwe, and South Africa
@@ -77,21 +77,10 @@ onMounted(() => {
                 </span>
                 to empower youth with skills and confidence.
               </p>
-
-              <!-- Quick stats - straight edges -->
-              <!-- <div class="grid grid-cols-3 gap-4 pt-4">
-                <div v-for="(stat, index) in animatedNumbers" :key="index"
-                  class="text-center p-4 bg-white/80 border border-gray-200 shadow-sm">
-                  <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
-                    {{ stat.value }}{{ stat.suffix }}
-                  </div>
-                  <div class="text-sm text-gray-600 font-medium">{{ stat.label }}</div>
-                </div>
-              </div> -->
             </div>
 
             <!-- Action buttons - no rounding -->
-            <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <div class="flex flex-col sm:flex-row gap-4 pt-6">
               <NuxtLink
                 :to="'/programs'"
                 class="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 text-lg text-center overflow-hidden"
@@ -121,7 +110,7 @@ onMounted(() => {
             </div>
 
             <!-- Trust indicator -->
-            <div class="flex items-center gap-3 pt-8">
+            <div class="flex items-center gap-3 pt-10">
               <div class="flex -space-x-2">
                 <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 border-2 border-white"></div>
                 <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 border-2 border-white"></div>
@@ -188,7 +177,7 @@ onMounted(() => {
 
         <!-- Scroll indicator - straight edges -->
         <div class="mt-16 flex justify-center">
-          <div class="animate-bounce text-cyan-500">
+          <div class=" text-cyan-500">
             <UIcon name="i-heroicons-chevron-double-down" class="w-8 h-8" />
           </div>
         </div>

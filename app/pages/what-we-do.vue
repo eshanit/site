@@ -27,10 +27,10 @@ useHead({
       </div> -->
       <div
         class="text-center mb-16 bg-gradient-to-b from-blue-900 to-cyan-500 py-16 px-4 ">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
           <span class="text-white">What We Do</span>
         </h1>
-        <p class="text-xl md:text-2xl text-cyan-50 max-w-4xl mx-auto">
+        <p class="text-xl text-cyan-50 max-w-4xl mx-auto">
           Transforming youth futures through evidence-based peer education and empowerment programs
         </p>
       </div>

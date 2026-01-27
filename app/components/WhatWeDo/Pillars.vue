@@ -152,10 +152,10 @@ onUnmounted(() => {
   <div ref="containerRef" class="py-20 px-4 md:px-10 overflow-hidden">
     <!-- Heading -->
     <div class="text-center mb-20 max-w-4xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
         Our Pillars of Change
       </h2>
-      <p class="text-xl text-gray-600">
+      <p class="text-lg text-gray-600">
         Four interconnected approaches that create sustainable transformation
       </p>
     </div>
@@ -210,8 +210,8 @@ onUnmounted(() => {
               </div>
               
               <!-- Title -->
-              <h3 
-                class="text-2xl md:text-3xl font-bold text-right transition-all duration-500"
+              <h3
+                class="text-2xl font-bold text-right transition-all duration-500"
                 :class="index <= activePillar ? 'text-gray-900' : 'text-gray-400'"
                 :style="{
                   transform: index === activePillar ? 'translateX(0)' : 'translateX(-10px)'

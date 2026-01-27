@@ -92,7 +92,7 @@ const getTeamGradient = (index: number) => {
                 </div>
                 <div>
                   <div class="text-sm font-semibold text-gray-700">Team Members</div>
-                  <div class="text-3xl font-bold text-gray-900 transition-all duration-300"
+                  <div class="text-2xl md:text-3xl font-bold text-gray-900 transition-all duration-300"
                        :class="teamMemberHovered === 'stats' ? 'text-cyan-700' : ''">
                     {{ teamMembers }}
                   </div>

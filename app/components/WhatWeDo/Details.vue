@@ -81,19 +81,19 @@ const componentHovered = ref<number | null>(null);
   <section class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <!-- Section Header -->
-      <div class="text-center mb-16 md:mb-20">
+      <div class="text-center mb-20 md:mb-24">
         <div class="inline-flex items-center gap-3 mb-4">
           <div class="w-3 h-3 bg-cyan-500"></div>
           <span class="text-sm font-semibold text-cyan-700 uppercase tracking-wider">Program Details</span>
         </div>
-        
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
           Understanding the <span class="bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">PEGISUS Framework</span>
         </h2>
 
         <div class="h-1 w-20 bg-linear-to-r from-cyan-500 to-blue-900 mx-auto mb-8"></div>
-        
-        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
           A comprehensive approach combining substance use prevention, gender inclusion, and vocational training
         </p>
       </div>
@@ -127,7 +127,7 @@ const componentHovered = ref<number | null>(null);
             
             <!-- Content with animation -->
             <div class="relative z-10 flex-1">
-              <div class="text-4xl md:text-5xl font-bold transition-all duration-300 mb-2"
+              <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
                    :class="componentHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${componentGradients[i % componentGradients.length]}` : 'text-gray-900'">
                 {{ component.title }}
               </div>

@@ -69,7 +69,7 @@ onMounted(() => {
                                 <span class="text-sm font-semibold text-cyan-700 uppercase tracking-wider">Our Reach</span>
                             </div>
                             
-                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                                 <span class="block">Where We Work</span>
                                 <span
                                     class="block mt-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-900">
@@ -79,7 +79,7 @@ onMounted(() => {
 
                             <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 my-6"></div>
 
-                            <p class="text-lg md:text-xl text-gray-700 leading-relaxed max-w-2xl">
+                            <p class="text-lg text-gray-700 leading-relaxed max-w-2xl">
                                 PEGISUS operates in communities across Zambia, Zimbabwe, and South Africa,
                                 partnering with local vocational training programs to create sustainable impact
                                 where it's needed most.
@@ -118,7 +118,7 @@ onMounted(() => {
                                         
                                         <!-- Value -->
                                         <div class="relative z-10 flex-1">
-                                            <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
+                                            <div class="text-2xl md:text-3xl font-bold transition-all duration-300 mb-2"
                                                  :class="mapStatsHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${statsGradients[i % statsGradients.length]}` : 'text-gray-900'">
                                                 {{ stat.value }}
                                             </div>
@@ -274,7 +274,7 @@ onMounted(() => {
                 <div class="bg-gradient-to-r from-cyan-500 to-blue-900 p-8 md:p-10 text-white">
                     <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                            <h3 class="text-2xl font-bold mb-6">
                                 Interested in Partnering?
                             </h3>
                             
