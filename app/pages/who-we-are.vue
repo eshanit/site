@@ -1,11 +1,49 @@
 <script setup lang="ts">
 
-// Partners logos data (replace with actual paths)
+// Partnership values data
+const partnershipValues = [
+    { title: 'Collaborative Expertise', description: 'Combining diverse institutional strengths and knowledge', icon: 'i-heroicons-user-group' },
+    { title: 'Innovation Focus', description: 'Developing evidence-based, impactful solutions', icon: 'i-heroicons-light-bulb' },
+    { title: 'Sustainable Impact', description: 'Creating lasting change in communities', icon: 'i-heroicons-chart-bar' }
+]
+
+// Values gradients
+const valueGradients = [
+    'from-cyan-500 to-blue-900',
+    'from-cyan-500 to-blue-700',
+    'from-cyan-500 to-emerald-600'
+]
+
+const getValueGradient = (index: number) => {
+    return `bg-gradient-to-br ${valueGradients[index % valueGradients.length]}`
+}
+
+const valueHovered = ref<number | null>(null)
+
+// Partners data
 const partners = [
-    { name: 'University Hospital Basel', logo: '/img/partners/USB.png' },
     { name: 'South African Medical Research Council', logo: '/img/partners/samrc-logo_0.png' },
+    { name: 'SolidarMed', logo: '/img/partners/SM.png' },
     { name: 'University of Zambia', logo: '/img/partners/unza.png' },
-    { name: 'SolidarMed', logo: '/img/partners/SM.png' }
+    { name: 'University Hospital Basel', logo: '/img/partners/USB.png' }
+]
+
+// Partner gradients
+const partnerGradients = [
+    'from-cyan-500 to-blue-900',
+    'from-cyan-500 to-blue-700',
+    'from-cyan-500 to-emerald-600',
+    'from-blue-700 to-cyan-500'
+]
+
+const partnerHovered = ref<number | null>(null)
+
+// Stats data
+const stats = [
+    { value: '4', label: 'Countries', icon: 'i-heroicons-globe-alt' },
+    { value: '20+', label: 'Team Members', icon: 'i-heroicons-users' },
+    { value: '5', label: 'Partner Institutions', icon: 'i-heroicons-building-office' },
+    { value: '3', label: 'Nations', icon: 'i-heroicons-map' }
 ]
 
 // Animation
@@ -14,6 +52,19 @@ import { useIntersectionObserver } from '@vueuse/core'
 
 const heroVisible = ref(false)
 const partnersVisible = ref(false)
+const statsHovered = ref<number | null>(null)
+
+// Stats gradients
+const statsGradients = [
+    'from-cyan-500 to-blue-900',
+    'from-cyan-500 to-blue-700',
+    'from-cyan-500 to-emerald-600',
+    'from-blue-700 to-cyan-500'
+]
+
+const getStatsGradient = (index: number) => {
+    return `bg-gradient-to-br ${statsGradients[index % statsGradients.length]}`
+}
 
 const heroRef = ref<HTMLElement | null>(null)
 const partnersRef = ref<HTMLElement | null>(null)
@@ -77,25 +128,7 @@ onMounted(() => {
                             </p>
                         </div>
 
-                        <!-- Stats -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                            <div class="bg-white border border-gray-200 p-4 shadow-sm">
-                                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">4</div>
-                                <div class="text-sm font-medium text-gray-900 mt-1">Countries</div>
-                            </div>
-                            <div class="bg-white border border-gray-200 p-4 shadow-sm">
-                                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">20+</div>
-                                <div class="text-sm font-medium text-gray-900 mt-1">Team Members</div>
-                            </div>
-                            <div class="bg-white border border-gray-200 p-4 shadow-sm">
-                                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">5</div>
-                                <div class="text-sm font-medium text-gray-900 mt-1">Partner Institutions</div>
-                            </div>
-                            <div class="bg-white border border-gray-200 p-4 shadow-sm">
-                                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">3</div>
-                                <div class="text-sm font-medium text-gray-900 mt-1">Nations</div>
-                            </div>
-                        </div>
+                    
                     </div>
 
                     <!-- Quote Card -->
@@ -182,16 +215,38 @@ onMounted(() => {
                 </div>
 
                 <!-- Logos Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     <div v-for="(partner, index) in partners" :key="partner.name"
-                        class="logo-card bg-white border border-gray-200 p-6 md:p-8 flex items-center justify-center shadow-sm hover:shadow transition-all duration-300 hover:border-cyan-200"
-                        :style="`transition-delay: ${index * 100}ms`">
-                        <div class="relative h-20 md:h-24 w-full">
-                            <NuxtImg :src="partner.logo" :alt="partner.name + ' logo'"
-                                class="object-contain w-full h-full opacity-80 hover:opacity-100 transition-opacity"
-                                loading="lazy" 
-                                format="webp"
-                                quality="80" />
+                        class="group relative h-full transform transition-all duration-500 hover:scale-105"
+                        @mouseenter="partnerHovered = index"
+                        @mouseleave="partnerHovered = null">
+                        
+                        <!-- Animated background gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                             :class="`${partnerGradients[index % partnerGradients.length]}`"></div>
+                        
+                        <!-- Main card -->
+                        <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden h-full flex items-center justify-center"
+                             :class="partnerHovered === index ? 'border-cyan-300' : ''">
+                            
+                            <!-- Logo Container -->
+                            <div class="relative z-10 w-full h-24 flex items-center justify-center">
+                                <NuxtImg :src="partner.logo" :alt="partner.name + ' logo'"
+                                    class="object-contain w-full h-full transition-all duration-300"
+                                    :class="partnerHovered === index ? 'opacity-100 scale-110' : 'opacity-70'"
+                                    loading="lazy" 
+                                    format="webp"
+                                    quality="80" />
+                            </div>
+                            
+                            <!-- Partner name on hover -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
+                                <p class="text-white text-sm font-semibold text-center px-2">{{ partner.name }}</p>
+                            </div>
+                            
+                            <!-- Hover indicator -->
+                            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                 :class="`bg-gradient-to-r ${partnerGradients[index % partnerGradients.length]}`"></div>
                         </div>
                     </div>
                 </div>
@@ -201,28 +256,50 @@ onMounted(() => {
                     <h3 class="text-2xl font-bold text-gray-900 text-center mb-8">Our Partnership Values</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="border border-gray-200 p-6 text-center">
-                            <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 flex items-center justify-center">
-                                <UIcon name="i-heroicons-user-group" class="w-6 h-6 text-cyan-600" />
+                        <div
+                            v-for="(value, i) in partnershipValues"
+                            :key="i"
+                            class="group relative h-full transform transition-all duration-500 hover:scale-105"
+                            @mouseenter="valueHovered = i"
+                            @mouseleave="valueHovered = null"
+                        >
+                            <!-- Animated background gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                                 :class="`${valueGradients[i % valueGradients.length]}`"></div>
+                            
+                            <!-- Main card -->
+                            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden h-full flex flex-col text-center"
+                                 :class="valueHovered === i ? 'border-cyan-300' : ''">
+                                
+                                <!-- Background icon glow -->
+                                <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
+                                     :class="`bg-gradient-to-br ${valueGradients[i % valueGradients.length]}`"></div>
+                                
+                                <!-- Icon -->
+                                <div class="mb-4 inline-flex items-center justify-center w-12 h-12 transition-all duration-500 text-white mx-auto"
+                                     :class="`bg-gradient-to-br ${valueGradients[i % valueGradients.length]}`">
+                                    <UIcon :name="value.icon" class="w-6 h-6" />
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="relative z-10 flex-1">
+                                    <h4 class="font-bold text-gray-900 mb-3 transition-colors duration-300"
+                                        :class="valueHovered === i ? 'text-cyan-700' : ''">
+                                        {{ value.title }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600 leading-relaxed">
+                                        {{ value.description }}
+                                    </p>
+                                </div>
+                                
+                                <!-- Accent line -->
+                                <div class="mt-4 h-1 w-6 mx-auto transition-all duration-500"
+                                     :class="`bg-gradient-to-r ${valueGradients[i % valueGradients.length]}`"></div>
+                                
+                                <!-- Hover indicator -->
+                                <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                     :class="`bg-gradient-to-r ${valueGradients[i % valueGradients.length]}`"></div>
                             </div>
-                            <h4 class="font-bold text-gray-900 mb-2">Collaborative Expertise</h4>
-                            <p class="text-sm text-gray-600">Combining diverse institutional strengths and knowledge</p>
-                        </div>
-                        
-                        <div class="border border-gray-200 p-6 text-center">
-                            <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 flex items-center justify-center">
-                                <UIcon name="i-heroicons-light-bulb" class="w-6 h-6 text-cyan-600" />
-                            </div>
-                            <h4 class="font-bold text-gray-900 mb-2">Innovation Focus</h4>
-                            <p class="text-sm text-gray-600">Developing evidence-based, impactful solutions</p>
-                        </div>
-                        
-                        <div class="border border-gray-200 p-6 text-center">
-                            <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 flex items-center justify-center">
-                                <UIcon name="i-heroicons-chart-bar" class="w-6 h-6 text-cyan-600" />
-                            </div>
-                            <h4 class="font-bold text-gray-900 mb-2">Sustainable Impact</h4>
-                            <p class="text-sm text-gray-600">Creating lasting change in communities</p>
                         </div>
                     </div>
                 </div>

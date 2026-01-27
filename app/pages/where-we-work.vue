@@ -1,8 +1,28 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
+
+// Map statistics data
+const mapStats = [
+    { value: '3', label: 'Countries', icon: 'i-heroicons-globe-alt' },
+    { value: '10+', label: 'Communities', icon: 'i-heroicons-home' },
+    { value: '3', label: 'Vocational Partners', icon: 'i-heroicons-building-office' }
+]
+
+// Stats gradients
+const statsGradients = [
+    'from-cyan-500 to-blue-900',
+    'from-cyan-500 to-blue-700',
+    'from-cyan-500 to-emerald-600'
+]
+
+const getStatsGradient = (index: number) => {
+    return `bg-gradient-to-br ${statsGradients[index % statsGradients.length]}`
+}
 
 const heroVisible = ref(false)
 const countriesVisible = ref(false)
+const mapStatsHovered = ref<number | null>(null)
 
 const heroRef = ref<HTMLElement | null>(null)
 const countriesRef = ref<HTMLElement | null>(null)
@@ -67,25 +87,60 @@ onMounted(() => {
                         </div>
 
                         <!-- Map Statistics -->
-                        <div class="border border-gray-200 p-6 md:p-8 bg-white">
-                            <h3 class="text-xl font-bold text-gray-900 mb-6">Regional Impact</h3>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-gray-900">Regional Impact</h3>
                             
-                            <div class="grid grid-cols-3 gap-4 mb-6">
-                                <div class="text-center border border-gray-200 p-4">
-                                    <div class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-1">3</div>
-                                    <div class="text-sm font-medium text-gray-900">Countries</div>
-                                </div>
-                                <div class="text-center border border-gray-200 p-4">
-                                    <div class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-1">10+</div>
-                                    <div class="text-sm font-medium text-gray-900">Communities</div>
-                                </div>
-                                <div class="text-center border border-gray-200 p-4">
-                                    <div class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-1">3</div>
-                                    <div class="text-sm font-medium text-gray-900">Vocational Partners</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div
+                                    v-for="(stat, i) in mapStats"
+                                    :key="i"
+                                    class="group relative h-full transform transition-all duration-500 hover:scale-105"
+                                    @mouseenter="mapStatsHovered = i"
+                                    @mouseleave="mapStatsHovered = null"
+                                >
+                                    <!-- Animated background gradient -->
+                                    <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                                         :class="`${statsGradients[i % statsGradients.length]}`"></div>
+                                    
+                                    <!-- Main card -->
+                                    <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden h-full flex flex-col text-center"
+                                         :class="mapStatsHovered === i ? 'border-cyan-300' : ''">
+                                        
+                                        <!-- Background icon glow -->
+                                        <div class="absolute top-0 right-0 -mr-10 -mt-10 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
+                                             :class="`bg-gradient-to-br ${statsGradients[i % statsGradients.length]}`"></div>
+                                        
+                                        <!-- Icon -->
+                                        <div class="mb-4 inline-flex items-center justify-center w-12 h-12 transition-all duration-500 text-white mx-auto"
+                                             :class="`bg-gradient-to-br ${statsGradients[i % statsGradients.length]}`">
+                                            <UIcon :name="stat.icon" class="w-6 h-6" />
+                                        </div>
+                                        
+                                        <!-- Value -->
+                                        <div class="relative z-10 flex-1">
+                                            <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
+                                                 :class="mapStatsHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${statsGradients[i % statsGradients.length]}` : 'text-gray-900'">
+                                                {{ stat.value }}
+                                            </div>
+                                            
+                                            <!-- Accent line -->
+                                            <div class="h-1 w-6 transition-all duration-500 mb-2 mx-auto"
+                                                 :class="`bg-gradient-to-r ${statsGradients[i % statsGradients.length]}`"></div>
+                                            
+                                            <div class="text-sm font-semibold text-gray-900 transition-colors duration-300"
+                                                 :class="mapStatsHovered === i ? 'text-cyan-600' : ''">
+                                                {{ stat.label }}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Hover indicator -->
+                                        <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                             :class="`bg-gradient-to-r ${statsGradients[i % statsGradients.length]}`"></div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="pt-6 border-t border-gray-200">
+                            <div class="pt-4 border-t border-gray-200 mt-6">
                                 <p class="text-sm text-gray-600">
                                     "Working directly with communities to address substance use, gender equity, and
                                     youth employment."

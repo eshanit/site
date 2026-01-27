@@ -52,16 +52,29 @@ const programItems = [
   }
 ];
 
-// Program stats
-const programStats = [
-  { value: '8', label: 'Sessions', description: 'Complete program structure' },
-  { value: '16-24', label: 'Age Range', description: 'Target youth demographic' },
-  { value: '3', label: 'Countries', description: 'Active implementation' },
-  { value: 'Peer', label: 'Delivery Model', description: 'Community-driven approach' }
+// Core Components display data
+const coreComponents = [
+  { title: '8', subtitle: 'Sessions', description: 'Complete program structure', icon: 'i-heroicons-calendar' },
+  { title: '16-24', subtitle: 'Age Range', description: 'Target youth demographic', icon: 'i-heroicons-users' },
+  { title: '3', subtitle: 'Core Areas', description: 'Substance use, gender, employment', icon: 'i-heroicons-star' },
+  { title: '2', subtitle: 'Foundational Programs', description: 'RAD-PAL & Manhood 2.0', icon: 'i-heroicons-beaker' }
 ];
+
+// Gradient colors for core components
+const componentGradients = [
+  'from-cyan-500 to-blue-900',
+  'from-cyan-500 to-blue-700',
+  'from-cyan-500 to-emerald-600',
+  'from-blue-700 to-cyan-500'
+];
+
+const getComponentGradient = (index: number) => {
+  return `bg-gradient-to-br ${componentGradients[index % componentGradients.length]}`
+};
 
 // Interactive state
 const activeItem = ref(programItems[0]);
+const componentHovered = ref<number | null>(null);
 </script>
 
 <template>
@@ -85,73 +98,93 @@ const activeItem = ref(programItems[0]);
         </p>
       </div>
 
-      <!-- Main Content Grid -->
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        <!-- Left Column - Interactive Selection -->
-        <div class="space-y-6">
-          <!-- Program Stats -->
-          <div class="border border-gray-200 p-6 bg-white">
-            <h3 class="text-xl font-bold text-gray-900 mb-6">Program Overview</h3>
+      <!-- Core Components Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div
+          v-for="(component, i) in coreComponents"
+          :key="i"
+          class="group relative h-full transform transition-all duration-500 hover:scale-105"
+          @mouseenter="componentHovered = i"
+          @mouseleave="componentHovered = null"
+        >
+          <!-- Animated background gradient -->
+          <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+               :class="`${componentGradients[i % componentGradients.length]}`"></div>
+          
+          <!-- Main card -->
+          <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden h-full flex flex-col"
+               :class="componentHovered === i ? 'border-cyan-300' : ''">
             
-            <div class="grid grid-cols-2 gap-4 mb-8">
-              <div v-for="stat in programStats" :key="stat.label"
-                class="text-center p-4 border border-gray-200 bg-gray-50">
-                <div class="text-2xl md:text-3xl font-bold bg-linear-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-1">
-                  {{ stat.value }}
-                </div>
-                <div class="text-sm font-semibold text-gray-900">{{ stat.label }}</div>
-                <div class="text-xs text-gray-600 mt-1">{{ stat.description }}</div>
+            <!-- Background icon glow -->
+            <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
+                 :class="`bg-gradient-to-br ${componentGradients[i % componentGradients.length]}`"></div>
+            
+            <!-- Icon -->
+            <div class="mb-6 inline-flex items-center justify-center w-14 h-14 transition-all duration-500 text-white"
+                 :class="`bg-gradient-to-br ${componentGradients[i % componentGradients.length]}`">
+              <UIcon :name="component.icon" class="w-7 h-7" />
+            </div>
+            
+            <!-- Content with animation -->
+            <div class="relative z-10 flex-1">
+              <div class="text-4xl md:text-5xl font-bold transition-all duration-300 mb-2"
+                   :class="componentHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${componentGradients[i % componentGradients.length]}` : 'text-gray-900'">
+                {{ component.title }}
+              </div>
+              
+              <!-- Accent line -->
+              <div class="h-1 w-8 transition-all duration-500 mb-4"
+                   :class="`bg-gradient-to-r ${componentGradients[i % componentGradients.length]}`"></div>
+              
+              <div class="text-lg font-bold text-gray-900 mb-3 transition-colors duration-300"
+                   :class="componentHovered === i ? 'text-cyan-600' : ''">
+                {{ component.subtitle }}
+              </div>
+              <div class="text-sm text-gray-600 leading-relaxed">
+                {{ component.description }}
               </div>
             </div>
             
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <div class="w-4 h-4 bg-linear-to-r from-cyan-500 to-blue-600"></div>
-                <span class="text-sm text-gray-700">Peer-delivered sessions</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-4 h-4 bg-linear-to-r from-blue-600 to-cyan-700"></div>
-                <span class="text-sm text-gray-700">Integrated with vocational training</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-4 h-4 bg-linear-to-r from-cyan-700 to-blue-800"></div>
-                <span class="text-sm text-gray-700">Evidence-based methodologies</span>
-              </div>
-            </div>
+            <!-- Hover indicator -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                 :class="`bg-gradient-to-r ${componentGradients[i % componentGradients.length]}`"></div>
           </div>
+        </div>
+      </div>
 
-          <!-- Program Components List -->
-          <div class="border border-gray-200 p-6 bg-white">
-            <h3 class="text-xl font-bold text-gray-900 mb-6">Core Components</h3>
-            
-            <div class="space-y-4">
+      <!-- Main Content Grid -->
+      <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
+        <!-- Left Column - Program Components List -->
+        <div class="lg:col-span-1">
+          <div class="border border-gray-200 p-6 bg-white sticky top-20">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Explore Components</h3>
+            <p class="text-sm text-gray-600 mb-6">Click on any component below to view detailed information.</p>
+
+            <div class="space-y-3 max-h-96 overflow-y-auto">
               <div 
                 v-for="item in programItems" 
                 :key="item.id"
-                class="border border-gray-200 p-4 transition-all duration-200 cursor-pointer hover:border-cyan-300 hover:shadow-sm"
+                class="border border-gray-200 p-3 transition-all duration-200 cursor-pointer hover:border-cyan-300 hover:shadow-sm"
                 :class="activeItem?.id === item.id ? 'border-cyan-400 bg-linear-to-r from-cyan-50 to-blue-50' : 'bg-white'"
                 @click="activeItem = item"
               >
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
                   <div
-                    class="w-10 h-10 flex items-center justify-center transition-all duration-200"
+                    class="w-8 h-8 flex items-center justify-center transition-all duration-200 flex-shrink-0 text-sm"
                     :class="activeItem?.id === item.id ? 'bg-linear-to-r ' + item.color + ' text-white' : 'bg-gray-100 text-gray-600'"
                   >
-                    <UIcon :name="item.icon" class="w-5 h-5" />
+                    <UIcon :name="item.icon" class="w-4 h-4" />
                   </div>
                   
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-gray-900" :class="activeItem?.id === item.id ? 'text-cyan-700' : ''">
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-gray-900 text-sm line-clamp-2" :class="activeItem?.id === item.id ? 'text-cyan-700' : ''">
                       {{ item.label }}
                     </h4>
-                    <div class="text-sm text-gray-600 mt-1">
-                      {{ item.content.substring(0, 80) }}...
-                    </div>
                   </div>
                   
                   <UIcon
                     name="i-heroicons-chevron-right"
-                    class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                    class="w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0"
                     :class="activeItem?.id === item.id ? 'rotate-90 text-cyan-600' : ''"
                   />
                 </div>
@@ -161,9 +194,7 @@ const activeItem = ref(programItems[0]);
         </div>
 
         <!-- Right Column - Detailed View -->
-        <div class="space-y-6">
-          <!-- Active Item Display -->
-          <div class="border border-gray-200 p-8 bg-white">
+        <div class="lg:col-span-2 space-y-6">
             <!-- Header -->
             <div class="flex items-start gap-4 mb-8">
               <div class="w-14 h-14 bg-linear-to-r from-cyan-500 to-blue-900 flex items-center justify-center">
@@ -228,45 +259,45 @@ const activeItem = ref(programItems[0]);
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- CTA Section -->
-          <div class="bg-linear-to-r from-cyan-500 to-blue-900 p-8">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
-              <div class="text-white">
-                <h4 class="text-xl font-bold mb-2">Ready to Learn More?</h4>
-                <p class="text-white/90">
-                  Access detailed program materials, research papers, and implementation guides
-                </p>
-              </div>
-              
-              <div class="flex flex-col sm:flex-row gap-4">
-                <NuxtLink
-                  to="/contact"
-                  class="px-6 py-3 bg-white text-cyan-700 font-bold hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  <UIcon name="i-heroicons-envelope" class="w-5 h-5" />
-                  <span>Contact Team</span>
-                </NuxtLink>
-                
-                <button class="px-6 py-3 bg-transparent text-white border-2 border-white font-bold hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2">
-                  <UIcon name="i-heroicons-document-arrow-down" class="w-5 h-5" />
-                  <span>Download PDF</span>
-                </button>
-              </div>
-            </div>
+      <!-- CTA Section -->
+      <div class="bg-linear-to-r from-cyan-500 to-blue-900 p-8 mt-12">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div class="text-white">
+            <h4 class="text-xl font-bold mb-2">Ready to Learn More?</h4>
+            <p class="text-white/90">
+              Access detailed program materials, research papers, and implementation guides
+            </p>
           </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4">
+            <NuxtLink
+              to="/contact"
+              class="px-6 py-3 bg-white text-cyan-700 font-bold hover:bg-gray-50 transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <UIcon name="i-heroicons-envelope" class="w-5 h-5" />
+              <span>Contact Team</span>
+            </NuxtLink>
+            
+            <button class="px-6 py-3 bg-transparent text-white border-2 border-white font-bold hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2">
+              <UIcon name="i-heroicons-document-arrow-down" class="w-5 h-5" />
+              <span>Download PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-          <!-- Quote -->
-          <div class="border border-gray-200 p-6 bg-white">
-            <div class="flex items-start gap-4">
-              <UIcon name="i-heroicons-chat-bubble-left-right" class="w-8 h-8 text-cyan-600 flex-shrink-0 mt-1" />
-              <div>
-                <blockquote class="text-gray-800 italic leading-relaxed mb-4">
-                  "PEGISUS helps young people build healthier habits, stronger peer support, and practical skills to succeed in life and work."
-                </blockquote>
-                <div class="text-sm text-gray-600 font-semibold">— Program Implementation Team</div>
-              </div>
-            </div>
+      <!-- Quote -->
+      <div class="mt-12 border border-gray-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <UIcon name="i-heroicons-chat-bubble-left-right" class="w-8 h-8 text-cyan-600 flex-shrink-0 mt-1" />
+          <div>
+            <blockquote class="text-gray-800 italic leading-relaxed mb-4">
+              "PEGISUS helps young people build healthier habits, stronger peer support, and practical skills to succeed in life and work."
+            </blockquote>
+            <div class="text-sm text-gray-600 font-semibold">— Program Implementation Team</div>
           </div>
         </div>
       </div>
@@ -297,7 +328,6 @@ const activeItem = ref(programItems[0]);
           </div>
         </div>
       </div>
-    </div>
   </section>
 </template>
 

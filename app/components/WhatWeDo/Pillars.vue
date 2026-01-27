@@ -330,7 +330,6 @@ onUnmounted(() => {
 }
 
 .pillar-active {
-  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {

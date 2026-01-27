@@ -3,16 +3,37 @@ import { ref, onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 
 const highlights = [
-  { number: '8', label: 'Sessions', description: 'Comprehensive program structure' },
-  { number: '16-24', label: 'Age Range', description: 'Targeted youth demographic' },
-  { number: '2', label: 'Science-backed Programs', description: 'RAD-PAL & Manhood 2.0 foundation' },
-  { number: 'Peer', label: 'Education Model', description: 'Community-driven approach' }
+  { number: '8', label: 'Sessions', description: 'Comprehensive program structure', icon: 'i-heroicons-calendar' },
+  { number: '16-24', label: 'Age Range', description: 'Targeted youth demographic', icon: 'i-heroicons-users' },
+  { number: '2', label: 'Science-backed Programs', description: 'RAD-PAL & Manhood 2.0 foundation', icon: 'i-heroicons-beaker' },
+  { number: 'Peer', label: 'Education Model', description: 'Community-driven approach', icon: 'i-heroicons-chat-bubble-left-right' }
 ]
 
 // reveal flags
 const heroVisible = ref(false)
 const highlightsVisible = ref(false)
 const animatedHighlights = ref(false)
+const highlightHovered = ref<number | null>(null)
+
+// Gradient colors for each highlight
+const highlightGradients = [
+  'from-cyan-500 to-blue-900',
+  'from-cyan-500 to-blue-700',
+  'from-cyan-500 to-emerald-600',
+  'from-blue-700 to-cyan-500'
+]
+
+const getHighlightGradient = (index: number) => {
+  return `bg-gradient-to-br ${highlightGradients[index % highlightGradients.length]}`
+}
+
+// Quick stats data
+const quickStats = [
+  { value: '3', label: 'Countries', description: 'Zambia, Zimbabwe, South Africa', icon: 'i-heroicons-globe-europe-africa' },
+  { value: '500+', label: 'Youth Impacted', description: 'Active participants', icon: 'i-heroicons-users' }
+]
+
+const quickStatHovered = ref<number | null>(null)
 
 // small delay to stagger highlights after reveal
 onMounted(() => {
@@ -66,100 +87,102 @@ onMounted(() => {
         </p>
 
         <!-- Quick stats -->
-        <div class="grid grid-cols-2 gap-4 mt-8">
-          <div class="border border-gray-200 p-4">
-            <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
-              3
+        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8">
+          <div
+            v-for="(stat, i) in quickStats"
+            :key="i"
+            class="group relative transform transition-all duration-500 hover:scale-105"
+            @mouseenter="quickStatHovered = i"
+            @mouseleave="quickStatHovered = null"
+          >
+            <!-- Animated background gradient -->
+            <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                 :class="`${highlightGradients[i % highlightGradients.length]}`"></div>
+            
+            <!-- Main card -->
+            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-md group-hover:shadow-xl transition-all duration-500 p-6 overflow-hidden"
+                 :class="quickStatHovered === i ? 'border-cyan-300' : ''">
+              
+              <!-- Background icon glow -->
+              <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
+                   :class="`bg-gradient-to-br ${highlightGradients[i % highlightGradients.length]}`"></div>
+              
+              <!-- Icon -->
+              <div class="mb-4 inline-flex items-center justify-center w-10 h-10 transition-all duration-500 text-white"
+                   :class="`bg-gradient-to-br ${highlightGradients[i % highlightGradients.length]}`">
+                <UIcon :name="stat.icon" class="w-5 h-5" />
+              </div>
+              
+              <!-- Value -->
+              <div class="relative z-10">
+                <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-1"
+                     :class="quickStatHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${highlightGradients[i % highlightGradients.length]}` : 'text-gray-900'">
+                  {{ stat.value }}
+                </div>
+                
+                <!-- Accent line -->
+                <div class="h-0.5 w-6 transition-all duration-500 mb-3"
+                     :class="`bg-gradient-to-r ${highlightGradients[i % highlightGradients.length]}`"></div>
+                
+                <div class="text-sm font-semibold text-gray-900 mb-1 transition-colors duration-300"
+                     :class="quickStatHovered === i ? 'text-cyan-600' : ''">
+                  {{ stat.label }}
+                </div>
+                <div class="text-xs text-gray-600">
+                  {{ stat.description }}
+                </div>
+              </div>
+              
+              <!-- Hover indicator -->
+              <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                   :class="`bg-gradient-to-r ${highlightGradients[i % highlightGradients.length]}`"></div>
             </div>
-            <div class="text-sm font-medium text-gray-900">Countries</div>
-            <div class="text-xs text-gray-600">Zambia, Zimbabwe, South Africa</div>
-          </div>
-          <div class="border border-gray-200 p-4">
-            <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
-              500+
-            </div>
-            <div class="text-sm font-medium text-gray-900">Youth Impacted</div>
-            <div class="text-xs text-gray-600">Active participants</div>
           </div>
         </div>
       </div>
 
-      <!-- Images with side-by-side layout -->
+      <!-- Hero Image -->
       <div
-        class="relative h-[360px] md:h-[400px]"
+        class="relative h-[360px] md:h-[400px] overflow-hidden"
         :class="heroVisible ? 'intro-revealed' : 'intro-hidden'"
         aria-hidden="false"
       >
-        <!-- Container for both images -->
-        <div class="relative w-full h-full flex gap-4">
-          <!-- Main image (larger, on left) -->
-          <div class="relative flex-1 border-4 border-white shadow-lg overflow-hidden h-full">
-            <div class="absolute inset-0">
-              <NuxtImg
-                src="/img/pegisus_program_1.jpg"
-                alt="PEGISUS program session with youth participants engaged in discussion"
-                class="w-full h-full object-cover transform transition-transform duration-700"
-                :class="heroVisible ? 'scale-105' : 'scale-100'"
-                width="450"
-                height="350"
-                sizes="(max-width: 768px) 50vw, 450px"
-                loading="lazy"
-                format="webp"
-                quality="85"
-              />
+        <!-- Main Image -->
+        <div class="relative w-full h-full">
+          <div class="absolute inset-0">
+            <NuxtImg
+              src="/img/pegisus_program_1.jpg"
+              alt="PEGISUS program session with youth participants engaged in discussion"
+              class="w-full h-full object-cover transform transition-transform duration-700"
+              :class="heroVisible ? 'scale-105' : 'scale-100'"
+              width="600"
+              height="400"
+              sizes="(max-width: 768px) 100vw, 600px"
+              loading="lazy"
+              format="webp"
+              quality="85"
+            />
+          </div>
+          
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+          
+          <!-- Text overlay -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
+            <div class="text-white max-w-2xl">
+              <div class="text-lg font-bold mb-2">Peer-led Sessions</div>
+              <div class="text-sm opacity-90">Interactive group discussions empowering youth through evidence-based interventions</div>
             </div>
-            
-            <!-- Overlay gradient for main image -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-            
-            <!-- Text overlay for main image -->
-            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-              <div class="text-white">
-                <div class="text-sm font-bold mb-1">Peer-led Sessions</div>
-                <div class="text-xs opacity-90">Interactive group discussions</div>
-              </div>
-            </div>
-            
-            <!-- Badge for main image -->
-            <div class="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-3 py-1 shadow">
-              <span class="text-xs font-bold">Program Session</span>
-            </div>
+          </div>
+          
+          <!-- Badge -->
+          <div class="absolute top-6 left-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-4 py-2 shadow-lg">
+            <span class="text-sm font-bold">Program in Action</span>
           </div>
 
-          <!-- Secondary image (smaller, on right) -->
-          <div class="relative w-1/3 flex-none border-4 border-white shadow-lg overflow-hidden self-end mb-8 h-full">
-            <div class="absolute inset-0">
-              <NuxtImg
-                src="/img/pegisus_program_2.jpg"
-                alt="Youth participating in hands-on group activity"
-                class="w-full h-full object-cover transform transition-transform duration-700"
-                :class="heroVisible ? 'scale-105' : 'scale-100'"
-                width="200"
-                height="280"
-                sizes="(max-width: 768px) 30vw, 200px"
-                loading="lazy"
-                format="webp"
-                quality="85"
-              />
-            </div>
-            
-            <!-- Overlay for secondary image -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-            
-            <!-- Label for secondary image -->
-            <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-              <div class="text-white text-xs font-bold">Group Activity</div>
-            </div>
-            
-            <!-- Corner accent for secondary image -->
-            <div class="absolute top-0 right-0 bg-white px-2 py-1">
-              <UIcon name="i-heroicons-users" class="w-3 h-3 text-cyan-600" />
-            </div>
-          </div>
+          <!-- Bottom accent line -->
+          <div class="absolute -bottom-4 -right-4 w-32 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 transform -rotate-45"></div>
         </div>
-
-        <!-- Background accent line -->
-        <div class="absolute -bottom-4 -right-4 w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 transform -rotate-45"></div>
       </div>
     </div>
 
@@ -172,42 +195,56 @@ onMounted(() => {
         <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto"></div>
       </div>
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           v-for="(h, i) in highlights"
           :key="i"
-          class="highlight-item border border-gray-200 p-6 text-center relative overflow-hidden bg-white shadow-sm hover:shadow transition-all duration-300 group"
-          :class="{
-            'revealed': highlightsVisible,
-            'animate-visible': animatedHighlights
-          }"
-          :style="`transition-delay: ${i * 80}ms`"
+          class="group relative h-full transform transition-all duration-500 hover:scale-105"
+          @mouseenter="highlightHovered = i"
+          @mouseleave="highlightHovered = null"
         >
-          <!-- Top accent bar -->
-          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500/20 to-blue-900/20 group-hover:from-cyan-500 group-hover:to-blue-900 transition-all duration-300"></div>
+          <!-- Animated background gradient -->
+          <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-none blur-xl"
+               :class="getHighlightGradient(i)"></div>
           
-          <div class="z-10 relative">
-            <!-- Number/Text display -->
-            <div class="mb-4">
-              <div class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent mb-2">
-                {{ h.number }}
-              </div>
-              <div class="h-0.5 w-8 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto mb-3"></div>
+          <!-- Main card -->
+          <div class="relative bg-white backdrop-blur-sm rounded-none border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden h-full flex flex-col"
+               :class="highlightHovered === i ? 'border-cyan-300' : ''">
+            
+            <!-- Background icon glow -->
+            <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
+                 :class="getHighlightGradient(i)"></div>
+            
+            <!-- Icon -->
+            <div v-if="h.icon" class="mb-6 inline-flex items-center justify-center w-14 h-14 transition-all duration-500"
+                 :class="getHighlightGradient(i) + ' text-white'">
+              <UIcon :name="h.icon" class="w-7 h-7" />
             </div>
             
-            <div class="text-lg font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition-colors duration-300">
-              {{ h.label }}
+            <!-- Number/Label with animation -->
+            <div class="relative z-10 flex-1">
+              <div class="text-4xl md:text-5xl font-bold transition-all duration-300 mb-2"
+                   :class="highlightHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent scale-105 ` + getHighlightGradient(i) : 'text-gray-900'">
+                {{ h.number }}
+              </div>
+              
+              <!-- Accent line -->
+              <div class="h-1 w-8 transition-all duration-500 mb-4"
+                   :class="getHighlightGradient(i)"></div>
+              
+              <div class="text-lg font-bold text-gray-900 mb-3 transition-colors duration-300"
+                   :class="highlightHovered === i ? 'text-cyan-600' : ''">
+                {{ h.label }}
+              </div>
+              <div class="text-sm text-gray-600 leading-relaxed">
+                {{ h.description }}
+              </div>
             </div>
-            <div class="text-sm text-gray-600 leading-relaxed">
-              {{ h.description }}
-            </div>
+            
+            <!-- Hover indicator -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                 :class="getHighlightGradient(i)"></div>
           </div>
-          
-          <!-- Bottom accent -->
-          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500/10 to-blue-900/10"></div>
-          
-          <!-- Hover overlay -->
-          <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 to-blue-900/0 group-hover:from-cyan-500/5 group-hover:to-blue-900/5 transition-all duration-300 pointer-events-none"></div>
         </div>
       </div>
     </div>
@@ -260,64 +297,46 @@ onMounted(() => {
 }
 
 /* Intro reveal animation */
-.intro-hidden .relative > div:first-child {
+.intro-hidden {
   opacity: 0;
   transform: translateX(20px);
 }
 
-.intro-hidden .relative > div:first-child > div:first-child {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-.intro-hidden .relative > div:first-child > div:last-child {
-  opacity: 0;
-  transform: translateX(40px);
-}
-
-.intro-revealed .relative > div:first-child {
+.intro-revealed {
   opacity: 1;
   transform: translateX(0);
+  transition: all 700ms cubic-bezier(.4,0,.2,1);
 }
 
-.intro-revealed .relative > div:first-child > div:first-child {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 100ms;
-}
-
-.intro-revealed .relative > div:first-child > div:last-child {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 200ms;
-}
-
-/* Highlights animation */
-.highlight-item {
-  transition: transform .48s cubic-bezier(.2,.9,.3,1), opacity .38s, box-shadow .28s, border-color .28s;
-  transform-origin: center;
+/* Highlights animation - stagger entrance */
+.grid > div {
+  animation: slideUp 0.6s cubic-bezier(.2,.9,.3,1) forwards;
   opacity: 0;
-  transform: translateY(18px);
 }
 
-.highlight-item.revealed { 
-  opacity: 1; 
-  transform: translateY(12px); 
-}
+.grid > div:nth-child(1) { animation-delay: 0ms; }
+.grid > div:nth-child(2) { animation-delay: 80ms; }
+.grid > div:nth-child(3) { animation-delay: 160ms; }
+.grid > div:nth-child(4) { animation-delay: 240ms; }
 
-.highlight-item.animate-visible { 
-  transform: translateY(0); 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Hover effect for highlights */
-.highlight-item:hover {
+.group:hover {
   border-color: #06b6d4;
-  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.12);
 }
 
 /* Image hover effects */
-.relative > div:first-child > div:first-child:hover img,
-.relative > div:first-child > div:last-child:hover img {
+.relative > div:first-child:hover img {
   transform: scale(1.08);
 }
 

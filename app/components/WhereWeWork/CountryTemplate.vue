@@ -37,12 +37,33 @@
           <!-- Stats Cards -->
           <div class="grid grid-cols-2 gap-4 mb-8">
             <div 
-              v-for="stat in stats" 
+              v-for="(stat, idx) in stats" 
               :key="stat.label"
-              class="border border-gray-200 p-4 bg-white"
+              @mouseenter="statsHovered = idx"
+              @mouseleave="statsHovered = null"
+              class="group relative transform transition-all duration-500 hover:scale-105"
             >
-              <div class="text-sm text-gray-600 mb-1">{{ stat.label }}</div>
-              <div class="text-xl font-bold" :class="stat.color">{{ stat.value }}</div>
+              <!-- Animated gradient glow -->
+              <div 
+                :class="[
+                  'absolute inset-0 rounded-lg blur-xl transition-opacity duration-500',
+                  getCountryGradient(idx),
+                  statsHovered === idx ? 'opacity-75' : 'opacity-0'
+                ]"
+              ></div>
+              
+              <!-- Card -->
+              <div class="relative backdrop-blur-sm bg-white/10 border border-white/20 p-4 rounded-lg shadow-lg transition-all duration-300 group-hover:bg-white/15">
+                <div class="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">{{ stat.label }}</div>
+                <div class="text-2xl font-bold bg-gradient-to-r" :class="getCountryGradient(idx) + ' bg-clip-text text-transparent'">{{ stat.value }}</div>
+                
+                <!-- Bottom accent bar -->
+                <div :class="[
+                  'absolute bottom-0 left-0 h-1 rounded-b-lg transition-all duration-300',
+                  getCountryGradient(idx),
+                  statsHovered === idx ? 'w-full' : 'w-0'
+                ]"></div>
+              </div>
             </div>
           </div>
 
@@ -82,7 +103,7 @@
               <span 
                 v-for="community in communities" 
                 :key="community"
-                class="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 hover:border-cyan-300 hover:bg-cyan-50/50 transition-colors duration-200"
+                class="px-4 py-2 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-cyan-100 transition-colors duration-200"
               >
                 {{ community }}
               </span>
@@ -200,6 +221,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 interface Stat {
   label: string
   value: string
@@ -219,6 +242,16 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const statsHovered = ref<number | null>(null)
+
+const countryGradients = [
+  'from-cyan-500 to-blue-900',
+  'from-cyan-500 to-blue-700',
+  'from-blue-500 to-cyan-600'
+]
+
+const getCountryGradient = (index: number) => `bg-gradient-to-br ${countryGradients[index % countryGradients.length]}`
 </script>
 
 <style scoped>

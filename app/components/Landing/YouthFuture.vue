@@ -5,22 +5,48 @@ const props = withDefaults(defineProps<{
     value: string;
     label: string;
     color: string;
+    icon?: string;
+    percentageValue?: number;
   }>;
 }>(), {
   stats: () => [
-    { value: '60%', label: 'Africa\'s Youth Population', color: 'from-cyan-500 to-blue-900' },
-    { value: '1B+', label: 'Young Africans', color: 'from-cyan-500 to-blue-700' },
-    { value: '75%', label: 'Under Age 35', color: 'from-cyan-500 to-emerald-600' }
+    { value: '60%', label: 'Africa\'s Youth Population', color: 'from-cyan-500 to-blue-900', icon: 'i-heroicons-users', percentageValue: 60 },
+    { value: '1B+', label: 'Young Africans', color: 'from-cyan-500 to-blue-700', icon: 'i-heroicons-globe-alt', percentageValue: 100 },
+    { value: '75%', label: 'Under Age 35', color: 'from-cyan-500 to-emerald-600', icon: 'i-heroicons-sparkles', percentageValue: 75 }
   ]
 });
 
 // Add some interactive state
 const isVisible = ref(false);
 const hoveredStat = ref<number | null>(null);
+const animatedValues = ref<number[]>([0, 0, 0]);
+
+const animateCounter = (targetValue: string, index: number) => {
+  const numValue = parseInt(targetValue);
+  if (isNaN(numValue)) return;
+  
+  let current = 0;
+  const increment = numValue / 30;
+  const interval = setInterval(() => {
+    current += increment;
+    if (current >= numValue) {
+      animatedValues.value[index] = numValue;
+      clearInterval(interval);
+    } else {
+      animatedValues.value[index] = Math.floor(current);
+    }
+  }, 30);
+};
 
 onMounted(() => {
   setTimeout(() => {
     isVisible.value = true;
+    // Start counter animations
+    props.stats?.forEach((stat, index) => {
+      setTimeout(() => {
+        animateCounter(stat.value, index);
+      }, 200 + index * 100);
+    });
   }, 100);
 });
 </script>
@@ -104,23 +130,57 @@ onMounted(() => {
         <!-- Right Column - Stats & Impact -->
         <div class="space-y-8">
           <!-- Statistics Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 transform transition-all duration-700 delay-100"
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 transform transition-all duration-700 delay-100"
                :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'">
             <div 
               v-for="(stat, index) in stats" 
               :key="index"
-              class="bg-white border border-gray-200 shadow-sm p-6 text-center transition-all duration-300 hover:border-cyan-300 hover:shadow-md"
-              :class="hoveredStat === index ? 'border-cyan-400' : ''"
+              class="group relative h-full transform transition-all duration-500 hover:scale-105"
               @mouseenter="hoveredStat = index"
               @mouseleave="hoveredStat = null"
             >
-              <div
-                :class="`text-3xl md:text-4xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2 transition-all duration-300 ${hoveredStat === index ? 'scale-110' : ''}`"
-              >
-                {{ stat.value }}
-              </div>
-              <div class="text-gray-700 font-medium text-sm md:text-base">
-                {{ stat.label }}
+              <!-- Animated background gradient -->
+              <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"
+                   :class="`${stat.color}`"></div>
+              
+              <!-- Main card -->
+              <div class="relative bg-white backdrop-blur-sm rounded-xl border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-8 overflow-hidden"
+                   :class="hoveredStat === index ? 'border-cyan-300' : ''">
+                
+                <!-- Background icon glow -->
+                <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
+                     :class="`bg-gradient-to-br ${stat.color}`"></div>
+                
+                <!-- Icon -->
+                <div v-if="stat.icon" class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg transition-all duration-500"
+                     :class="`bg-gradient-to-br ${stat.color} text-white`">
+                  <UIcon :name="stat.icon" class="w-7 h-7" />
+                </div>
+                
+                <!-- Value with animation -->
+                <div class="relative z-10">
+                  <div class="text-3xl md:text-4xl font-bold transition-all duration-300"
+                       :class="hoveredStat === index ? `bg-gradient-to-r ${stat.color} bg-clip-text text-transparent scale-110` : 'text-gray-900'">
+                    {{ stat.value }}
+                  </div>
+                  
+                  <!-- Optional progress bar for percentage stats -->
+                  <div v-if="stat.percentageValue" class="mt-4 h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full transition-all duration-1000 ease-out"
+                         :class="`bg-gradient-to-r ${stat.color}`"
+                         :style="{ width: isVisible ? `${stat.percentageValue}%` : '0%' }"></div>
+                  </div>
+                </div>
+                
+                <!-- Label -->
+                <p class="mt-6 text-gray-700 font-semibold text-base transition-colors duration-300"
+                   :class="hoveredStat === index ? 'text-gray-900' : ''">
+                  {{ stat.label }}
+                </p>
+                
+                <!-- Hover indicator -->
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                     :class="`${stat.color}`"></div>
               </div>
             </div>
           </div>

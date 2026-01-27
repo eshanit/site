@@ -128,7 +128,7 @@ onMounted(() => {
                 <div class="w-8 h-8 bg-gradient-to-r from-cyan-600 to-blue-700 border-2 border-white"></div>
               </div>
               <span class="text-sm text-gray-600">
-                <span class="font-bold text-cyan-700">Join 500+</span> youth already empowered
+                <span class="font-bold text-cyan-700">Join our</span> youth already empowered
               </span>
             </div>
           </div>
@@ -155,9 +155,9 @@ onMounted(() => {
                 <div class="absolute inset-0 bg-gradient-to-t from-cyan-900/30 via-transparent to-transparent"></div>
                 
                 <!-- Location badges - straight edges -->
-                <div class="absolute top-6 left-6 bg-white/95 px-4 py-2 shadow-lg">
+                <!-- <div class="absolute top-6 left-6 bg-white/95 px-4 py-2 shadow-lg">
                   <span class="text-sm font-bold text-cyan-700">Southern Africa</span>
-                </div>
+                </div> -->
                 
                 <div class="absolute bottom-6 right-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-4 py-2 shadow-lg">
                   <span class="text-sm font-bold">Empowering Youth</span>
@@ -165,12 +165,12 @@ onMounted(() => {
               </div>
               
               <!-- Stats badge - straight edges -->
-              <div class="absolute -right-4 top-1/4 bg-white p-4 shadow-xl border border-gray-200">
+              <!-- <div class="absolute -right-4 top-1/4 bg-white p-4 shadow-xl border border-gray-200">
                 <div class="text-center">
                   <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">3</div>
                   <div class="text-xs text-gray-600 font-medium">Countries</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <!-- Bottom quote card - straight edges -->

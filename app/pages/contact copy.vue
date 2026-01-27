@@ -1,35 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-
-// Contact statistics data
-const contactStats = [
-    { value: '3', label: 'Countries', icon: 'i-heroicons-globe-alt' },
-    { value: '20+', label: 'Communities', icon: 'i-heroicons-home' },
-    { value: '500+', label: 'Youth Impacted', icon: 'i-heroicons-users' }
-]
-
-// Stats gradients
-const statsGradients = [
-    'from-cyan-500 to-blue-900',
-    'from-cyan-500 to-blue-700',
-    'from-cyan-500 to-emerald-600'
-]
-
-const getStatsGradient = (index: number) => {
-    return `bg-gradient-to-br ${statsGradients[index % statsGradients.length]}`
-}
-
-// Contact info gradients
-const infoGradients = [
-    'from-cyan-500 to-blue-900',
-    'from-cyan-500 to-blue-700',
-    'from-blue-700 to-cyan-500'
-]
-
-const getInfoGradient = (index: number) => {
-    return `bg-gradient-to-br ${infoGradients[index % infoGradients.length]}`
-}
 
 // Form state
 const form = ref({
@@ -47,8 +18,6 @@ const submitError = ref('')
 const heroVisible = ref(false)
 const formVisible = ref(false)
 const infoVisible = ref(false)
-const statsHovered = ref<number | null>(null)
-const infoHovered = ref<number | null>(null)
 
 const heroRef = ref<HTMLElement | null>(null)
 const formRef = ref<HTMLElement | null>(null)
@@ -202,49 +171,18 @@ const contactInfo = [
             </div>
 
             <!-- Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div
-                v-for="(stat, i) in contactStats"
-                :key="i"
-                class="group relative h-full transform transition-all duration-500 hover:scale-105"
-                @mouseenter="statsHovered = i"
-                @mouseleave="statsHovered = null"
-              >
-                <!-- Animated background gradient -->
-                <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                     :class="`${statsGradients[i % statsGradients.length]}`"></div>
-                
-                <!-- Main card -->
-                <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden h-full flex flex-col text-center"
-                     :class="statsHovered === i ? 'border-cyan-300' : ''">
-                    
-                    <!-- Icon -->
-                    <div class="mb-4 inline-flex items-center justify-center w-12 h-12 transition-all duration-500 text-white mx-auto"
-                         :class="`bg-gradient-to-br ${statsGradients[i % statsGradients.length]}`">
-                        <UIcon :name="stat.icon" class="w-6 h-6" />
-                    </div>
-                    
-                    <!-- Value -->
-                    <div class="relative z-10 flex-1">
-                        <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
-                             :class="statsHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${statsGradients[i % statsGradients.length]}` : 'text-gray-900'">
-                            {{ stat.value }}
-                        </div>
-                        
-                        <!-- Accent line -->
-                        <div class="h-1 w-6 transition-all duration-500 mb-2 mx-auto"
-                             :class="`bg-gradient-to-r ${statsGradients[i % statsGradients.length]}`"></div>
-                        
-                        <div class="text-sm font-semibold text-gray-900 transition-colors duration-300"
-                             :class="statsHovered === i ? 'text-cyan-600' : ''">
-                            {{ stat.label }}
-                        </div>
-                    </div>
-                    
-                    <!-- Hover indicator -->
-                    <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                         :class="`bg-gradient-to-r ${statsGradients[i % statsGradients.length]}`"></div>
-                </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="border border-gray-200 p-4 bg-white">
+                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">3</div>
+                <div class="text-sm font-medium text-gray-900 mt-1">Countries</div>
+              </div>
+              <div class="border border-gray-200 p-4 bg-white">
+                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">20+</div>
+                <div class="text-sm font-medium text-gray-900 mt-1">Communities</div>
+              </div>
+              <div class="border border-gray-200 p-4 bg-white">
+                <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">500+</div>
+                <div class="text-sm font-medium text-gray-900 mt-1">Youth Impacted</div>
               </div>
             </div>
           </div>
@@ -448,44 +386,18 @@ const contactInfo = [
             <div 
               v-for="(info, index) in contactInfo"
               :key="info.title"
-              class="group relative h-full transform transition-all duration-500 hover:scale-105"
-              @mouseenter="infoHovered = index"
-              @mouseleave="infoHovered = null"
+              class="border border-gray-200 p-6 bg-white hover:border-cyan-300 hover:shadow transition-all duration-300 group"
+              :style="`transition-delay: ${index * 100}ms`"
             >
-              <!-- Animated background gradient -->
-              <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                   :class="`${infoGradients[index % infoGradients.length]}`"></div>
-              
-              <!-- Main card -->
-              <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden"
-                   :class="infoHovered === index ? 'border-cyan-300' : ''">
-                
-                <!-- Background icon glow -->
-                <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
-                     :class="`bg-gradient-to-br ${infoGradients[index % infoGradients.length]}`"></div>
-                
-                <!-- Icon and content -->
-                <div class="relative z-10 flex items-start gap-4">
-                  <div class="w-12 h-12 flex items-center justify-center transition-all duration-500 text-white flex-shrink-0"
-                       :class="`bg-gradient-to-br ${infoGradients[index % infoGradients.length]}`">
-                    <UIcon :name="info.icon" class="w-5 h-5" />
-                  </div>
-                  <div class="flex-1">
-                    <h3 class="font-bold text-gray-900 mb-1 transition-colors duration-300"
-                        :class="infoHovered === index ? 'text-cyan-700' : ''">
-                      {{ info.title }}
-                    </h3>
-                    <p class="font-medium transition-all duration-300"
-                       :class="infoHovered === index ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${infoGradients[index % infoGradients.length]}` : 'text-cyan-600'">
-                      {{ info.value }}
-                    </p>
-                    <p class="text-sm text-gray-600 mt-2">{{ info.description }}</p>
-                  </div>
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <UIcon :name="info.icon" class="w-5 h-5 text-white" />
                 </div>
-                
-                <!-- Hover indicator -->
-                <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                     :class="`bg-gradient-to-r ${infoGradients[index % infoGradients.length]}`"></div>
+                <div>
+                  <h3 class="font-bold text-gray-900 mb-1">{{ info.title }}</h3>
+                  <p class="text-cyan-600 font-medium mb-2">{{ info.value }}</p>
+                  <p class="text-sm text-gray-600">{{ info.description }}</p>
+                </div>
               </div>
             </div>
 
@@ -562,7 +474,7 @@ const contactInfo = [
 
         <!-- Partner Types -->
         <div class="grid md:grid-cols-3 gap-6">
-          <div class="p-6 bg-white shadow-lg hover:shadow-2xl transition-all duration-300">
+          <div class="border border-gray-200 p-6 bg-white hover:border-cyan-300 hover:shadow transition-all duration-300">
             <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-900 flex items-center justify-center mb-4">
               <UIcon name="i-heroicons-academic-cap" class="w-6 h-6 text-white" />
             </div>
@@ -572,7 +484,7 @@ const contactInfo = [
             </p>
           </div>
 
-          <div class="p-6 bg-white shadow-lg hover:shadow-2xl transition-all duration-300">
+          <div class="border border-gray-200 p-6 bg-white hover:border-cyan-300 hover:shadow transition-all duration-300">
             <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-900 flex items-center justify-center mb-4">
               <UIcon name="i-heroicons-briefcase" class="w-6 h-6 text-white" />
             </div>
@@ -582,7 +494,7 @@ const contactInfo = [
             </p>
           </div>
 
-          <div class="p-6 bg-white shadow-lg hover:shadow-2xl transition-all duration-300">
+          <div class="border border-gray-200 p-6 bg-white hover:border-cyan-300 hover:shadow transition-all duration-300">
             <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-900 flex items-center justify-center mb-4">
               <UIcon name="i-heroicons-user-group" class="w-6 h-6 text-white" />
             </div>

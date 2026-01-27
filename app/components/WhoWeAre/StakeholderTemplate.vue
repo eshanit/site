@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 interface TeamMember {
   name: string
   photo: string
@@ -21,6 +23,21 @@ defineProps<Props>()
 const institutionColors = {
   bg: 'bg-gradient-to-r from-cyan-500 to-blue-900',
   text: 'text-white'
+}
+
+// Team member card states
+const teamMemberHovered = ref<number | string | null>(null)
+
+// Gradient colors for team cards
+const teamGradients = [
+  'from-cyan-500 to-blue-900',
+  'from-cyan-500 to-blue-700',
+  'from-blue-700 to-cyan-500',
+  'from-cyan-500 to-emerald-600'
+]
+
+const getTeamGradient = (index: number) => {
+  return `bg-gradient-to-br ${teamGradients[index % teamGradients.length]}`
 }
 </script>
 
@@ -55,29 +72,79 @@ const institutionColors = {
           <div class="h-1 w-12 bg-gradient-to-r from-cyan-500 to-blue-900"></div>
         </div>
         
-        <!-- Team Stats -->
-        <div class="border border-gray-200 p-4 bg-white">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 flex items-center justify-center">
-              <UIcon name="i-heroicons-user-group" class="w-5 h-5 text-cyan-600" />
+        <!-- Team Stats Card -->
+        <div class="group relative transform transition-all duration-500 hover:scale-105">
+          <!-- Animated background gradient -->
+          <div class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-900 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+          
+          <!-- Main card -->
+          <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden"
+               :class="teamMemberHovered === 'stats' ? 'border-cyan-300' : ''">
+            
+            <!-- Background glow -->
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-24 h-24 rounded-full opacity-5 transition-all duration-500 bg-gradient-to-br from-cyan-500 to-blue-900"></div>
+            
+            <!-- Icon and content -->
+            <div class="relative z-10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 flex items-center justify-center transition-all duration-500 text-white bg-gradient-to-br from-cyan-500 to-blue-900">
+                  <UIcon name="i-heroicons-user-group" class="w-6 h-6" />
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-gray-700">Team Members</div>
+                  <div class="text-3xl font-bold text-gray-900 transition-all duration-300"
+                       :class="teamMemberHovered === 'stats' ? 'text-cyan-700' : ''">
+                    {{ teamMembers }}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Accent line -->
+              <div class="h-1 w-8 bg-gradient-to-r from-cyan-500 to-blue-900"></div>
             </div>
-            <div>
-              <div class="text-sm font-medium text-gray-700">Team Members</div>
-              <div class="text-2xl font-bold text-gray-900">{{ teamMembers }}</div>
-            </div>
+            
+            <!-- Hover indicator -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-cyan-500 to-blue-900"></div>
           </div>
         </div>
         
-        <!-- Description -->
-        <div class="border border-cyan-100 p-4 bg-gradient-to-r from-cyan-50/50 to-blue-50/50">
-          <div class="flex items-start gap-3 mb-3">
-            <UIcon name="i-heroicons-information-circle" class="w-5 h-5 text-cyan-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 class="font-bold text-gray-900 text-sm mb-1">Institutional Role</h4>
-              <p class="text-sm text-gray-700 leading-relaxed">
-                {{ description }}
-              </p>
+        <!-- Institutional Role Card -->
+        <div class="group relative transform transition-all duration-500 hover:scale-105"
+             @mouseenter="teamMemberHovered = 'role'"
+             @mouseleave="teamMemberHovered = null">
+          <!-- Animated background gradient -->
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+          
+          <!-- Main card -->
+          <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden"
+               :class="teamMemberHovered === 'role' ? 'border-cyan-300' : ''">
+            
+            <!-- Background glow -->
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-24 h-24 rounded-full opacity-5 transition-all duration-500 bg-gradient-to-br from-blue-500 to-cyan-600"></div>
+            
+            <!-- Icon and content -->
+            <div class="relative z-10">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="w-10 h-10 flex items-center justify-center transition-all duration-500 text-white bg-gradient-to-br from-blue-500 to-cyan-600 flex-shrink-0 mt-1">
+                  <UIcon name="i-heroicons-information-circle" class="w-5 h-5" />
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-gray-900 text-sm mb-2 transition-colors duration-300"
+                      :class="teamMemberHovered === 'role' ? 'text-cyan-700' : ''">
+                    Institutional Role
+                  </h4>
+                  <p class="text-sm text-gray-700 leading-relaxed">
+                    {{ description }}
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Accent line -->
+              <div class="h-0.5 w-6 bg-gradient-to-r from-blue-500 to-cyan-600 mt-3"></div>
             </div>
+            
+            <!-- Hover indicator -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-blue-500 to-cyan-600"></div>
           </div>
         </div>
 
@@ -124,49 +191,61 @@ const institutionColors = {
           <div 
             v-for="(person, index) in team" 
             :key="person.name"
-            class="team-member-card border border-gray-200 p-4 bg-white shadow-sm hover:shadow transition-all duration-300 hover:border-cyan-200 group"
-            :style="`transition-delay: ${index * 30}ms`"
+            class="group relative h-full transform transition-all duration-500 hover:scale-105"
+            @mouseenter="teamMemberHovered = index"
+            @mouseleave="teamMemberHovered = null"
           >
-            <!-- Photo Container -->
-            <div class="relative mb-3 overflow-hidden bg-gray-50">
-              <div class="aspect-square w-full">
+            <!-- Animated background gradient -->
+            <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                 :class="`${teamGradients[index % teamGradients.length]}`"></div>
+            
+            <!-- Main card -->
+            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-4 overflow-hidden h-full flex flex-col"
+                 :class="teamMemberHovered === index ? 'border-cyan-300' : ''">
+              
+              <!-- Background icon glow -->
+              <div class="absolute top-0 right-0 -mr-8 -mt-8 w-20 h-20 rounded-full opacity-5 transition-all duration-500"
+                   :class="`bg-gradient-to-br ${teamGradients[index % teamGradients.length]}`"></div>
+              
+              <!-- Photo Container -->
+              <div class="relative mb-4 overflow-hidden aspect-square bg-gray-100">
                 <NuxtImg
                   :src="person.photo"
                   :alt="person.name"
-                  class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                  class="w-full h-full object-cover transform transition-transform duration-500"
+                  :class="teamMemberHovered === index ? 'scale-110' : 'scale-100'"
                   loading="lazy"
                   format="webp"
                   quality="85"
                 />
+                
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t opacity-0 transition-opacity duration-500"
+                     :class="teamMemberHovered === index ? `from-black/60 via-black/20 to-transparent opacity-100` : 'from-transparent'"></div>
+                
+                <!-- Role Badge on hover -->
+                <div v-if="person.role" class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span class="inline-block px-2 py-1 bg-white text-xs font-bold text-gray-900">
+                    {{ person.role }}
+                  </span>
+                </div>
               </div>
               
-              <!-- Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              <!-- Corner Badge -->
-              <div class="absolute top-2 right-2 bg-white px-2 py-1 shadow">
-                <UIcon name="i-heroicons-user" class="w-3 h-3 text-cyan-600" />
-              </div>
-            </div>
-            
-            <!-- Info -->
-            <div class="text-center space-y-1">
-              <div class="font-bold text-gray-900 text-sm group-hover:text-cyan-700 transition-colors duration-200">
-                {{ person.name }}
+              <!-- Info -->
+              <div class="relative z-10 flex-1 flex flex-col">
+                <div class="font-bold text-gray-900 text-sm leading-tight transition-colors duration-300"
+                     :class="teamMemberHovered === index ? 'text-cyan-700' : ''">
+                  {{ person.name }}
+                </div>
+                
+                <div v-if="person.title" class="text-xs text-gray-600 mt-2 flex-1">
+                  {{ person.title }}
+                </div>
               </div>
               
-              <div v-if="person.title" class="text-xs text-gray-600">
-                {{ person.title }}
-              </div>
-              
-              <div v-if="person.role" class="text-xs font-medium mt-1">
-                <span class="px-2 py-1 bg-gradient-to-r from-cyan-50 to-blue-50 text-cyan-700">
-                  {{ person.role }}
-                </span>
-              </div>
-              
-              <!-- Bottom accent -->
-              <div class="h-0.5 w-6 bg-gradient-to-r from-cyan-500/20 to-blue-900/20 mx-auto mt-2 group-hover:w-12 transition-all duration-300"></div>
+              <!-- Bottom accent line -->
+              <div class="mt-3 h-1 w-full opacity-0 group-hover:opacity-100 transition-all duration-500"
+                   :class="`bg-gradient-to-r ${teamGradients[index % teamGradients.length]}`"></div>
             </div>
           </div>
         </div>

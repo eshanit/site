@@ -26,6 +26,14 @@ const funders = [
 
 // State for hover effects
 const hoveredFunder = ref<number | null>(null);
+
+const funderGradients = [
+  'from-cyan-500 to-blue-900',
+  'from-cyan-500 to-blue-700',
+  'from-blue-500 to-cyan-600'
+]
+
+const getFunderGradient = (index: number) => `bg-gradient-to-br ${funderGradients[index % funderGradients.length]}`
 </script>
 
 <template>
@@ -57,13 +65,23 @@ const hoveredFunder = ref<number | null>(null);
           <div 
             v-for="(funder, index) in funders" 
             :key="index"
-            class="group border border-gray-200 p-8 transition-all duration-300 hover:border-cyan-300 hover:shadow-sm bg-gradient-to-b from-white to-gray-50/50"
-            :class="hoveredFunder === index ? 'border-cyan-400' : ''"
             @mouseenter="hoveredFunder = index"
             @mouseleave="hoveredFunder = null"
+            class="group relative transform transition-all duration-500 hover:scale-105"
           >
+            <!-- Animated gradient glow -->
+            <div 
+              :class="[
+                'absolute inset-0 rounded-lg blur-xl transition-opacity duration-500',
+                getFunderGradient(index),
+                hoveredFunder === index ? 'opacity-60' : 'opacity-0'
+              ]"
+            ></div>
+            
+            <!-- Card -->
+            <div class="relative backdrop-blur-sm bg-white/95 border border-white/20 p-8 rounded-lg shadow-lg transition-all duration-300 group-hover:bg-white h-full min-h-80 flex flex-col">
             <!-- Logo Container with enhanced background for transparency -->
-            <div class="h-24 mb-6 flex items-center justify-center relative">
+            <div class="h-24 mb-6 flex items-center justify-center relative flex-shrink-0">
               <!-- Background for better logo visibility -->
               <div class="absolute inset-0 bg-gradient-to-br from-white to-gray-50/70 group-hover:from-cyan-50/30 group-hover:to-blue-50/30 transition-all duration-300"></div>
               
@@ -93,7 +111,7 @@ const hoveredFunder = ref<number | null>(null);
             </div>
             
             <!-- Organization Name -->
-            <h3 class="text-xl font-bold text-gray-900 text-center mb-2 group-hover:text-cyan-600 transition-colors duration-300">
+            <h3 class="text-xl font-bold text-gray-900 text-center mb-2 group-hover:text-transparent bg-gradient-to-r transition-all duration-300" :class="hoveredFunder === index ? getFunderGradient(index) + ' bg-clip-text' : ''">
               {{ funder.name }}
             </h3>
             
@@ -102,7 +120,7 @@ const hoveredFunder = ref<number | null>(null);
             </p>
             
             <!-- Website Link -->
-            <div class="text-center">
+            <div class="text-center mt-auto pt-6">
               <a 
                 :href="`https://${funder.website}`" 
                 target="_blank" 
@@ -113,6 +131,14 @@ const hoveredFunder = ref<number | null>(null);
                 <span>{{ funder.website }}</span>
                 <UIcon name="i-heroicons-arrow-up-right" class="w-3 h-3 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
               </a>
+            </div>
+            
+            <!-- Bottom accent bar -->
+            <div :class="[
+              'absolute bottom-0 left-0 h-1 rounded-b-lg transition-all duration-300',
+              getFunderGradient(index),
+              hoveredFunder === index ? 'w-full' : 'w-0'
+            ]"></div>
             </div>
           </div>
         </div>
