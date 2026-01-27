@@ -33,13 +33,13 @@ onMounted(() => {
     </div>
 
     <!-- Main content - full width -->
-    <div class="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-20 md:py-32 lg:py-48">
+    <div class="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-20 lg:py-28">
       <div class="w-full">
         <!-- Grid layout -->
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
           <!-- Text content -->
           <div
-            class="space-y-12 transform transition-all duration-1000"
+            class="space-y-8 transform transition-all duration-1000"
             :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
           >
             <!-- Badge -->
@@ -80,7 +80,7 @@ onMounted(() => {
             </div>
 
             <!-- Action buttons - no rounding -->
-            <div class="flex flex-col sm:flex-row gap-4 pt-12">
+            <div class="flex flex-col sm:flex-row gap-4 pt-8">
               <NuxtLink
                 :to="'/programs'"
                 class="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 text-lg text-center overflow-hidden"
@@ -163,7 +163,7 @@ onMounted(() => {
             </div>
 
             <!-- Bottom quote card - straight edges -->
-            <div class="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 border border-cyan-200 p-10 transform transition-all duration-500 hover:-translate-y-1">
+            <div class="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 border border-cyan-200 p-6 transform transition-all duration-500 hover:-translate-y-1">
               <p class="text-gray-700 italic">
                 "Empowering youth today builds a stronger Africa tomorrow."
               </p>
@@ -176,7 +176,7 @@ onMounted(() => {
         </div>
 
         <!-- Scroll indicator - straight edges -->
-        <div class="mt-20 flex justify-center">
+        <div class="mt-16 flex justify-center">
           <div class=" text-cyan-500">
             <UIcon name="i-heroicons-chevron-double-down" class="w-8 h-8" />
           </div>
