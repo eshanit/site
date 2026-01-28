@@ -279,8 +279,6 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Bottom gradient accent -->
-    <div class="h-1 w-full bg-gradient-to-r from-cyan-500 via-blue-700 to-blue-900"></div>
   </div>
 </template>
 

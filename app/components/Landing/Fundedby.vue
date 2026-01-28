@@ -37,7 +37,7 @@ const getFunderGradient = (index: number) => `bg-gradient-to-br ${funderGradient
 </script>
 
 <template>
-  <div class="w-full relative bg-white border-t border-gray-200">
+  <div class="w-full relative bg-white">
     <!-- Content Container -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
       
