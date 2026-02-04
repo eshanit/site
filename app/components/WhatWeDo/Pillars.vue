@@ -11,9 +11,9 @@ const pillars = [
       'Our program incorporates cognitive-behavioral techniques to help participants recognize triggers and develop alternative responses to substance use.',
       'We provide ongoing support and monitoring to ensure sustainable change and prevent relapse through community reinforcement approaches.'
     ],
-    icon: 'i-heroicons-heart',
-    color: 'from-cyan-500 to-blue-500',
-    dotColor: 'bg-cyan-500'
+    icon: 'i-heroicons-shield-check',
+    color: 'blue',
+    dotColor: 'bg-blue-600'
   },
   {
     title: 'Gender Inclusion',
@@ -23,8 +23,8 @@ const pillars = [
       'Our approach fosters inclusive environments where all individuals feel valued and respected regardless of gender identity.'
     ],
     icon: 'i-heroicons-scale',
-    color: 'from-purple-500 to-pink-500',
-    dotColor: 'bg-purple-500'
+    color: 'orange',
+    dotColor: 'bg-orange-500'
   },
   {
     title: 'Vocational Integration',
@@ -34,7 +34,7 @@ const pillars = [
       'Our vocational support includes resume building, interview preparation, and workplace etiquette training for long-term success.'
     ],
     icon: 'i-heroicons-briefcase',
-    color: 'from-green-500 to-emerald-500',
+    color: 'green',
     dotColor: 'bg-green-500'
   },
   {
@@ -45,10 +45,46 @@ const pillars = [
       'Our peer support model emphasizes empowerment, with experienced participants mentoring newcomers to create a cycle of positive change.'
     ],
     icon: 'i-heroicons-user-group',
-    color: 'from-orange-500 to-amber-500',
-    dotColor: 'bg-orange-500'
+    color: 'purple',
+    dotColor: 'bg-purple-500'
   }
 ]
+
+// Color mapping from design system
+const colorClasses = {
+  blue: {
+    bg: 'bg-blue-600',
+    text: 'text-blue-600',
+    border: 'border-blue-600',
+    bgLight: 'bg-blue-50',
+    fromTo: 'from-blue-500 to-blue-700'
+  },
+  orange: {
+    bg: 'bg-orange-500',
+    text: 'text-orange-600',
+    border: 'border-orange-500',
+    bgLight: 'bg-orange-50',
+    fromTo: 'from-orange-400 to-orange-600'
+  },
+  green: {
+    bg: 'bg-green-500',
+    text: 'text-green-600',
+    border: 'border-green-500',
+    bgLight: 'bg-green-50',
+    fromTo: 'from-green-400 to-green-600'
+  },
+  purple: {
+    bg: 'bg-purple-500',
+    text: 'text-purple-600',
+    border: 'border-purple-500',
+    bgLight: 'bg-purple-50',
+    fromTo: 'from-purple-400 to-purple-600'
+  }
+}
+
+const getColorClass = (color: string, type: keyof typeof colorClasses.blue) => {
+  return colorClasses[color as keyof typeof colorClasses][type]
+}
 
 // Refs for elements
 const containerRef = ref<HTMLElement | null>(null)
@@ -63,16 +99,13 @@ const { height: windowHeight } = useWindowSize()
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v))
 
 // Compute element page top from useElementBounding + scrollY
-// elementPageTop = boundingClientRect.top + scrollY
 const containerPageTop = computed(() => {
-  // boundingClientRect.top might be undefined initially; guard it
   const top = Number(containerRect.top?.value ?? 0)
   return top + scrollY.value
 })
 
-// Compute a scroll position relative to the container (same semantics as your old code)
+// Compute scroll position relative to the container
 const relativeScroll = computed(() => {
-  // scrollTop within container: scrollY - containerPageTop
   return scrollY.value - containerPageTop.value
 })
 
@@ -80,7 +113,6 @@ const relativeScroll = computed(() => {
 const scrollPercentage = computed(() => {
   const height = Number(containerRect.height?.value ?? 0)
   if (height <= 0) return 0
-  // keep the same visual offset you had before: add 40% of viewport
   const adjusted = relativeScroll.value + windowHeight.value * 0.4
   return clamp(adjusted / height, 0, 1)
 })
@@ -101,7 +133,13 @@ const pillarProgress = computed(() => {
   return clamp(progress, 0, 1)
 })
 
-// For fade-in visibility per pillar (used for adding classes / extra animations)
+// Safe color accessor for active pillar
+const activePillarColor = computed(() => {
+  const pillar = pillars[activePillar.value]
+  return pillar?.color || pillars[0]?.color || 'blue'
+})
+
+// For fade-in visibility per pillar
 const pillarVisible = ref<boolean[]>(Array(pillars.length).fill(false))
 let intersectionObservers: IntersectionObserver[] = []
 
@@ -109,7 +147,7 @@ const createObservers = async () => {
   // Wait for DOM refs to be set
   await nextTick()
 
-  // Clean up existing observers (if any)
+  // Clean up existing observers
   intersectionObservers.forEach(o => o.disconnect())
   intersectionObservers = []
 
@@ -120,9 +158,6 @@ const createObservers = async () => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             pillarVisible.value[index] = true
-          } else {
-            // keep true once visible (optional). If you want toggle, set false.
-            // pillarVisible.value[index] = false
           }
         })
       },
@@ -137,9 +172,7 @@ const createObservers = async () => {
 }
 
 onMounted(() => {
-  // create observers when component mounts and when DOM updates
   createObservers()
-  // If pillars or refs change dynamically you can re-run createObservers()
 })
 
 onUnmounted(() => {
@@ -149,30 +182,55 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="py-24 px-4 md:px-10 overflow-hidden">
-    <!-- Heading -->
-    <div class="text-center mb-24 max-w-4xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-        Our Pillars of Change
-      </h2>
-      <p class="text-lg text-gray-600">
-        Four interconnected approaches that create sustainable transformation
-      </p>
+  <section ref="containerRef" class="py-16 md:py-24 px-4 md:px-8 lg:px-12 bg-white">
+    <!-- Section Header -->
+    <div class="max-w-7xl mx-auto mb-16 md:mb-24">
+      <div class="inline-flex items-center gap-3 mb-6">
+        <div class="w-3 h-3 bg-blue-600"></div>
+        <span class="text-sm font-semibold text-blue-700 font-poppins uppercase tracking-wider">Framework & Approach</span>
+      </div>
+      
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-poppins leading-tight mb-6">
+            Our Pillars of
+            <span class="text-blue-600 block">Sustainable Change</span>
+          </h2>
+          
+          <div class="h-1 w-24 bg-blue-600 mb-8"></div>
+          
+          <p class="text-lg text-gray-700 font-inter leading-relaxed mb-6">
+            Four interconnected approaches creating holistic transformation through evidence-based, peer-led interventions.
+          </p>
+        </div>
+        
+        <div class="bg-blue-50 p-6 border-l-4 border-blue-600">
+          <div class="flex items-start gap-4">
+            <UIcon name="i-heroicons-light-bulb" class="w-8 h-8 text-blue-600 mt-1 flex-shrink-0" />
+            <div>
+              <h3 class="text-xl font-bold text-blue-700 font-poppins mb-2">Evidence-Based Design</h3>
+              <p class="text-gray-700 font-inter">
+                Each pillar integrates rigorous research with community-led implementation for maximum impact.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Timeline Container -->
-    <div class="relative max-w-7xl mx-auto">
-      <!-- Vertical Line (at 30% mark) -->
+    <div class="relative max-w-6xl mx-auto">
+      <!-- Vertical Line -->
       <div class="timeline-line absolute top-0 bottom-0 w-0.5 bg-gray-200 z-0"></div>
       
-      <!-- Moving Dot (follows the vertical line) -->
+      <!-- Moving Dot -->
       <div
-        class="timeline-dot absolute w-5 h-5 rounded-full border-4 border-white shadow-xl transform -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300"
-        :class="pillars[activePillar]!.dotColor"
+        class="timeline-dot absolute w-5 h-5 border-4 border-white shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300"
+        :class="getColorClass(activePillarColor, 'bg')"
         :style="{
-          /* generic formula that supports any number of pillars */
           top: `${(activePillar + pillarProgress) * (100 / pillars.length)}%`
         }"
+        aria-hidden="true"
       ></div>
 
       <!-- Pillar Items -->
@@ -181,18 +239,18 @@ onUnmounted(() => {
           v-for="(pillar, index) in pillars"
           :key="index"
           :ref="el => (pillarRefs[index] = el as HTMLElement)"
-          class="pillar-item mb-36 opacity-30 transition-all duration-700"
+          class="pillar-item mb-24 md:mb-32 opacity-30 transition-all duration-700"
           :class="{
             'opacity-100': index <= activePillar,
             'pillar-active': index === activePillar,
-            // add 'visible' class when intersection observer reports visible
             'opacity-100 translate-y-0': pillarVisible[index]
           }"
         >
           <!-- Static dot on timeline -->
           <div 
-            class="timeline-static-dot absolute w-4 h-4 rounded-full transform -translate-x-1/2 -translate-y-2 z-10 transition-all duration-500"
-            :class="index <= activePillar ? 'scale-125 ' + pillar.dotColor : 'scale-100 bg-gray-300'"
+            class="timeline-static-dot absolute w-4 h-4 transform -translate-x-1/2 -translate-y-2 z-10 transition-all duration-500"
+            :class="index <= activePillar ? 'scale-125 ' + getColorClass(pillar.color, 'bg') : 'scale-100 bg-gray-300'"
+            aria-hidden="true"
           ></div>
 
           <!-- Title Column (Left - 30%) -->
@@ -200,25 +258,35 @@ onUnmounted(() => {
             <div class="flex flex-col items-end">
               <!-- Icon -->
               <div
-                :class="`w-16 h-16 bg-gradient-to-r ${pillar.color} flex items-center justify-center shadow-lg mb-6 transition-all duration-500`"
+                class="w-16 h-16 flex items-center justify-center shadow-md mb-6 transition-all duration-500"
+                :class="[
+                  getColorClass(pillar.color, 'bg'),
+                  'text-white',
+                  index === activePillar ? 'scale-110' : 'scale-100'
+                ]"
                 :style="{
                   opacity: index <= activePillar ? 1 : 0.4,
                   transform: index === activePillar ? 'translateX(0) scale(1.1)' : 'translateX(-20px) scale(1)'
                 }"
               >
-                <UIcon :name="pillar.icon" class="w-8 h-8 text-white" />
+                <UIcon :name="pillar.icon" class="w-8 h-8" />
               </div>
               
               <!-- Title -->
               <h3
-                class="text-2xl font-bold text-right transition-all duration-500"
-                :class="index <= activePillar ? 'text-gray-900' : 'text-gray-400'"
+                class="text-2xl font-bold text-right font-poppins transition-all duration-500 mb-3"
+                :class="index <= activePillar ? getColorClass(pillar.color, 'text') : 'text-gray-400'"
                 :style="{
                   transform: index === activePillar ? 'translateX(0)' : 'translateX(-10px)'
                 }"
               >
                 {{ pillar.title }}
               </h3>
+              
+              <!-- Pillar Number -->
+              <div class="text-sm font-medium text-gray-500 font-inter">
+                Pillar {{ index + 1 }}
+              </div>
             </div>
           </div>
 
@@ -235,7 +303,7 @@ onUnmounted(() => {
                 class="overflow-hidden"
               >
                 <p 
-                  class="text-lg leading-relaxed transition-all duration-700"
+                  class="text-lg leading-relaxed font-inter transition-all duration-700"
                   :style="{
                     opacity: index === activePillar ? 1 : index < activePillar ? 0.8 : 0.3,
                     transform: index === activePillar ? 'translateX(0)' : 'translateX(30px)',
@@ -250,13 +318,42 @@ onUnmounted(() => {
             <!-- Progress indicator for current pillar -->
             <div 
               v-if="index === activePillar"
-              class="mt-8 h-2 w-full bg-gray-200 rounded-full overflow-hidden transition-all duration-300"
+              class="mt-8 h-2 w-full bg-gray-200 overflow-hidden transition-all duration-300"
+              aria-label="Progress through this pillar"
             >
               <div 
-                class="h-full rounded-full transition-all duration-300"
-                :class="pillar.color.replace('from-', 'bg-gradient-to-r from-')"
+                class="h-full transition-all duration-300"
+                :class="getColorClass(pillar.color, 'bg')"
                 :style="{ width: `${pillarProgress * 100}%` }"
+                role="progressbar"
+                :aria-valuenow="pillarProgress * 100"
+                aria-valuemin="0"
+                aria-valuemax="100"
               ></div>
+            </div>
+            
+            <!-- Key Outcome -->
+            <div 
+              v-if="index === activePillar"
+              class="mt-8 p-6 border-l-4 transition-all duration-500"
+              :class="getColorClass(pillar.color, 'bgLight') + ' ' + getColorClass(pillar.color, 'border')"
+              :style="{
+                opacity: pillarProgress > 0.5 ? 1 : 0,
+                transform: pillarProgress > 0.5 ? 'translateX(0)' : 'translateX(20px)'
+              }"
+            >
+              <div class="flex items-start gap-3">
+                <UIcon name="i-heroicons-check-circle" class="w-6 h-6 mt-1 flex-shrink-0" :class="getColorClass(pillar.color, 'text')" />
+                <div>
+                  <h4 class="font-bold font-poppins mb-1" :class="getColorClass(pillar.color, 'text')">Key Outcome</h4>
+                  <p class="text-gray-700 font-inter text-sm">
+                    {{ index === 0 ? 'Reduced substance use and increased coping skills' :
+                       index === 1 ? 'More equitable gender beliefs and reduced stereotypes' :
+                       index === 2 ? 'Increased employment readiness and economic independence' :
+                       'Stronger community networks and peer support systems' }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -264,39 +361,104 @@ onUnmounted(() => {
 
       <!-- Scroll Indicator -->
       <div class="text-center mt-20 pt-8 border-t border-gray-200">
-        <div class="inline-flex items-center space-x-2 mb-3">
+        <div class="inline-flex items-center space-x-2 mb-4">
           <UIcon name="i-heroicons-arrow-down" class="w-5 h-5 text-gray-400 animate-bounce" />
-          <p class="text-gray-500 text-sm font-medium">
-            Scroll to explore
+          <p class="text-gray-500 text-sm font-medium font-inter">
+            Scroll to explore each pillar
           </p>
         </div>
-        <div class="flex justify-center space-x-3">
+        
+        <div class="flex justify-center space-x-4 mb-8">
           <div 
             v-for="(pillar, index) in pillars"
             :key="index"
             class="flex flex-col items-center"
           >
-            <div 
-              class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-              :class="index <= activePillar ? pillar.dotColor + ' text-white' : 'bg-gray-200 text-gray-400'"
+            <button
+              @click="activePillar = index; window.scrollTo({ top: containerPageTop + (index * (containerRect.height / pillars.length)), behavior: 'smooth' })"
+              :class="[
+                'w-10 h-10 flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2',
+                index <= activePillar ? getColorClass(pillar.color, 'bg') + ' text-white' : 'bg-gray-100 text-gray-400',
+                index === activePillar ? 'ring-2 ' + getColorClass(pillar.color, 'bg') : ''
+              ]"
+              :aria-label="`Jump to ${pillar.title} pillar`"
+              :aria-current="index === activePillar ? 'step' : null"
             >
               <UIcon :name="pillar.icon" class="w-5 h-5" />
-            </div>
+            </button>
             <span 
-              class="text-xs font-medium mt-2 transition-all duration-300"
+              class="text-xs font-medium mt-2 transition-all duration-300 font-poppins"
               :class="index <= activePillar ? 'text-gray-900' : 'text-gray-400'"
             >
               {{ index + 1 }}
             </span>
           </div>
         </div>
+        
+        <p class="text-sm text-gray-600 font-inter max-w-2xl mx-auto">
+          Each pillar represents a core component of the PEGISUS framework, working together to create holistic youth empowerment.
+        </p>
       </div>
     </div>
-  </div>
+
+    <!-- Bottom CTA -->
+    <div class="mt-24 pt-8 border-t border-gray-200">
+      <div class="max-w-4xl mx-auto text-center">
+        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins mb-6">
+          Ready to Implement This Framework?
+        </h3>
+        
+        <p class="text-lg text-gray-600 mb-8 font-inter max-w-2xl mx-auto">
+          Contact us to Access our complete implementation guide, training materials, and evaluation tools.
+        </p>
+        
+        <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <NuxtLink
+            to="/resources"
+            class="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-blue-900 font-bold font-poppins shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-3 group"
+            aria-label="Download implementation resources"
+          >
+            <UIcon name="i-heroicons-document-arrow-down" class="w-5 h-5" />
+            <span>Download Resources</span>
+          </NuxtLink>
+          
+          <NuxtLink
+            to="/training"
+            class="px-8 py-4 bg-white text-blue-600 border-2 border-blue-600 font-bold font-poppins shadow-sm hover:shadow transition-all duration-300 hover:bg-blue-50 flex items-center justify-center gap-3 group"
+            aria-label="Learn about training opportunities"
+          >
+            <UIcon name="i-heroicons-academic-cap" class="w-5 h-5" />
+            <span>Training Programs</span>
+          </NuxtLink>
+        </div> -->
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
-/* Same styles as before */
+/* Remove all border-radius */
+* {
+  border-radius: 0 !important;
+}
+
+/* Font family utilities */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* WCAG-compliant focus styles */
+a:focus,
+button:focus {
+  outline: 2px solid #1E3A8A;
+  outline-offset: 2px;
+}
+
+/* Timeline layout */
 .pillar-item {
   position: relative;
   min-height: 300px;
@@ -323,55 +485,92 @@ onUnmounted(() => {
   width: 75%;
 }
 
+/* Smooth transitions */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, 
+                      opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
 
-.pillar-active {
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .pillar-item,
+  .timeline-dot {
+    transition: none !important;
+  }
+  
+  .animate-bounce {
+    animation: none;
+  }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+/* Print styles */
+@media print {
+  .timeline-line,
+  .timeline-dot,
+  .timeline-static-dot {
+    display: none;
   }
-  50% {
-    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0.1);
+  
+  .pillar-item {
+    break-inside: avoid;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .bg-orange-500,
+  .bg-blue-600,
+  .bg-green-500,
+  .bg-purple-500 {
+    background-color: #f8fafc !important;
+    -webkit-print-color-adjust: exact;
   }
 }
 
-.pillar-active .title-column h3 {
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .title-column {
+    width: 30%;
+  }
+  
+  .description-column {
+    margin-left: 30%;
+    width: 70%;
+  }
+  
+  .timeline-line,
+  .timeline-dot,
+  .timeline-static-dot {
+    left: 30%;
+  }
 }
 
 @media (max-width: 768px) {
   .pillar-item {
-    flex-direction: column;
     min-height: 400px;
+    margin-bottom: 4rem !important;
   }
   
-  .timeline-line {
-    left: 2rem !important;
-  }
-  
-  .timeline-dot {
-    left: 2rem !important;
-  }
-  
+  .timeline-line,
+  .timeline-dot,
   .timeline-static-dot {
-    left: 2rem !important;
+    display: none;
   }
   
   .title-column {
-    width: 100% !important;
     position: relative !important;
-    padding-left: 3rem !important;
+    width: 100% !important;
+    padding: 0 !important;
     margin-bottom: 2rem;
-    text-align: left !important;
   }
   
   .title-column .flex {
@@ -384,16 +583,32 @@ onUnmounted(() => {
   }
   
   .description-column {
-    margin-left: 3rem !important;
-    width: calc(100% - 3rem) !important;
+    margin-left: 0 !important;
+    width: 100% !important;
     padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .pillar-item p {
-    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+@media (max-width: 640px) {
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-4xl {
+    font-size: 2rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  .gap-4 > * {
+    width: 100%;
   }
 }
 </style>

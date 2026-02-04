@@ -222,7 +222,7 @@ const scrollToTop = () => {
               </h3>
               
               <p class="text-gray-400 text-sm">
-                Subscribe to our newsletter for the latest research, program updates, and impact stories.
+                For more information about the latest research, program updates, workshops, programes and impact stories, fill in your email below.
               </p>
 
               <!-- Success message -->
@@ -233,9 +233,9 @@ const scrollToTop = () => {
                 <div class="flex items-center space-x-3">
                   <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-green-400 flex-shrink-0" />
                   <div>
-                    <div class="font-semibold text-green-300">Subscribed!</div>
+                    <div class="font-semibold text-green-300">Added to mailing list!</div>
                     <div class="text-sm text-green-400/80 mt-1">
-                      Thank you for subscribing to our newsletter.
+                      Thank you for reaching out to us.
                     </div>
                   </div>
                 </div>

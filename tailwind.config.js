@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   theme: {
     extend: {
       fontSize: {
@@ -12,6 +13,15 @@ module.exports = {
         'base': ['1rem', { lineHeight: '1.7' }],
         'sm': ['0.875rem', { lineHeight: '1.6' }],
         'xs': ['0.75rem', { lineHeight: '1.5' }],
+      },
+      colors: {
+        // Custom dark mode colors
+        dark: {
+          900: '#0f172a', // Very dark blue
+          800: '#1e293b', // Dark blue-gray
+          700: '#334155', // Medium blue-gray
+          600: '#475569', // Light blue-gray
+        }
       }
     }
   }

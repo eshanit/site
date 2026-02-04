@@ -1,184 +1,286 @@
 <script setup lang="ts">
-// Define props for customization
+// Define props
 const props = withDefaults(defineProps<{
   backgroundImage?: string;
   ctaText?: string;
   videoText?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  subtitle?: string;
+  showMetrics?: boolean;
 }>(), {
-  backgroundImage: '/img/youth.jpg',
-  ctaText: 'Sign Up Now',
-  videoText: 'Watch Video'
+  backgroundImage: '/img/youth.webp',
+  ctaText: 'Explore Our Programs',
+  videoText: 'Watch Our Impact',
+  titleLine1: 'Empowering Youth Through',
+  titleLine2: 'Skills & Community',
+  subtitle: 'A peer-led intervention integrating substance use prevention and gender equity into vocational training across Zambia, Zimbabwe, and South Africa.',
+  showMetrics: true
 });
 
-// Mock data for animation effects
-const animatedNumbers = ref([
-  { value: 75, label: 'Youth Empowerment', suffix: '%' },
-  { value: 90, label: 'Success Rate', suffix: '%' },
-  { value: 1000, label: 'Lives Impacted', suffix: '+' }
+// Impact metrics
+const impactMetrics = ref([
+  { value: 500, label: 'Youth Reached', suffix: '+', color: 'blue' },
+  { value: 3, label: 'Countries', suffix: '', color: 'orange' },
+  { value: 10, label: 'Vocational Partners', suffix: '+', color: 'green' }
 ]);
 
+
+// Pillars
+const pillars = ref([
+  {
+    title: 'Peer-Led Approach',
+    description: 'Youth-to-youth mentorship creating sustainable change through shared experiences and community ownership.',
+    icon: 'i-heroicons-user-group',
+    iconBg: 'bg-gradient-to-br from-blue-600 to-blue-900',
+    titleColor: 'text-blue-700',
+    accentColor: 'bg-gradient-to-r from-blue-600 to-blue-900',
+    statLabel: 'Mentorship',
+    statValue: 'Yes',
+    statColor: 'text-blue-600',
+    patternColor: 'bg-blue-50',
+    cornerColor: 'from-blue-600 to-blue-900'
+  },
+  {
+    title: 'Vocational Skills',
+    description: 'Market-relevant training programs that equip youth with practical skills for sustainable economic empowerment.',
+    icon: 'i-heroicons-briefcase',
+    iconBg: 'bg-gradient-to-br from-orange-500 to-orange-700',
+    titleColor: 'text-orange-600',
+    accentColor: 'bg-gradient-to-r from-orange-500 to-orange-700',
+    statLabel: 'Skills training',
+    statValue: 'Yes',
+    statColor: 'text-orange-600',
+    patternColor: 'bg-orange-50',
+    cornerColor: 'from-orange-500 to-orange-700'
+  },
+  {
+    title: 'Holistic Support',
+    description: 'Comprehensive approach addressing substance use prevention and transforming gender beliefs for balanced development.',
+    icon: 'i-heroicons-shield-check',
+    iconBg: 'bg-gradient-to-br from-green-500 to-green-700',
+    titleColor: 'text-green-600',
+    accentColor: 'bg-gradient-to-r from-green-500 to-green-700',
+    statLabel: 'Wellness Programs',
+    statValue: 'Yes',
+    statColor: 'text-green-600',
+    patternColor: 'bg-green-50',
+    cornerColor: 'from-green-500 to-green-700'
+  },
+  {
+    title: 'Regional Impact',
+    description: 'Adaptable framework implemented across Zambia, Zimbabwe, and South Africa with localized community solutions.',
+    icon: 'i-heroicons-globe-americas',
+    iconBg: 'bg-gradient-to-br from-purple-500 to-purple-700',
+    titleColor: 'text-purple-600',
+    accentColor: 'bg-gradient-to-r from-purple-500 to-purple-700',
+    statLabel: 'Country Reach',
+    statValue: '3+',
+    statColor: 'text-purple-600',
+    patternColor: 'bg-purple-50',
+    cornerColor: 'from-purple-500 to-purple-700'
+  }
+]);
+
+// State
 const isVisible = ref(false);
+const isLoaded = ref(false);
+const hoveredMetric = ref<number | null>(null);
 
 onMounted(() => {
-  isVisible.value = true;
+  setTimeout(() => {
+    isVisible.value = true;
+  }, 100);
 });
+
+// Methods
+const handleImageLoad = () => {
+  isLoaded.value = true;
+};
+
+const getMetricColor = (color: string) => {
+  const colors = {
+    blue: 'bg-blue-500',
+    orange: 'bg-orange-500',
+    green: 'bg-green-500',
+    purple: 'bg-purple-500'
+  };
+  return colors[color as keyof typeof colors] || colors.blue;
+};
+
+const getMetricGradient = (color: string) => {
+  const gradients = {
+    blue: 'from-blue-400 to-blue-600',
+    orange: 'from-orange-400 to-orange-600',
+    green: 'from-green-400 to-green-600',
+    purple: 'from-purple-400 to-purple-600'
+  };
+  return gradients[color as keyof typeof gradients] || gradients.blue;
+};
 </script>
 
 <template>
-  <div class="w-full relative bg-gradient-to-br from-white via-cyan-50 to-blue-50">
-    <!-- Simplified background elements -->
-    <div class="absolute inset-0 z-0">
-      <div class="absolute top-0 left-0 w-1/2 h-1/2 bg-cyan-300/5"></div>
-      <div class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-blue-600/5"></div>
-    </div>
-
-    <!-- Main content - full width -->
-    <div class="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-20 lg:py-28">
-      <div class="w-full">
-        <!-- Grid layout -->
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
-          <!-- Text content -->
-          <div
-            class="space-y-8 transform transition-all duration-1000"
-            :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
-          >
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-blue-900/20 px-4 py-2 border border-cyan-200">
-              <div class="w-2 h-2 bg-cyan-500"></div>
-              <span class="text-sm font-semibold text-cyan-700">PEGISUS Initiative</span>
-            </div>
-
-            <!-- Main heading with gradient text -->
-            <div class="space-y-4">
-              <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                Creating pathways for youth to
-                <span class="relative">
-                  <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent font-extrabold">
-                    thrive
-                  </span>
-                  <span class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-900 transform scale-x-0 transition-transform duration-1000 group-hover:scale-x-100"></span>
-                </span>
-                in a rapidly changing world.
-              </h1>
-
-              <!-- Underline -->
-              <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-900 transform transition-all duration-500 hover:w-32"></div>
-            </div>
-
-            <!-- Description with highlighted countries -->
-            <div class="space-y-4">
-              <p class="text-lg text-gray-700 leading-relaxed mb-8">
-                Integrating a peer group intervention for substance use and gender beliefs into vocational training programs across
-                <span class="relative inline-block">
-                  <span class="font-bold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                    Zambia, Zimbabwe, and South Africa
-                  </span>
-                  <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-600"></span>
-                </span>
-                to empower youth with skills and confidence.
-              </p>
-            </div>
-
-            <!-- Action buttons - no rounding -->
-            <div class="flex flex-col sm:flex-row gap-4 pt-8">
-              <NuxtLink
-                :to="'/programs'"
-                class="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 text-lg text-center overflow-hidden"
-              >
-                <!-- Button content -->
-                <span class="relative flex items-center justify-center gap-2">
-                  {{ ctaText }}
-                  <UIcon name="i-heroicons-arrow-right" class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-                <!-- Shine effect -->
-                <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700">
-                  <div class="w-1/2 h-full bg-white/20 skew-x-12"></div>
-                </div>
-              </NuxtLink>
-
-              <button
-                class="group px-6 py-4 bg-white border-2 border-cyan-400 text-cyan-600 hover:text-white transition-all duration-300 font-bold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl relative overflow-hidden"
-              >
-                <!-- Background on hover -->
-                <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                <!-- Content -->
-                <span class="relative flex items-center gap-2">
-                  <UIcon name="i-heroicons-play-circle" class="w-6 h-6" />
-                  {{ videoText }}
-                </span>
-              </button>
-            </div>
-
-            <!-- Trust indicator -->
-            <div class="flex items-center gap-3 pt-10">
-              <div class="flex -space-x-2">
-                <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 border-2 border-white"></div>
-                <div class="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 border-2 border-white"></div>
-                <div class="w-8 h-8 bg-gradient-to-r from-cyan-600 to-blue-700 border-2 border-white"></div>
-              </div>
-              <span class="text-sm text-gray-600">
-                <span class="font-bold text-cyan-700">Join our</span> youth already empowered
-              </span>
-            </div>
-          </div>
-
-          <!-- Image container -->
-          <div 
-            class="relative transform transition-all duration-1000 delay-300"
-            :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
-          >
-            <!-- Main image with straight edges -->
-            <div class="relative group">
-              <!-- Main image container -->
-              <div class="relative overflow-hidden shadow-2xl">
-                <NuxtImg
-                  :src="backgroundImage"
-                  class="w-full h-[500px] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                  alt="Youth empowerment in Southern Africa"
-                  sizes="sm:100vw md:50vw lg:600px"
-                  format="webp"
-                  quality="80"
-                />
-                
-                <!-- Overlay gradient -->
-                <div class="absolute inset-0 bg-gradient-to-t from-cyan-900/30 via-transparent to-transparent"></div>
-                
-                <!-- Location badges - straight edges -->
-                <!-- <div class="absolute top-6 left-6 bg-white/95 px-4 py-2 shadow-lg">
-                  <span class="text-sm font-bold text-cyan-700">Southern Africa</span>
-                </div> -->
-                
-                <div class="absolute bottom-6 right-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-4 py-2 shadow-lg">
-                  <span class="text-sm font-bold">Empowering Youth</span>
-                </div>
+  <div class="w-full relative bg-white overflow-hidden">
+    <!-- Hero Section with Full-Width Image -->
+    <div class="relative w-full">
+      <!-- Image Container with Creative Layout -->
+      <div class="relative w-full h-[85vh] min-h-[600px] max-h-[800px] overflow-hidden">
+        <!-- Background Image -->
+        <img
+          v-if="backgroundImage"
+          :src="backgroundImage"
+          :alt="titleLine1 + ' ' + titleLine2"
+          class="w-full h-full object-cover object-center"
+          loading="eager"
+          :class="isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'"
+          @load="handleImageLoad"
+        />
+        
+        <!-- Loading Skeleton -->
+        <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
+        
+        <!-- Overlay with Creative Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-black/30 to-transparent pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-orange-500/20 via-transparent to-transparent pointer-events-none"></div>
+      </div>
+      
+      <!-- Content Overlay - Split Layout -->
+      <div class="absolute inset-0">
+        <div class="w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div class="h-full flex flex-col justify-center">
+            <!-- Main Content - Left Aligned with Better Positioning -->
+            <div 
+              class="max-w-3xl transform transition-all duration-1000 delay-300"
+              :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
+            >
+              <!-- Badge -->
+              <div class="inline-flex items-center gap-2 bg-blue-600/90 backdrop-blur-sm px-4 py-2 mb-6">
+                <UIcon name="i-heroicons-academic-cap" class="w-4 h-4 text-white" />
+                <span class="text-sm font-semibold text-white font-poppins uppercase tracking-wider">Evidence-Based Research Initiative</span>
               </div>
               
-              <!-- Stats badge - straight edges -->
-              <!-- <div class="absolute -right-4 top-1/4 bg-white p-4 shadow-xl border border-gray-200">
-                <div class="text-center">
-                  <div class="text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">3</div>
-                  <div class="text-xs text-gray-600 font-medium">Countries</div>
-                </div>
-              </div> -->
-            </div>
-
-            <!-- Bottom quote card - straight edges -->
-            <div class="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-900/10 border border-cyan-200 p-6 transform transition-all duration-500 hover:-translate-y-1">
-              <p class="text-gray-700 italic">
-                "Empowering youth today builds a stronger Africa tomorrow."
+              <!-- Main Title -->
+              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white font-poppins leading-tight mb-6">
+                <span class="block">{{ titleLine1 }}</span>
+                <span class="block text-blue-300">{{ titleLine2 }}</span>
+              </h1>
+              
+              <!-- Animated Underline -->
+              <div class="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mb-6"></div>
+              
+              <!-- Subtitle -->
+              <p class="text-lg md:text-xl text-white/90 leading-relaxed font-inter max-w-2xl mb-8">
+                {{ subtitle }}
               </p>
-              <div class="mt-3 flex items-center gap-2">
-                <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
-                <span class="text-sm font-semibold text-cyan-700">PEGISUS Team</span>
+              
+              <!-- Impact Metrics - Enhanced -->
+              <div v-if="showMetrics" class="py-6 border-t border-white/20">
+                <div class="grid grid-cols-3 gap-8">
+                  <div 
+                    v-for="(metric, index) in impactMetrics" 
+                    :key="metric.label"
+                    class="group text-left transform transition-all duration-500 hover:scale-105"
+                    @mouseenter="hoveredMetric = index"
+                    @mouseleave="hoveredMetric = null"
+                  >
+                    <!-- Metric Value -->
+                    <div class="relative mb-2">
+                      <div class="text-3xl md:text-4xl font-bold text-white font-poppins"
+                           :class="hoveredMetric === index ? 'drop-shadow-lg' : ''">
+                        {{ metric.value }}{{ metric.suffix }}
+                      </div>
+                    </div>
+                    
+                    <!-- Metric Label -->
+                    <div class="text-sm font-medium text-white/70 font-inter">
+                      {{ metric.label }}
+                    </div>
+                    
+                    <!-- Bottom Accent -->
+                    <div class="h-1 w-12 mt-2 bg-gradient-to-r transition-all duration-500"
+                         :class="[
+                           getMetricGradient(metric.color),
+                           hoveredMetric === index ? 'w-full opacity-100' : 'opacity-60'
+                         ]"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Scroll indicator - straight edges -->
-        <div class="mt-16 flex justify-center">
-          <div class=" text-cyan-500">
-            <UIcon name="i-heroicons-chevron-double-down" class="w-8 h-8" />
+    <!-- Impact Dashboard (Below Hero) -->
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 md:py-24 lg:py-32">
+      <div class="w-full max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 border-l-4 border-blue-600 mb-4">
+            <UIcon name="i-heroicons-chart-bar" class="w-4 h-4 text-blue-600" />
+            <span class="text-sm font-semibold text-blue-700 font-poppins">Impact Framework</span>
+          </div>
+          
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-poppins mb-6">
+            Our <span class="text-blue-600">Four Pillars</span> of Impact
+          </h2>
+          
+          <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-blue-900 mx-auto mb-6"></div>
+          
+          <p class="text-lg text-gray-600 font-inter max-w-3xl mx-auto">
+            A comprehensive approach to youth empowerment through evidence-based interventions and sustainable partnerships
+          </p>
+        </div>
+
+        <!-- Impact Cards with Creative Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div 
+            v-for="(pillar, index) in pillars" 
+            :key="pillar.title"
+            class="group relative bg-white border border-gray-200 p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+          >
+            <!-- Card Background Pattern -->
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                 :class="pillar.patternColor"></div>
+            
+            <!-- Card Content -->
+            <div class="relative z-10">
+              <div class="flex items-start gap-4 mb-6">
+                <div class="w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                     :class="pillar.iconBg">
+                  <UIcon :name="pillar.icon" class="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold font-poppins mb-2" :class="pillar.titleColor">
+                    {{ pillar.title }}
+                  </h3>
+                  <div class="h-1 w-8 transition-all duration-500 group-hover:w-12"
+                       :class="pillar.accentColor"></div>
+                </div>
+              </div>
+              
+              <p class="text-gray-600 font-inter mb-6">
+                {{ pillar.description }}
+              </p>
+              
+              <!-- Card Stats -->
+              <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div class="text-sm font-medium text-gray-500 font-inter">{{ pillar.statLabel }}</div>
+                <div class="text-lg font-bold font-poppins" :class="pillar.statColor">
+                  {{ pillar.statValue }}
+                </div>
+              </div>
+            </div>
+            
+            <!-- Card Corner Decoration -->
+            <div class="absolute top-0 right-0 w-12 h-12 overflow-hidden">
+              <div class="absolute top-0 right-0 w-12 h-12 transform rotate-45 translate-x-6 -translate-y-6 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                   :class="pillar.cornerColor"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -187,61 +289,197 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Remove all border-radius globally */
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Remove all border-radius */
 * {
   border-radius: 0 !important;
 }
 
 /* Custom animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  50% {
-    transform: translateY(-10px);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Enhanced hover effects */
-.group:hover .group-hover\:scale-105 {
-  transform: scale(1.05);
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
-/* Gradient border effect */
-.gradient-border {
-  position: relative;
-  border: double 2px transparent;
-  background-image: linear-gradient(white, white), 
-                    linear-gradient(to right, #06b6d4, #1e3a8a);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+.shimmer-effect {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* WCAG-compliant focus styles */
+a:focus,
+button:focus {
+  outline: 2px solid #1E3A8A;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .bg-gradient-to-br,
+  .bg-gradient-to-r,
+  .bg-gradient-to-t {
+    background: none !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .shadow-lg, .shadow-xl, .shadow-2xl {
+    box-shadow: none !important;
+  }
+  
+  .border {
+    border: 1px solid #000 !important;
+  }
+  
+  .text-white {
+    color: #000 !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .transform,
+  .hover\:transform,
+  .group-hover\:transform {
+    transform: none !important;
+  }
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .text-6xl {
-    font-size: 3rem;
+@media (max-width: 1024px) {
+  .h-\[85vh\] {
+    height: 75vh;
   }
   
-  .text-5xl {
-    font-size: 2.5rem;
+  .lg\:col-span-7,
+  .lg\:col-span-5 {
+    grid-column: span 12;
   }
   
-  /* Ensure full width on mobile */
-  .w-full {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Ensure the main container is full width */
-.w-full {
-  width: 100%;
-  max-width: 100%;
+@media (max-width: 768px) {
+  .h-\[85vh\] {
+    height: 70vh;
+  }
+  
+  .text-7xl,
+  .text-6xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-5xl {
+    font-size: 2rem;
+  }
+  
+  .grid-cols-4,
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .h-\[85vh\] {
+    height: 65vh;
+    min-height: 500px;
+  }
+  
+  .text-4xl {
+    font-size: 1.75rem;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .bg-white\/90,
+  .bg-white\/10,
+  .bg-white\/20,
+  .backdrop-blur-sm,
+  .backdrop-blur-md {
+    background: white !important;
+    backdrop-filter: none !important;
+  }
+  
+  .text-white\/90,
+  .text-white\/80 {
+    color: black !important;
+  }
+  
+  .border-white\/20,
+  .border-white\/30 {
+    border-color: black !important;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .bg-white {
+    background-color: #111827 !important;
+  }
+  
+  .text-gray-900 {
+    color: #f9fafb !important;
+  }
+  
+  .text-gray-600,
+  .text-gray-700 {
+    color: #d1d5db !important;
+  }
+  
+  .border-gray-200 {
+    border-color: #374151 !important;
+  }
+  
+  .bg-gray-100 {
+    background-color: #1f2937 !important;
+  }
+  
+  .bg-white\/95,
+  .bg-white\/10 {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+  }
 }
 </style>

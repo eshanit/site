@@ -3,326 +3,380 @@ import { ref, onMounted } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 
 const highlights = [
-  { number: '8', label: 'Sessions', description: 'Comprehensive program structure', icon: 'i-heroicons-calendar' },
-  { number: '16-24', label: 'Age Range', description: 'Targeted youth demographic', icon: 'i-heroicons-users' },
-  { number: '2', label: 'Science-backed Programs', description: 'RAD-PAL & Manhood 2.0 foundation', icon: 'i-heroicons-beaker' },
-  { number: 'Peer', label: 'Education Model', description: 'Community-driven approach', icon: 'i-heroicons-chat-bubble-left-right' }
+  { 
+    number: '8', 
+    label: 'Sessions', 
+    description: 'Comprehensive program structure', 
+    icon: 'i-heroicons-calendar',
+    color: 'blue'
+  },
+  { 
+    number: '16-24', 
+    label: 'Age Range', 
+    description: 'Targeted youth demographic', 
+    icon: 'i-heroicons-users',
+    color: 'orange'
+  },
+  { 
+    number: '2', 
+    label: 'Science-backed Programs', 
+    description: 'RAD-PAL & Manhood 2.0 foundation', 
+    icon: 'i-heroicons-beaker',
+    color: 'green'
+  },
+  { 
+    number: 'Peer', 
+    label: 'Education Model', 
+    description: 'Community-driven approach', 
+    icon: 'i-heroicons-chat-bubble-left-right',
+    color: 'purple'
+  }
 ]
 
-// reveal flags
-const heroVisible = ref(false)
-const highlightsVisible = ref(false)
-const animatedHighlights = ref(false)
-const highlightHovered = ref<number | null>(null)
+// State
+const isVisible = ref(false)
+const isLoaded = ref(false)
+const hoveredHighlight = ref<number | null>(null)
 
-// Gradient colors for each highlight
-const highlightGradients = [
-  'from-cyan-500 to-blue-900',
-  'from-cyan-500 to-blue-700',
-  'from-cyan-500 to-emerald-600',
-  'from-blue-700 to-cyan-500'
-]
-
-const getHighlightGradient = (index: number) => {
-  return `bg-gradient-to-br ${highlightGradients[index % highlightGradients.length]}`
+// Color mapping
+const colorClasses = {
+  blue: {
+    bg: 'bg-blue-600',
+    text: 'text-blue-600',
+    border: 'border-blue-600',
+    bgLight: 'bg-blue-50',
+    hover: 'hover:bg-blue-50',
+    gradient: 'from-blue-600 to-blue-900'
+  },
+  orange: {
+    bg: 'bg-orange-500',
+    text: 'text-orange-600',
+    border: 'border-orange-500',
+    bgLight: 'bg-orange-50',
+    hover: 'hover:bg-orange-50',
+    gradient: 'from-orange-500 to-orange-700'
+  },
+  green: {
+    bg: 'bg-green-500',
+    text: 'text-green-600',
+    border: 'border-green-500',
+    bgLight: 'bg-green-50',
+    hover: 'hover:bg-green-50',
+    gradient: 'from-green-500 to-green-700'
+  },
+  purple: {
+    bg: 'bg-purple-500',
+    text: 'text-purple-600',
+    border: 'border-purple-500',
+    bgLight: 'bg-purple-50',
+    hover: 'hover:bg-purple-50',
+    gradient: 'from-purple-500 to-purple-700'
+  }
 }
 
-// Quick stats data
+const getColorClass = (color: string, type: keyof typeof colorClasses.blue) => {
+  return colorClasses[color as keyof typeof colorClasses][type]
+}
+
+// Quick stats
 const quickStats = [
-  { value: '3', label: 'Countries', description: 'Zambia, Zimbabwe, South Africa', icon: 'i-heroicons-globe-europe-africa' },
-  { value: '500+', label: 'Youth Impacted', description: 'Active participants', icon: 'i-heroicons-users' }
+  { 
+    value: '3', 
+    label: 'Countries', 
+    description: 'Zambia, Zimbabwe, South Africa', 
+    icon: 'i-heroicons-globe-europe-africa',
+    color: 'blue'
+  },
+  { 
+    value: '500+', 
+    label: 'Youth Impacted', 
+    description: 'Active participants', 
+    icon: 'i-heroicons-users',
+    color: 'orange'
+  }
 ]
 
-const quickStatHovered = ref<number | null>(null)
+// Methods
+const handleImageLoad = () => {
+  isLoaded.value = true
+}
 
-// small delay to stagger highlights after reveal
 onMounted(() => {
-  // add slight stagger for highlight entrance after they become visible
-  const { stop } = useIntersectionObserver(() => document.querySelector('#intro-highlights') as HTMLElement | null,
-    (entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          highlightsVisible.value = true
-          // stagger appearance
-          setTimeout(() => (animatedHighlights.value = true), 120)
-          stop?.()
-        }
-      })
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -80px 0px' }
-  )
-
-  useIntersectionObserver(
-    () => document.querySelector('#intro-hero') as HTMLElement | null,
-    (entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          heroVisible.value = true
-        }
-      })
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -120px 0px' }
-  )
+  setTimeout(() => {
+    isVisible.value = true
+  }, 100)
 })
 </script>
 
 <template>
-  <section id="intro-hero" class="py-24 md:py-36 px-4 md:px-10">
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <!-- Text -->
-      <div class="max-w-2xl mx-auto lg:mx-0">
-        <div class="mb-24">
-          <div class="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 mb-4"></div>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-            Peer Education for Gender Inclusion
-            <span class="block mt-4 bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">
-              and Substance Use in Southern Africa
-            </span>
-          </h2>
-        </div>
-
-        <p class="text-lg leading-relaxed text-gray-700 mb-8">
-          PEGISUS represents a groundbreaking approach to youth development, combining substance use prevention
-          with gender equity education through peer-led, community-embedded programming.
-        </p>
-
-        <!-- Quick stats -->
-        <div class="grid grid-cols-2 gap-8 md:gap-12 mt-8">
-          <div
-            v-for="(stat, i) in quickStats"
-            :key="i"
-            class="group relative transform transition-all duration-500 hover:scale-105"
-            @mouseenter="quickStatHovered = i"
-            @mouseleave="quickStatHovered = null"
-          >
-            <!-- Animated background gradient -->
-            <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                 :class="`${highlightGradients[i % highlightGradients.length]}`"></div>
-            
-            <!-- Main card -->
-            <div class="relative bg-white backdrop-blur-sm border border-gray-100 shadow-md group-hover:shadow-xl transition-all duration-500 p-10 overflow-hidden h-full"
-                  :class="quickStatHovered === i ? 'border-cyan-300' : ''">
-              
-              <!-- Background icon glow -->
-              <div class="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full opacity-5 transition-all duration-500"
-                   :class="`bg-gradient-to-br ${highlightGradients[i % highlightGradients.length]}`"></div>
-              
-              <!-- Icon -->
-              <div class="mb-4 inline-flex items-center justify-center w-10 h-10 transition-all duration-500 text-white"
-                   :class="`bg-gradient-to-br ${highlightGradients[i % highlightGradients.length]}`">
-                <UIcon :name="stat.icon" class="w-5 h-5" />
-              </div>
-              
-              <!-- Value -->
-              <div class="relative z-10">
-                <div class="text-2xl md:text-3xl font-bold transition-all duration-300 mb-1"
-                     :class="quickStatHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent ` + `${highlightGradients[i % highlightGradients.length]}` : 'text-gray-900'">
-                  {{ stat.value }}
-                </div>
-                
-                <!-- Accent line -->
-                <div class="h-0.5 w-6 transition-all duration-500 mb-3"
-                     :class="`bg-gradient-to-r ${highlightGradients[i % highlightGradients.length]}`"></div>
-                
-                <div class="text-sm font-semibold text-gray-900 mb-1 transition-colors duration-300"
-                     :class="quickStatHovered === i ? 'text-cyan-600' : ''">
-                  {{ stat.label }}
-                </div>
-                <div class="text-xs text-gray-600">
-                  {{ stat.description }}
-                </div>
-              </div>
-              
-              <!-- Hover indicator -->
-              <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                   :class="`bg-gradient-to-r ${highlightGradients[i % highlightGradients.length]}`"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hero Image -->
-      <div
-        class="relative h-[360px] md:h-[400px] overflow-hidden"
-        :class="heroVisible ? 'intro-revealed' : 'intro-hidden'"
-        aria-hidden="false"
-      >
+  <div class="w-full relative overflow-hidden">
+    <!-- Hero Section with Large Vivid Image -->
+    <section id="intro-hero" class="relative w-full">
+      <!-- Full-width Image Background -->
+      <div class="relative w-full h-[85vh] min-h-[600px] max-h-[800px] overflow-hidden">
         <!-- Main Image -->
-        <div class="relative w-full h-full">
-          <div class="absolute inset-0">
-            <NuxtImg
-              src="/img/pegisus_program_1.jpg"
-              alt="PEGISUS program session with youth participants engaged in discussion"
-              class="w-full h-full object-cover transform transition-transform duration-700"
-              :class="heroVisible ? 'scale-105' : 'scale-100'"
-              width="600"
-              height="400"
-              sizes="(max-width: 768px) 100vw, 600px"
-              loading="lazy"
-              format="webp"
-              quality="85"
-            />
-          </div>
-          
-          <!-- Overlay gradient -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-          
-          <!-- Text overlay -->
-          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
-            <div class="text-white max-w-2xl">
-              <div class="text-lg font-bold mb-2">Peer-led Sessions</div>
-              <div class="text-sm opacity-90">Interactive group discussions empowering youth through evidence-based interventions</div>
+        <img
+          src="/img/workshops.webp"
+          alt="Youth participants engaging in peer education sessions in Southern Africa"
+          class="w-full h-full object-cover object-center transition-all duration-1000"
+          :class="isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'"
+          @load="handleImageLoad"
+        />
+        
+        <!-- Loading Skeleton -->
+        <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
+        
+        <!-- Gradient Overlay for Text Readability -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+        
+        <!-- Content Overlay -->
+        <div class="absolute inset-0">
+          <div class="w-full h-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div class="h-full flex items-center">
+              <div 
+                class="max-w-2xl transform transition-all duration-1000 delay-300"
+                :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'"
+              >
+                <!-- Program Badge -->
+                <div class="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 border-l-4 border-blue-600 mb-8">
+                  <UIcon name="i-heroicons-academic-cap" class="w-4 h-4 text-blue-600" />
+                  <span class="text-sm font-semibold text-blue-700 font-poppins uppercase tracking-wider">Program Overview</span>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-poppins leading-tight mb-6">
+                  Peer Education for
+                  <span class="text-blue-300 block">Gender Inclusion</span>
+                  <span class="text-orange-300 block text-xl md:text-2xl font-inter mt-4">
+                    and Substance Use in Southern Africa
+                  </span>
+                </h1>
+
+                <!-- Animated Underline -->
+                <div class="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mb-8 transform transition-all duration-1000 delay-500"
+                     :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-24 opacity-0'"></div>
+
+                <!-- Description -->
+                <p class="text-xl text-white/90 leading-relaxed font-inter mb-10 max-w-xl">
+                  PEGISUS represents a groundbreaking, evidence-based approach to youth development, combining substance use prevention with gender equity education through peer-led, community-embedded programming.
+                </p>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 gap-6 mb-8">
+                  <div 
+                    v-for="(stat, index) in quickStats" 
+                    :key="stat.label"
+                    class="group relative bg-white/10 backdrop-blur-sm border border-white/20 p-6 hover:bg-white/15 transition-all duration-300"
+                  >
+                    <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 flex items-center justify-center text-white"
+                           :class="getColorClass(stat.color, 'bg')">
+                        <UIcon :name="stat.icon" class="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div class="text-3xl font-bold text-white font-poppins">
+                          {{ stat.value }}
+                        </div>
+                        <div class="text-sm font-semibold text-white/90 font-poppins">
+                          {{ stat.label }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CTA Buttons -->
+               
+              </div>
             </div>
           </div>
-          
-          <!-- Badge -->
-          <div class="absolute top-6 left-6 bg-gradient-to-r from-cyan-500 to-blue-900 text-white px-4 py-2 shadow-lg">
-            <span class="text-sm font-bold">Program in Action</span>
-          </div>
-
-          <!-- Bottom accent line -->
-          <div class="absolute -bottom-4 -right-4 w-32 h-1 bg-gradient-to-r from-cyan-500 to-blue-900 transform -rotate-45"></div>
         </div>
-      </div>
-    </div>
 
-    <!-- Highlights -->
-    <div id="intro-highlights" class="mt-24 md:mt-36">
-      <div class="mb-24 text-center">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">
-          Program <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Highlights</span>
-        </h3>
-        <div class="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-900 mx-auto"></div>
-      </div>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-        <div
-          v-for="(h, i) in highlights"
-          :key="i"
-          class="group relative h-full transform transition-all duration-500 hover:scale-105"
-          @mouseenter="highlightHovered = i"
-          @mouseleave="highlightHovered = null"
-        >
-          <!-- Animated background gradient -->
-          <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-none blur-xl"
-               :class="getHighlightGradient(i)"></div>
-          
-          <!-- Main card -->
-          <div class="relative bg-white backdrop-blur-sm rounded-none border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500 p-12 overflow-hidden h-full flex flex-col"
-                :class="highlightHovered === i ? 'border-cyan-300' : ''">
-            
-            <!-- Background icon glow -->
-            <div class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 rounded-full opacity-5 transition-all duration-500"
-                 :class="getHighlightGradient(i)"></div>
-            
-            <!-- Icon -->
-            <div v-if="h.icon" class="mb-6 inline-flex items-center justify-center w-14 h-14 transition-all duration-500"
-                 :class="getHighlightGradient(i) + ' text-white'">
-              <UIcon :name="h.icon" class="w-7 h-7" />
-            </div>
-            
-            <!-- Number/Label with animation -->
-            <div class="relative z-10 flex-1">
-              <div class="text-3xl md:text-4xl font-bold transition-all duration-300 mb-2"
-                   :class="highlightHovered === i ? `bg-gradient-to-r bg-clip-text text-transparent scale-105 ` + getHighlightGradient(i) : 'text-gray-900'">
-                {{ h.number }}
-              </div>
-              
-              <!-- Accent line -->
-              <div class="h-1 w-8 transition-all duration-500 mb-4"
-                   :class="getHighlightGradient(i)"></div>
-              
-              <div class="text-lg font-bold text-gray-900 mb-3 transition-colors duration-300"
-                   :class="highlightHovered === i ? 'text-cyan-600' : ''">
-                {{ h.label }}
-              </div>
-              <div class="text-sm text-gray-600 leading-relaxed">
-                {{ h.description }}
-              </div>
-            </div>
-            
-            <!-- Hover indicator -->
-            <div class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                 :class="getHighlightGradient(i)"></div>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div class="animate-bounce">
+            <UIcon name="i-heroicons-chevron-down" class="w-8 h-8 text-white/70" />
           </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Call to Action -->
-    <div class="mt-24 md:mt-36 text-center">
-      <div class="border-t border-b border-gray-200 py-12 md:py-16">
-        <div class="max-w-3xl mx-auto">
-          <h3 class="text-2xl font-bold text-gray-900 mb-8">
-            Ready to <span class="bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent">Empower Youth</span> in Your Community?
-          </h3>
-          <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-            Join our mission to create sustainable change through evidence-based, peer-led interventions.
+    </section>
+
+    <!-- Highlights Section -->
+    <section id="intro-highlights" class="relative -mt-20 z-10">
+      <div class="w-full px-4 md:px-8 lg:px-12 pb-16 md:pb-24">
+        <div class="w-full max-w-7xl mx-auto">
+          <!-- Content Card -->
+          <div 
+            class="relative bg-white shadow-2xl border border-gray-100 p-8 md:p-12 transform transition-all duration-1000"
+            :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
+          >
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+              <div class="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 border-l-4 border-blue-600 mb-4 mx-auto">
+                <UIcon name="i-heroicons-star" class="w-4 h-4 text-blue-600" />
+                <span class="text-sm font-semibold text-blue-700 font-poppins">Program Highlights</span>
+              </div>
+              
+              <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-poppins mb-6">
+                Key <span class="text-blue-600">Program Features</span>
+              </h2>
+              
+              <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-blue-900 mx-auto mb-6"></div>
+              
+              <p class="text-lg text-gray-600 font-inter max-w-3xl mx-auto">
+                Discover the essential elements that make PEGISUS an effective, evidence-based intervention for youth empowerment.
+              </p>
+            </div>
+
+            <!-- Highlights Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              <div
+                v-for="(highlight, index) in highlights"
+                :key="index"
+                class="group relative bg-white border border-gray-200 p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                @mouseenter="hoveredHighlight = index"
+                @mouseleave="hoveredHighlight = null"
+              >
+                <!-- Card Background Pattern -->
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                     :class="`bg-gradient-to-br ${getColorClass(highlight.color, 'gradient')}`"></div>
+                
+                <!-- Card Content -->
+                <div class="relative z-10">
+                  <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                         :class="getColorClass(highlight.color, 'bg')">
+                      <UIcon :name="highlight.icon" class="w-7 h-7 text-white" />
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold font-poppins mb-2" 
+                          :class="hoveredHighlight === index ? getColorClass(highlight.color, 'text') : 'text-gray-900'">
+                        {{ highlight.label }}
+                      </h3>
+                      <div class="h-1 w-8 transition-all duration-500 group-hover:w-12"
+                           :class="`bg-gradient-to-r ${getColorClass(highlight.color, 'gradient')}`"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Number -->
+                  <div class="text-4xl md:text-5xl font-bold font-poppins mb-4 transition-colors duration-300"
+                       :class="hoveredHighlight === index ? `bg-gradient-to-r ${getColorClass(highlight.color, 'gradient')} bg-clip-text text-transparent` : 'text-gray-900'">
+                    {{ highlight.number }}
+                  </div>
+                  
+                  <!-- Description -->
+                  <p class="text-gray-600 font-inter">
+                    {{ highlight.description }}
+                  </p>
+                </div>
+                
+                <!-- Card Corner Decoration -->
+                <div class="absolute top-0 right-0 w-12 h-12 overflow-hidden">
+                  <div class="absolute top-0 right-0 w-12 h-12 transform rotate-45 translate-x-6 -translate-y-6 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                       :class="`bg-gradient-to-br ${getColorClass(highlight.color, 'gradient')}`"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="w-full px-4 md:px-8 lg:px-12 py-16 md:py-24 bg-gradient-to-r from-blue-600 to-blue-900">
+      <div class="w-full max-w-7xl mx-auto">
+        <div class="text-center">
+          <div class="mb-8">
+            <UIcon name="i-heroicons-hand-raised" class="w-16 h-16 text-white/90 mx-auto" />
+          </div>
+          
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white font-poppins mb-6">
+            Ready to <span class="text-orange-300">Empower Youth</span> in Your Community?
+          </h2>
+          
+          <div class="w-16 h-1 bg-gradient-to-r from-orange-400 to-orange-300 mx-auto mb-8"></div>
+          
+          <p class="text-xl text-white/90 mb-10 font-inter max-w-3xl mx-auto">
+            Join our mission to create sustainable change through evidence-based, peer-led interventions across Southern Africa. Together, we can build stronger, healthier communities.
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <NuxtLink
               to="/contact"
-              class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-900 text-white font-bold shadow hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group"
+              class="group px-10 py-4 bg-white text-blue-600 font-bold font-poppins shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 text-lg flex items-center justify-center gap-3"
             >
-              <UIcon name="i-heroicons-envelope" class="w-5 h-5 transform group-hover:scale-110 transition-transform" />
-              <span>Contact Our Team</span>
-              <UIcon name="i-heroicons-arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+              <UIcon name="i-heroicons-hand-raised" class="w-5 h-5" />
+              <span>Get Involved</span>
+              <UIcon name="i-heroicons-arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-2" />
             </NuxtLink>
+            
             <NuxtLink
-              to="/what-we-do"
-              class="px-8 py-3 bg-white text-cyan-600 border-2 border-cyan-500 font-bold shadow hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group"
+              to="/research"
+              class="group px-10 py-4 bg-transparent text-white border-2 border-white font-bold font-poppins hover:bg-white/10 transition-all duration-300 text-lg flex items-center justify-center gap-3"
             >
-              <UIcon name="i-heroicons-information-circle" class="w-5 h-5 transform group-hover:scale-110 transition-transform" />
-              <span>Learn More</span>
+              <UIcon name="i-heroicons-document-text" class="w-5 h-5" />
+              <span>View Programs</span>
             </NuxtLink>
+          </div> -->
+
+          <!-- Trust Indicators -->
+          <div class="mt-12 pt-8 border-t border-white/20">
+            <p class="text-sm text-white/80 font-inter mb-6">Trusted by leading organizations</p>
+            <div class="flex flex-wrap justify-center gap-8 items-center">
+              <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center mb-2">
+                  <span class="text-white font-bold font-poppins text-sm">CN</span>
+                </div>
+                <span class="text-sm font-semibold text-white/90 font-poppins">Communities</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center mb-2">
+                  <UIcon name="i-heroicons-heart" class="w-6 h-6 text-white" />
+                </div>
+                <span class="text-sm font-semibold text-white/90 font-poppins">Health Institutions</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center mb-2">
+                  <UIcon name="i-heroicons-user-group" class="w-6 h-6 text-white" />
+                </div>
+                <span class="text-sm font-semibold text-white/90 font-poppins">Local NGOs</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center mb-2">
+                  <UIcon name="i-heroicons-briefcase" class="w-6 h-6 text-white" />
+                </div>
+                <span class="text-sm font-semibold text-white/90 font-poppins">Partners</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <style scoped>
-/* Remove all border-radius globally */
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Remove all border-radius */
 * {
   border-radius: 0 !important;
 }
 
-/* Core transitions */
-* {
-  transition: background-color .28s cubic-bezier(.4,0,.2,1),
-              color .28s cubic-bezier(.4,0,.2,1),
-              transform .32s cubic-bezier(.4,0,.2,1),
-              opacity .28s cubic-bezier(.4,0,.2,1);
-}
-
-/* Intro reveal animation */
-.intro-hidden {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.intro-revealed {
-  opacity: 1;
-  transform: translateX(0);
-  transition: all 700ms cubic-bezier(.4,0,.2,1);
-}
-
-/* Highlights animation - stagger entrance */
-.grid > div {
-  animation: slideUp 0.6s cubic-bezier(.2,.9,.3,1) forwards;
-  opacity: 0;
-}
-
-.grid > div:nth-child(1) { animation-delay: 0ms; }
-.grid > div:nth-child(2) { animation-delay: 80ms; }
-.grid > div:nth-child(3) { animation-delay: 160ms; }
-.grid > div:nth-child(4) { animation-delay: 240ms; }
-
-@keyframes slideUp {
+/* Custom animations */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -330,90 +384,141 @@ onMounted(() => {
   }
 }
 
-/* Hover effect for highlights */
-.group:hover {
-  border-color: #06b6d4;
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Image hover effects */
-.relative > div:first-child:hover img {
-  transform: scale(1.08);
+/* WCAG-compliant focus styles */
+a:focus,
+button:focus {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
 }
 
-/* Responsive tweaks */
+/* Print styles */
+@media print {
+  .bg-gradient-to-r,
+  .bg-gradient-to-br {
+    background: none !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .shadow-lg, .shadow-2xl {
+    box-shadow: none !important;
+  }
+  
+  .border {
+    border: 1px solid #000 !important;
+  }
+  
+  .text-white {
+    color: #000 !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .transform,
+  .hover\:transform,
+  .group-hover\:transform {
+    transform: none !important;
+  }
+}
+
+/* Responsive adjustments */
 @media (max-width: 1024px) {
+  .h-\[85vh\] {
+    height: 75vh;
+  }
+  
   .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .relative.h-\[360px\] {
-    height: 300px;
-  }
-
-  .relative > div:first-child {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .relative > div:first-child > div:first-child {
-    width: 100%;
-    height: 250px;
-  }
-
-  .relative > div:first-child > div:last-child {
-    width: 60%;
-    height: 180px;
-    margin-left: auto;
-    margin-right: 8px;
   }
 }
 
 @media (max-width: 768px) {
-  .grid-lg\:grid-cols-2 {
-    grid-template-columns: 1fr;
+  .h-\[85vh\] {
+    height: 60vh;
+    min-height: 500px;
   }
-
-  .max-w-2xl {
-    margin-left: 0;
-    margin-right: 0;
+  
+  .text-6xl {
+    font-size: 2.5rem;
   }
-
+  
+  .text-5xl {
+    font-size: 2rem;
+  }
+  
   .grid-cols-4 {
     grid-template-columns: 1fr;
-  }
-
-  .flex-col {
-    flex-direction: column;
-  }
-
-  .gap-4 > * {
-    width: 100%;
-  }
-
-  .relative.h-\[360px\] {
-    height: 280px;
-    margin-top: 20px;
   }
 }
 
 @media (max-width: 640px) {
-  .relative > div:first-child > div:last-child {
-    width: 50%;
-    height: 160px;
+  .h-\[85vh\] {
+    height: 50vh;
+    min-height: 450px;
+  }
+  
+  .text-4xl {
+    font-size: 1.75rem;
+  }
+  
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * { 
-    transition: none !important; 
-    animation: none !important; 
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .bg-white\/90,
+  .bg-white\/10,
+  .bg-white\/20,
+  .backdrop-blur-sm,
+  .backdrop-blur-md {
+    background: white !important;
+    backdrop-filter: none !important;
   }
   
-  .intro-hidden .relative > div:first-child,
-  .intro-revealed .relative > div:first-child,
-  .highlight-item {
-    opacity: 1;
-    transform: none;
+  .text-white\/90,
+  .text-white\/80 {
+    color: black !important;
+  }
+  
+  .border-white\/20,
+  .border-white\/30 {
+    border-color: black !important;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .bg-white {
+    background-color: #111827 !important;
+  }
+  
+  .text-gray-900 {
+    color: #f9fafb !important;
+  }
+  
+  .text-gray-600 {
+    color: #d1d5db !important;
+  }
+  
+  .border-gray-100 {
+    border-color: #374151 !important;
   }
 }
 </style>

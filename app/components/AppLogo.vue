@@ -27,11 +27,11 @@ const sizeClasses = {
 
 <template>
   <div class="flex items-center">
-    <!-- For navbar, use the full size without container constraints -->
+    <!-- For navbar, use fixed width to maintain consistency -->
     <AppLogoIcon 
       v-if="size === 'navbar'" 
-      size="navbar" 
-      class="w-full"
+      size="xl" 
+      class="w-64" 
     />
     <!-- For other sizes, use the constrained version -->
     <AppLogoIcon 

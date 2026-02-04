@@ -10,11 +10,11 @@ const props = withDefaults(defineProps<{
 });
 
 const sizeClasses = {
-  sm: 'h-8',
-  md: 'h-12',
-  lg: 'h-16',
-  xl: 'h-24',
-  navbar: 'h-14' // Adjusted for navbar height
+  sm: 'h-12',
+  md: 'h-16',
+  lg: 'h-24',
+  xl: 'h-32',
+  navbar: 'h-20' // Larger for navbar prominence
 };
 </script>
 
@@ -22,7 +22,7 @@ const sizeClasses = {
   <component :is="href ? 'NuxtLink' : 'div'" :to="href || undefined" class="inline-block">
     <!-- In Nuxt, public files are served from /public directory -->
     <NuxtImg
-      src="/img/pegi_logo2.png"
+      src="/img/pegi_logo_large.png"
       alt="Peer Education Center"
       :class="[sizeClasses[size], 'w-auto', className]"
       v-bind="$attrs"
