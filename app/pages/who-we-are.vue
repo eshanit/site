@@ -118,7 +118,7 @@ onMounted(() => {
 <template>
     <div class="bg-white min-h-screen">
         <!-- Hero Section -->
-        <section ref="heroRef" class="pt-16 md:pt-24 pb-16 px-4 md:px-8 lg:px-12"
+        <section ref="heroRef" class="pt-48 md:pt-48 pb-16 px-4 md:px-8 lg:px-12"
             :class="heroVisible ? 'fade-in-up' : 'opacity-0'">
             <div class="max-w-7xl mx-auto">
                 <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">

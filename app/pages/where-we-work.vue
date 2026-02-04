@@ -82,7 +82,7 @@ const getStatColor = (color: string) => {
     <div class="w-full bg-white">
         <!-- Hero Section -->
         <div 
-            class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 md:py-24 lg:py-32"
+            class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-48 md:py-48 lg:py-48"
             :class="heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
         >
             <div class="w-full max-w-7xl mx-auto">

@@ -10,11 +10,11 @@ const props = withDefaults(defineProps<{
 });
 
 const sizeClasses = {
-  sm: 'h-12',
-  md: 'h-16',
-  lg: 'h-24',
-  xl: 'h-32',
-  navbar: 'h-20' // Larger for navbar prominence
+  sm: 'h-8',
+  md: 'h-12',
+  lg: 'h-16',
+  xl: 'h-20',
+  navbar: 'h-16' // Consistent with navbar height
 };
 </script>
 

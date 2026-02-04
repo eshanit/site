@@ -14,19 +14,8 @@ useHead({
   <div>
     <!-- Hero Section -->
     <div class="bg-gradient-to-br from-white to-cyan-50">
-
-      <!-- Page Header -->
-      <!-- <div class="text-center mb-16 py-16 px-4 "
-        style="background: linear-gradient(to bottom, #0d0064, #120091, #1700b6, #1d00e5, #2000ff);">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-          <span class="text-white">What We Do</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto">
-          Transforming youth futures through evidence-based peer education and empowerment programs
-        </p>
-      </div> -->
       <div
-        class="text-center py-16 px-4 bg-cover bg-center bg-no-repeat relative overflow-hidden"
+        class="text-center pt-48 pb-16 px-4 bg-cover bg-center bg-no-repeat relative overflow-hidden"
         style="background-image: url('/img/hands.png');"
       >
         <!-- Gradient overlay for text readability -->

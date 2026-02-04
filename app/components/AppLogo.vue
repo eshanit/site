@@ -7,19 +7,19 @@ const props = withDefaults(defineProps<{
 
 const sizeClasses = {
   sm: {
-    container: 'size-6',
+    container: 'size-8',
     text: 'text-xs'
   },
   md: {
-    container: 'size-8',
+    container: 'size-12',
     text: 'text-sm'
   },
   lg: {
-    container: 'size-10',
+    container: 'size-16',
     text: 'text-base'
   },
   navbar: {
-    container: '', // No container size for navbar
+    container: 'w-64',
     text: 'text-base'
   }
 };
@@ -30,14 +30,14 @@ const sizeClasses = {
     <!-- For navbar, use fixed width to maintain consistency -->
     <AppLogoIcon 
       v-if="size === 'navbar'" 
-      size="xl" 
-      class="w-64" 
+      size="navbar" 
+      :class="sizeClasses[size].container" 
     />
     <!-- For other sizes, use the constrained version -->
     <AppLogoIcon 
       v-else 
       :size="size" 
-      :class="sizeClasses[size].container"
+      :class="sizeClasses[size]?.container"
     />
   </div>
 </template>
