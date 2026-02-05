@@ -15,7 +15,7 @@ useHead({
     <!-- Hero Section -->
     <div class="bg-gradient-to-br from-white to-cyan-50">
       <div
-        class="text-center pt-48 pb-16 px-4 bg-cover bg-center bg-no-repeat relative overflow-hidden"
+        class="text-center pt-32 pb-16 px-4 bg-cover bg-center bg-no-repeat relative overflow-hidden"
         style="background-image: url('/img/hands.png');"
       >
         <!-- Gradient overlay for text readability -->

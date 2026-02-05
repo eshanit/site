@@ -109,7 +109,7 @@ const componentHovered = ref<number | null>(null);
 </script>
 
 <template>
-  <section class="py-16 md:py-24 px-4 md:px-8 lg:px-12 bg-gray-50">
+  <section class="py-16 md:py-24 px-4 md:px-8 lg:px-12 bg-gray-100">
     <div class="max-w-7xl mx-auto">
       <!-- Section Header -->
       <div class="mb-16 md:mb-24">

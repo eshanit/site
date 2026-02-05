@@ -36,7 +36,7 @@ const handleScroll = () => {
   lastScrollY.value = currentScrollY;
   
   // Show/hide based on scroll position and direction
-  isScrolled.value = currentScrollY > 100;
+  isScrolled.value = currentScrollY > 50;
   
   // Calculate scroll progress for the scroll indicator
   const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -48,6 +48,7 @@ const handleSearch = () => {
   if (searchQuery.value.trim()) {
     navigateTo(`/search?q=${encodeURIComponent(searchQuery.value.trim())}`);
     searchQuery.value = '';
+    isSearchOpen.value = false;
   }
 };
 
@@ -57,6 +58,7 @@ const handleSearchKeydown = (event: KeyboardEvent) => {
     handleSearch();
   } else if (event.key === 'Escape') {
     searchQuery.value = '';
+    isSearchOpen.value = false;
   }
 };
 
@@ -105,31 +107,26 @@ const menuItems = computed(() => {
       name: 'Home',
       href: '/',
       current: route.path === '/',
-      description: 'Welcome to PEGISUS'
     },
     {
       name: 'What We Do',
       href: '/what-we-do',
       current: route.path.startsWith('/what-we-do'),
-      description: 'Skills for tomorrow',
     },
     {
       name: 'Who We Are',
       href: '/who-we-are',
       current: route.path.startsWith('/who-we-are'),
-      description: 'Working with youth',
     },
     {
       name: 'Where We Work',
       href: '/where-we-work',
       current: route.path.startsWith('/where-we-work'),
-      description: 'Community-led solutions',
     },
     {
       name: 'Contact',
       href: '/contact',
       current: route.path.startsWith('/contact'),
-      description: 'Get in touch'
     }
   ];
   return items;
@@ -143,6 +140,7 @@ const toggleMenu = () => {
 const closeMobileMenu = () => {
   isMenuOpen.value = false;
   openSubmenu.value = null;
+  isSearchOpen.value = false;
 };
 
 const toggleSubmenu = (menuName: string) => {
@@ -180,9 +178,10 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
 
 <template>
   <nav 
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans bg-white/95 backdrop-blur-sm"
     role="navigation"
     aria-label="Main navigation"
+    :class="[isScrolled ? 'shadow-lg border-b border-gray-100' : '']"
   >
     <!-- Skip to main content link for accessibility -->
     <a 
@@ -194,295 +193,214 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
     </a>
 
     <!-- Full width container -->
-    <div class="w-full max-w-8xl mx-auto">
-      <!-- Top Row: Logo (Gradient Strip) - Hides on scroll -->
-      <div 
-        class="bg-gradient-to-r from-white via-cyan-50 to-blue-900 px-4 sm:px-6 lg:px-8 shadow-sm transition-all duration-300"
-        :class="isScrolled ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 h-24'"
-        style="background: linear-gradient(to right, white 20%, #a5f3fc 30%, #1e3a8a 100%);"
-      >
-        <div class="flex justify-between items-center h-24">
-          <!-- Logo Section -->
-          <div class="shrink-0 flex items-center">
-            <NuxtLink 
-              to="/" 
-              class="flex items-center space-x-4 group"
-              aria-label="PEGISUS Home"
-              @click="closeMobileMenu"
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <NuxtLink 
+            to="/" 
+            class="flex items-center group"
+            aria-label="PEGISUS Home"
+            @click="closeMobileMenu"
+          >
+            <AppLogo size="navbar" />
+          </NuxtLink>
+        </div>
+
+        <!-- Desktop Navigation Menu -->
+        <div class="hidden lg:flex items-center space-x-1">
+          <div 
+            v-for="(item, index) in menuItems" 
+            :key="item.name" 
+            class="relative"
+          >
+            <NuxtLink
+              :to="item.href"
+              :class="[
+                'px-5 py-2 font-medium text-gray-700 transition-colors duration-200 relative group/navitem',
+                'hover:text-blue-700',
+                item.current ? 'text-blue-700' : ''
+              ]"
+              :aria-current="item.current ? 'page' : undefined"
+              @keydown="(e) => handleMenuKeydown(e, index)"
+              role="menuitem"
+              tabindex="0"
             >
-              <AppLogo size="navbar" />
+              <span class="text-base font-bold tracking-wide text-blue-800 hover:text-cyan-600 transition-colors duration-200">
+                {{ item.name }}
+              </span>
+              
+              <!-- Active/Hover indicator -->
+              <div 
+                class="absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-200 origin-left"
+                :class="[
+                  item.current 
+                    ? 'bg-blue-700 scale-x-100' 
+                    : 'bg-blue-700 scale-x-0 group-hover/navitem:scale-x-100'
+                ]"
+                aria-hidden="true"
+              ></div>
             </NuxtLink>
           </div>
-          
-          <!-- Search Bar -->
-          <div class="flex-1 max-w-md mx-8">
+        </div>
+
+        <!-- Right side actions -->
+        <div class="flex items-center space-x-4">
+          <!-- Search button (mobile first) -->
+          <button
+            @click="isSearchOpen = !isSearchOpen"
+            class="lg:hidden p-2 text-gray-600 hover:text-blue-700 transition-colors"
+            :aria-label="isSearchOpen ? 'Close search' : 'Open search'"
+          >
+            <UIcon 
+              :name="isSearchOpen ? 'i-heroicons-x-mark' : 'i-heroicons-magnifying-glass'" 
+              class="w-5 h-5" 
+            />
+          </button>
+
+          <!-- Search input (desktop) -->
+          <div class="hidden lg:block relative">
             <div class="relative">
               <input
                 v-model="searchQuery"
                 type="text"
                 placeholder="Search..."
-                class="w-full px-4 py-2 pl-10 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent text-gray-800 bg-white/90"
+                class="w-48 px-4 py-2 pl-10 border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-gray-800 transition-all duration-200"
                 @keydown="handleSearchKeydown"
               />
-              <svg 
-                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 cursor-pointer hover:text-blue-700 transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                @click="handleSearch"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
+              <UIcon 
+                name="i-heroicons-magnifying-glass" 
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" 
+              />
             </div>
           </div>
-          
+
           <!-- Dark/Light Mode Toggle -->
-          <div class="shrink-0 ml-4">
-            <button
-              @click="toggleDarkMode"
-              class="flex items-center justify-center w-10 h-10 bg-white/90 text-gray-700 rounded border border-gray-300 cursor-pointer hover:bg-white hover:text-blue-700 transition-colors duration-200"
-              :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-              :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
-            >
-              <!-- Sun icon (light mode) -->
-              <svg
-                v-if="isDarkMode"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-              </svg>
-              <!-- Moon icon (dark mode) -->
-              <svg
-                v-else
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-              </svg>
-            </button>
-          </div>
+          <button
+            @click="toggleDarkMode"
+            class="p-2 text-gray-600 hover:text-blue-700 transition-colors"
+            :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+            :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <UIcon 
+              :name="isDarkMode ? 'i-heroicons-sun' : 'i-heroicons-moon'" 
+              class="w-5 h-5" 
+            />
+          </button>
+
+          <!-- Mobile menu button -->
+          <button 
+            @click="toggleMenu"
+            :class="[
+              'lg:hidden p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2',
+              isMenuOpen 
+                ? 'text-blue-700' 
+                : 'text-gray-600 hover:text-blue-700'
+            ]"
+            :aria-label="isMenuOpen ? 'Close main menu' : 'Open main menu'"
+            :aria-expanded="isMenuOpen"
+            :aria-controls="'mobile-menu'"
+          >
+            <UIcon 
+              v-if="!isMenuOpen" 
+              name="i-heroicons-bars-3" 
+              class="w-6 h-6" 
+              aria-hidden="true"
+            />
+            <UIcon 
+              v-else 
+              name="i-heroicons-x-mark" 
+              class="w-6 h-6" 
+              aria-hidden="true"
+            />
+          </button>
         </div>
       </div>
 
-      <!-- Bottom Row: Sticky Navigation (Gradient Strip - Reversed) -->
-      <div 
-        :class="[
-          'bg-gradient-to-l from-white via-cyan-50 to-blue-900 shadow-md transition-all duration-300 relative z-50',
-          isScrolled ? 'sticky top-0' : ''
-        ]"
-        style="background: linear-gradient(to left, white 20%, #a5f3fc 30%, #1e3a8a 100%);"
+      <!-- Mobile Search (appears when toggled) -->
+      <Transition
+        enter-active-class="transition-all duration-200 ease-out"
+        enter-from-class="opacity-0 -translate-y-4"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition-all duration-150 ease-in"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-4"
       >
-        <div class="px-4 sm:px-6 lg:px-8 max-w-8xl mx-auto">
-          <!-- Main Navigation Bar -->
-          <div class="flex items-center h-16">
-            <!-- Mobile menu button -->
-            <button 
-              @click="toggleMenu"
-              :class="[
-                'lg:hidden p-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 mr-4',
-                isMenuOpen 
-                  ? 'bg-blue-700 text-white' 
-                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
-              ]"
-              :aria-label="isMenuOpen ? 'Close main menu' : 'Open main menu'"
-              :aria-expanded="isMenuOpen"
-              :aria-controls="'mobile-menu'"
+        <div 
+          v-if="isSearchOpen"
+          class="lg:hidden pb-4"
+        >
+          <div class="relative">
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Search..."
+              class="w-full px-4 py-3 pl-12 border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-gray-800"
+              @keydown="handleSearchKeydown"
+            />
+            <UIcon 
+              name="i-heroicons-magnifying-glass" 
+              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
+            />
+            <button
+              @click="handleSearch"
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-700 font-medium"
             >
-              <UIcon 
-                v-if="!isMenuOpen" 
-                name="i-heroicons-bars-3" 
-                class="w-5 h-5" 
-                aria-hidden="true"
-              />
-              <UIcon 
-                v-else 
-                name="i-heroicons-x-mark" 
-                class="w-5 h-5" 
-                aria-hidden="true"
-              />
+              Go
             </button>
-
-            <!-- Desktop Navigation Menu (centered) -->
-            <div class="hidden lg:flex items-center justify-center flex-1">
-              <div class="flex items-center space-x-2">
-                <div 
-                  v-for="(item, index) in menuItems" 
-                  :key="item.name" 
-                  class="relative"
-                >
-                  <div class="relative">
-                    <NuxtLink
-                      :to="item.href"
-                      :class="[
-                        'px-5 py-4 font-semibold text-lg transition-all duration-200 flex items-center space-x-2 relative group/navitem ',
-                        item.current ? 'text-blue-700 bg-blue-50' : 'hover:bg-blue-50'
-                      ]"
-                      :aria-current="item.current ? 'page' : undefined"
-                      @keydown="(e) => handleMenuKeydown(e, index)"
-                      role="menuitem"
-                      tabindex="0"
-                    >
-                      <span class="text-lg text-gray-900 font-semibold tracking-tight">
-                        {{ item.name }}
-                      </span>
-
-                      <!-- Active indicator -->
-                      <div 
-                        v-if="item.current"
-                        class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700"
-                        aria-hidden="true"
-                      ></div>
-
-                      <!-- Hover indicator -->
-                      <div 
-                        v-else
-                        class="absolute bottom-0 left-1/2 right-1/2 h-0.5 bg-blue-700 opacity-0 group-hover/navitem:opacity-100 group-hover/navitem:left-0 group-hover/navitem:right-0 transition-all duration-200"
-                        aria-hidden="true"
-                      ></div>
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Logo on the extreme right (appears on scroll) -->
-            <Transition
-              enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 translate-x-4"
-              enter-to-class="opacity-100 translate-x-0"
-              leave-active-class="transition-all duration-200 ease-in"
-              leave-from-class="opacity-100 translate-x-0"
-              leave-to-class="opacity-0 translate-x-4"
-            >
-              <div v-if="isScrolled" class="ml-auto pl-6 border-l border-gray-300">
-                <NuxtLink 
-                  to="/" 
-                  class="flex items-center"
-                  aria-label="PEGISUS Home"
-                  @click="closeMobileMenu"
-                >
-                  <AppLogo size="navbar" />
-                </NuxtLink>
-              </div>
-            </Transition>
           </div>
         </div>
+      </Transition>
 
-        <!-- Scroll indicator -->
-        <div
-          v-if="isScrolled"
-          class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700 origin-left transition-transform duration-200"
-          :style="{ 
-            transform: `scaleX(${scrollProgress})`,
-            transition: 'transform 0.1s ease-out'
-          }"
-          aria-hidden="true"
-        ></div>
-      </div>
+      <!-- Scroll indicator -->
+      <div
+        v-if="isScrolled"
+        class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700/20 origin-left transition-transform duration-200"
+        :style="{ 
+          transform: `scaleX(${scrollProgress})`,
+          transition: 'transform 0.1s ease-out'
+        }"
+        aria-hidden="true"
+      ></div>
     </div>
 
     <!-- Mobile Navigation Menu -->
     <Transition
       enter-active-class="transition-all duration-200 ease-out"
-      enter-from-class="opacity-0 -translate-y-2"
+      enter-from-class="opacity-0 -translate-y-4"
       enter-to-class="opacity-100 translate-y-0"
       leave-active-class="transition-all duration-150 ease-in"
       leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 -translate-y-2"
+      leave-to-class="opacity-0 -translate-y-4"
     >
       <div 
         v-show="isMenuOpen"
         id="mobile-menu"
-        class="lg:hidden bg-white border border-gray-200 shadow-lg mt-1 mb-2"
+        class="lg:hidden bg-white border-t border-gray-100 shadow-lg"
         role="menu"
         aria-label="Mobile navigation"
       >
-        <div class="space-y-0">
+        <div class="py-2">
           <div 
             v-for="(item, index) in menuItems" 
             :key="item.name"
-            class="border-b border-gray-100"
             role="none"
           >
-            <div class="flex flex-col">
-              <div 
-                :class="[
-                  'flex items-center justify-between px-5 py-4 text-lg font-semibold transition-all duration-150 group cursor-pointer',
-                  item.current
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-900 hover:bg-gray-50 hover:text-blue-700'
-                ]"
-                @click="item.submenu ? toggleSubmenu(item.name) : (closeMobileMenu(), navigateTo(item.href))"
-                @keydown="(e) => handleMenuKeydown(e, index)"
-                :tabindex="0"
-                role="menuitem"
-                :aria-expanded="item.submenu && openSubmenu === item.name"
-                :aria-haspopup="item.submenu ? 'true' : 'false'"
-              >
-                <div class="flex items-center space-x-3">
-                  <div class="flex-1 text-left">
-                    <div class="font-medium">{{ item.name }}</div>
-                    <div 
-                      v-if="item.description"
-                      class="text-xs text-gray-600 group-hover:text-blue-600 mt-0.5 font-sans"
-                    >
-                      {{ item.description }}
-                    </div>
-                  </div>
-                </div>
-
-                <UIcon 
-                  v-if="item.submenu"
-                  name="i-heroicons-chevron-down" 
-                  class="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-transform duration-150"
-                  :class="openSubmenu === item.name ? 'rotate-180' : ''"
-                  aria-hidden="true"
-                />
-                <UIcon 
-                  v-else
-                  name="i-heroicons-chevron-right" 
-                  class="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-150"
-                  aria-hidden="true"
-                />
-              </div>
-
-              <!-- Mobile Submenu -->
-              <Transition
-                enter-active-class="transition-all duration-200 ease-out"
-                enter-from-class="opacity-0 max-h-0"
-                enter-to-class="opacity-100 max-h-96"
-                leave-active-class="transition-all duration-150 ease-in"
-                leave-from-class="opacity-100 max-h-96"
-                leave-to-class="opacity-0 max-h-0"
-              >
-                <div 
-                  v-if="item.submenu && openSubmenu === item.name"
-                  class="bg-gray-50 overflow-hidden"
-                  role="menu"
-                >
-                  <NuxtLink
-                    v-for="subItem in item.submenu"
-                    :key="subItem.name"
-                    :to="subItem.href"
-                    class="flex items-center px-8 py-4 text-lg font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 transition-colors duration-150"
-                    @click="closeMobileMenu"
-                    role="menuitem"
-                    tabindex="-1"
-                  >
-                    <UIcon name="i-heroicons-chevron-right" class="w-3 h-3 mr-3 text-gray-400" aria-hidden="true" />
-                    <span>{{ subItem.name }}</span>
-                  </NuxtLink>
-                </div>
-              </Transition>
-            </div>
+            <NuxtLink
+              :to="item.href"
+              :class="[
+                'block px-6 py-4 text-base font-medium transition-colors duration-150 border-l-4',
+                item.current 
+                  ? 'text-blue-700 bg-blue-50 border-blue-700' 
+                  : 'text-gray-700 hover:text-blue-700 hover:bg-gray-50 border-transparent'
+              ]"
+              @click="closeMobileMenu"
+              @keydown="(e) => handleMenuKeydown(e, index)"
+              role="menuitem"
+              tabindex="0"
+            >
+              {{ item.name }}
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -505,14 +423,15 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
 
 /* WCAG-compliant focus styles with design system colors */
 a:focus,
-button:focus {
-  outline: 2px solid #1d4ed8; /* blue-700 */
+button:focus,
+input:focus {
+  outline: 2px solid #1e3a8a; /* black */
   outline-offset: 2px;
 }
 
 /* Ensure keyboard navigation support */
 [role="menuitem"]:focus {
-  outline: 2px solid #1d4ed8;
+  outline: 0.5px solid #fff;
   outline-offset: -2px;
 }
 
@@ -537,45 +456,51 @@ button:focus {
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .border-gray-200 {
+  .border-gray-100 {
     border-color: var(--color-gray-900);
   }
   
   .text-gray-600 {
     color: var(--color-gray-900);
   }
+  
+  .text-gray-700 {
+    color: var(--color-gray-900);
+  }
 }
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  nav {
-    background-color: #111827; /* gray-900 */
-    border-color: #374151; /* gray-700 */
-  }
-  
-  .bg-white {
-    background-color: #1f2937; /* gray-800 */
-  }
-  
-  .text-gray-800 {
-    color: #f3f4f6; /* gray-100 */
-  }
-  
-  .text-gray-600 {
-    color: #d1d5db; /* gray-300 */
-  }
-  
-  .border-gray-200 {
-    border-color: #4b5563; /* gray-600 */
-  }
-  
-  .bg-gray-50 {
-    background-color: #374151; /* gray-700 */
-  }
-  
-  .hover\:bg-gray-50:hover {
-    background-color: #4b5563; /* gray-600 */
-  }
+.dark nav {
+  background-color: #111827; /* gray-900 */
+  border-color: #374151; /* gray-700 */
+}
+
+.dark .bg-white {
+  background-color: #1f2937; /* gray-800 */
+}
+
+.dark .text-gray-700 {
+  color: #d1d5db; /* gray-300 */
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af; /* gray-400 */
+}
+
+.dark .border-gray-100 {
+  border-color: #374151; /* gray-700 */
+}
+
+.dark .bg-gray-50 {
+  background-color: #374151; /* gray-700 */
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: #4b5563; /* gray-600 */
+}
+
+.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
 }
 
 /* Ensure z-index stacking for accessibility */
@@ -592,7 +517,7 @@ nav {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .max-w-8xl {
+  .max-w-7xl {
     max-width: 100%;
   }
 }
@@ -607,15 +532,21 @@ nav {
 }
 
 /* Right-to-left language support */
-[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 1;
-}
-
-[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+[dir="rtl"] .space-x-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 1;
 }
 
 [dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 1;
+}
+
+/* Backdrop blur fallback for older browsers */
+@supports not (backdrop-filter: blur(8px)) {
+  nav {
+    background-color: white;
+  }
+  .dark nav {
+    background-color: #111827;
+  }
 }
 </style>

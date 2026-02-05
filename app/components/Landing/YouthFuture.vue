@@ -45,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full relative bg-gray-50">
+  <div class="w-full relative bg-gray-100">
     <!-- Content Container -->
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
       

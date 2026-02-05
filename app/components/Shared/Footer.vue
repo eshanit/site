@@ -172,7 +172,7 @@ const scrollToTop = () => {
             <div class="space-y-6">
               <h3 class="text-lg font-bold text-white flex items-center">
                 <UIcon name="i-heroicons-link" class="w-5 h-5 mr-2 text-cyan-400" />
-                Quick Links
+                <span class="text-cyan-400">Quick Links</span>
               </h3>
               <ul class="space-y-3">
                 <li v-for="link in quickLinks" :key="link.name">
@@ -194,7 +194,7 @@ const scrollToTop = () => {
             <div class="space-y-6">
               <h3 class="text-lg font-bold text-white flex items-center">
                 <UIcon name="i-heroicons-chat-bubble-left-right" class="w-5 h-5 mr-2 text-cyan-400" />
-                Get in Touch
+                <span class="text-cyan-400">Get in Touch</span>
               </h3>
               <div class="space-y-4">
                 <a
@@ -218,7 +218,7 @@ const scrollToTop = () => {
             <div class="space-y-6">
               <h3 class="text-lg font-bold text-white flex items-center">
                 <UIcon name="i-heroicons-newspaper" class="w-5 h-5 mr-2 text-cyan-400" />
-                Stay Updated
+                <span class="text-cyan-400">Stay Updated</span> 
               </h3>
               
               <p class="text-gray-400 text-sm">
@@ -279,7 +279,7 @@ const scrollToTop = () => {
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div class="text-center mb-6">
             <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">
-              In Partnership With
+              <span class="text-cyan-400">In Partnership With</span>
             </h4>
             <div class="flex flex-wrap justify-center items-center gap-8">
               <span 
