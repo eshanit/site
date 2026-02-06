@@ -85,7 +85,16 @@ const getStatColor = (color: string) => {
             class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-32 md:py-32 lg:py-32"
             :class="heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
         >
-            <div class="w-full max-w-7xl mx-auto">
+            <!-- Background Image with Fade Effect -->
+            <div 
+                class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+                style="background-image: url('/img/pegi_tree.png'); background-position: 100% center;"
+            ></div>
+            <!-- Fade Overlay -->
+            <div class="absolute inset-0 w-full h-full bg-white/70"></div>
+            
+            <!-- Content Container -->
+            <div class="relative z-10 w-full max-w-7xl mx-auto">
                 <!-- Grid layout - 12 column system -->
                 <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
                     <!-- Text content - 6 columns -->
