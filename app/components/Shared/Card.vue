@@ -100,7 +100,7 @@ const cardClasses = computed(() => {
 
 /* Focus styles for accessibility */
 .card:focus-within {
-  @apply ring-2 ring-cyan-500 ring-offset-2;
+  @apply ring-2 ring-brand-medium ring-offset-2;
 }
 
 /* Animation */

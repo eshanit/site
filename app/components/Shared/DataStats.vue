@@ -45,7 +45,7 @@ const gridClass = computed(() => {
       <div
         v-if="stat.icon"
         class="stat-icon"
-        :class="stat.color || 'bg-cyan-500'"
+        :class="stat.color || 'bg-brand-medium'"
       >
         <UIcon :name="stat.icon" class="w-6 h-6 text-white" />
       </div>
@@ -107,7 +107,7 @@ const gridClass = computed(() => {
 
 .stat-value {
   @apply text-4xl md:text-5xl font-bold text-gray-900 mb-2;
-  @apply bg-gradient-to-r from-cyan-500 to-blue-900 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-brand-light to-brand-darkest bg-clip-text text-transparent;
 }
 
 .stat-label {
@@ -120,7 +120,7 @@ const gridClass = computed(() => {
 
 /* Focus styles for accessibility */
 .stat-item:focus-within {
-  @apply ring-2 ring-cyan-500 ring-offset-2;
+  @apply ring-2 ring-brand-medium ring-offset-2;
 }
 
 /* Responsive */

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
 const team = [
-  { name: 'Beatrice Chiyokoma', photo: '/img/zambia/BeatriceChiyokoma.png', title: 'Site Principal Investigator', role: 'Local PI' },
+  { name: 'Beatrice Chiyokoma', photo: '/img/zambia/BeatriceChiyokoma.jpg', title: 'Site Principal Investigator', role: 'Local PI' },
   { name: 'Nancy Choka', photo: '/img/zambia/NancyChoka.jpg', title: 'Research Assistant', role: 'Implementation' },
   { name: 'Sheena Lungu', photo: '/img/zambia/SheenaLungu.jpg', title: 'Research Assistant', role: 'Data Collection' },
-  { name: 'Chimuka Muleya', photo: '/img/zambia/ChimukaMuleya.jpg', title: 'Research Assistant', role: 'Training' },
+  // { name: 'Chimuka Muleya', photo: '/img/zambia/ChimukaMuleya.jpg', title: 'Research Assistant', role: 'Training' },
 ]
 </script>
 <template>

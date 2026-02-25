@@ -4,17 +4,18 @@ const mainText = `We work in the Matero, Lilanda, and 6-mile to 15-mile communit
 
 const partnerText = `We have partnered with Build It International, a vocational training program focused mainly on teaching skilled trades, such as bricklaying, painting, and carpentry.`
 
-const images: [string, string] = [
-  '/img/countries/zambia/community_1.jpg',
-  '/img/countries/zambia/community_2.jpg'
+const images: string[] = [
+  // '/img/countries/zambia/community_1.jpg',
+  // '/img/countries/zambia/community_2.jpg'
+     'https://picsum.photos/640/640?random=1',
+  'https://picsum.photos/640/640?random=2',
+  'https://picsum.photos/640/640?random=3',
+  'https://picsum.photos/640/640?random=4',
+  'https://picsum.photos/640/640?random=5',
+  'https://picsum.photos/640/640?random=6'
 ]
 
-const stats = [
-  { label: 'Youth Unemployment', value: '36%', color: 'text-red-600' },
-  { label: 'Informal Sector', value: '80%', color: 'text-amber-600' },
-  { label: 'Alcohol Use Rate', value: 'Highest', color: 'text-blue-600' },
-  { label: 'IPV Experience', value: '33%', color: 'text-purple-600' }
-]
+const countryMap ='/img/countries/zambia/zambiaMap.png'
 
 const communities = [
   'Matero', 'Lilanda', '6-mile', '15-mile', 'Heroes Stadium Area'
@@ -27,7 +28,7 @@ const communities = [
     :main-text="mainText"
     :partner-text="partnerText"
     :images="images"
-    :stats="stats"
+    :country-map="countryMap"
     :communities="communities"
     icon="i-heroicons-flag"
     svg-icon="/img/countries/zambia/zambia.svg" 

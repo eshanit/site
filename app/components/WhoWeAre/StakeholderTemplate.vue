@@ -1,5 +1,6 @@
+
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface TeamMember {
   name: string
@@ -18,45 +19,69 @@ interface Props {
   isEven?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-// Color mapping from design system
-const institutionColors = {
-  blue: {
-    bg: 'bg-blue-600',
+// Color mapping from PEGISUS design system (blues & greens)
+const institutionColors: Record<string, { bg: string; text: string; border: string; bgLight: string; fromTo: string; accent: string }> = {
+  indigo: {
+    bg: 'bg-indigo-600',
     text: 'text-white',
-    border: 'border-blue-600',
-    bgLight: 'bg-blue-50',
-    fromTo: 'from-blue-500 to-blue-700'
+    border: 'border-indigo-600',
+    bgLight: 'bg-indigo-50',
+    fromTo: 'from-indigo-500 to-indigo-700',
+    accent: 'bg-indigo-600'
   },
-  orange: {
-    bg: 'bg-orange-500',
+  teal: {
+    bg: 'bg-teal-600',
     text: 'text-white',
-    border: 'border-orange-500',
-    bgLight: 'bg-orange-50',
-    fromTo: 'from-orange-400 to-orange-600'
+    border: 'border-teal-600',
+    bgLight: 'bg-teal-50',
+    fromTo: 'from-teal-500 to-teal-700',
+    accent: 'bg-teal-600'
   },
-  green: {
-    bg: 'bg-green-500',
+  emerald: {
+    bg: 'bg-emerald-600',
     text: 'text-white',
-    border: 'border-green-500',
-    bgLight: 'bg-green-50',
-    fromTo: 'from-green-400 to-green-600'
+    border: 'border-emerald-600',
+    bgLight: 'bg-emerald-50',
+    fromTo: 'from-emerald-500 to-emerald-700',
+    accent: 'bg-emerald-600'
   },
-  purple: {
-    bg: 'bg-purple-500',
+  navy: {
+    bg: 'bg-navy-600',
     text: 'text-white',
-    border: 'border-purple-500',
-    bgLight: 'bg-purple-50',
-    fromTo: 'from-purple-400 to-purple-600'
+    border: 'border-navy-600',
+    bgLight: 'bg-brand-lightest', // navy-50 not available, use brand-lightest
+    fromTo: 'from-navy-500 to-navy-700',
+    accent: 'bg-navy-600'
+  },
+  brand: {
+    bg: 'bg-brand-medium',
+    text: 'text-white',
+    border: 'border-brand-medium',
+    bgLight: 'bg-brand-lightest',
+    fromTo: 'from-brand-medium to-brand-dark',
+    accent: 'bg-brand-medium'
   }
 }
 
-// Assign colors based on institution index or specific logic
-const getInstitutionColor = (index: number) => {
-  const colors: Array<keyof typeof institutionColors> = ['blue', 'orange', 'green', 'purple']
-  return colors[index % colors.length]
+// Map institution names to color keys
+const institutionColorKey = computed((): string => {
+  const name = props.institution.toLowerCase()
+  if (name.includes('zambia')) return 'indigo'
+  if (name.includes('zimbabwe')) return 'teal'
+  if (name.includes('basel') || name.includes('switzerland')) return 'navy'
+  if (name.includes('south africa') || name.includes('samrc')) return 'emerald'
+  return 'brand' // default fallback
+})
+
+// Helper to get color with fallback
+const getColor = (key: string): { bg: string; text: string; border: string; bgLight: string; fromTo: string; accent: string } => {
+  return institutionColors[key] ?? institutionColors.brand!
 }
+
+// Current color value for template
+const currentColor = computed(() => getColor(institutionColorKey.value))
 
 // Team member card states
 const teamMemberHovered = ref<number | string | null>(null)
@@ -69,266 +94,112 @@ const teamMemberHovered = ref<number | string | null>(null)
       isEven ? 'bg-gray-50' : 'bg-white'
     ]"
   >
-    <div class="p-6 md:p-8 lg:p-10">
-      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        <!-- Left Column: Institution Info -->
-        <div class="lg:col-span-5 space-y-6">
-          <!-- Institution Header -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-4">
+    <div class="p-6 md:p-10 lg:p-12">
+      <!-- Header Section -->
+      <div class="mb-10">
+        <div class="flex items-center gap-5">
+          <div 
+            class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center shadow-md"
+            :class="currentColor.bg"
+          >
+            <UIcon :name="icon" class="w-8 h-8 md:w-10 md:h-10 text-white" />
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 font-poppins">{{ institution }}</h3>
+            <div class="flex items-center gap-2 mt-2">
+              <UIcon name="i-heroicons-map-pin" class="w-5 h-5 text-gray-500" />
+              <span class="text-base text-gray-600 font-inter">{{ country }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="h-1.5 w-24 mt-5" :class="currentColor.bg"></div>
+      </div>
+
+      <!-- Team Members Section Header -->
+      <div class="mb-8 pb-6 border-b border-gray-200">
+        <h4 class="text-xl md:text-2xl font-bold text-gray-900 font-poppins">Team Members</h4>
+        <p class="text-base text-gray-600 font-inter mt-2">Key contributors from {{ institution }}</p>
+      </div>
+
+      <!-- Enhanced Team Grid - Larger Images -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+        <div 
+          v-for="(person, index) in team" 
+          :key="person.name"
+          class="group relative transition-all duration-300"
+          @mouseenter="teamMemberHovered = index"
+          @mouseleave="teamMemberHovered = null"
+          :aria-label="`Team member: ${person.name}, ${person.title}`"
+        >
+          <!-- Main card with larger image -->
+          <div 
+            class="relative bg-white border border-gray-200 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden h-full flex flex-col"
+            :class="teamMemberHovered === index ? '-translate-y-2' : ''"
+          >
+            <!-- Top colored accent bar -->
+            <div 
+              class="h-2 w-full transition-all duration-500"
+              :class="[
+                currentColor.bg,
+                teamMemberHovered === index ? 'w-full' : 'w-1/2'
+              ]"
+            ></div>
+            
+            <!-- Large Photo Container - 4:5 aspect ratio -->
+            <div class="relative w-full aspect-[4/5] overflow-hidden bg-gray-100">
+              <!-- Fallback for missing images -->
               <div 
-                class="w-14 h-14 flex items-center justify-center border border-gray-300 shadow-sm"
-                :class="institutionColors[getInstitutionColor(0)].bg"
+                v-if="!person.photo"
+                class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
               >
-                <UIcon :name="icon" class="w-7 h-7 text-white" />
+                <UIcon name="i-heroicons-user" class="w-16 h-16 text-gray-400" />
               </div>
-              <div>
-                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins">{{ institution }}</h3>
-                <div class="flex items-center gap-2 mt-1">
-                  <UIcon name="i-heroicons-map-pin" class="w-4 h-4 text-gray-500" />
-                  <span class="text-sm text-gray-600 font-inter">{{ country }}</span>
-                </div>
+              
+              <!-- Actual image with zoom effect -->
+              <NuxtImg
+                v-if="person.photo"
+                :src="person.photo"
+                :alt="person.name"
+                class="w-full h-full object-cover transition-transform duration-700"
+                :class="teamMemberHovered === index ? 'scale-125' : 'scale-110'"
+                loading="lazy"
+                format="webp"
+                quality="90"
+              />
+              
+              <!-- Gradient overlay on hover -->
+              <div 
+                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+              
+              <!-- Name overlay on hover -->
+              <div 
+                class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <div class="text-white font-poppins font-bold text-lg">{{ person.name }}</div>
+                <div v-if="person.title" class="text-white/80 text-sm font-inter">{{ person.title }}</div>
               </div>
             </div>
             
-            <div class="h-1 w-12" :class="institutionColors[getInstitutionColor(0)].bg"></div>
-          </div>
-          
-          <!-- Team Stats Card -->
-          <div class="group relative transition-all duration-300">
-            <!-- Main card -->
-            <div class="relative bg-white border border-gray-200 shadow-sm transition-all duration-300 p-6 overflow-hidden"
-                 :class="teamMemberHovered === 'stats' ? 'shadow-lg -translate-y-1' : ''">
+            <!-- Info Section - Below image -->
+            <div class="p-4 md:p-5 flex flex-col flex-1 bg-white">
+              <div class="font-bold text-gray-900 text-base md:text-lg font-poppins leading-tight">
+                {{ person.name }}
+              </div>
               
-              <!-- Top accent -->
-              <div class="absolute top-0 left-0 right-0 h-1 transition-all duration-300"
-                   :class="[
-                     institutionColors[getInstitutionColor(0)].bg,
-                     teamMemberHovered === 'stats' ? 'w-full' : 'w-12'
-                   ]"></div>
+              <div v-if="person.title" class="text-sm text-gray-600 font-inter mt-2 flex-1">
+                {{ person.title }}
+              </div>
               
-              <!-- Icon and content -->
-              <div class="relative">
-                <div class="flex items-center gap-4 mb-4">
-                  <div class="w-12 h-12 flex items-center justify-center transition-all duration-300 text-white"
-                       :class="institutionColors[getInstitutionColor(0)].bg">
-                    <UIcon name="i-heroicons-user-group" class="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div class="text-sm font-semibold text-gray-700 font-inter">Team Members</div>
-                    <div class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins transition-colors duration-300"
-                         :class="teamMemberHovered === 'stats' ? institutionColors[getInstitutionColor(0)].text.replace('text-white', 'text-blue-600') : ''">
-                      {{ teamMembers }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- Decorative element -->
+              <div 
+                class="h-0.5 w-8 mt-3 transition-all duration-300"
+                :class="[
+                  currentColor.bg,
+                  teamMemberHovered === index ? 'w-full' : 'w-8'
+                ]"
+              ></div>
             </div>
-          </div>
-          
-          <!-- Institutional Role Card -->
-          <div class="group relative transition-all duration-300"
-               @mouseenter="teamMemberHovered = 'role'"
-               @mouseleave="teamMemberHovered = null">
-            <!-- Main card -->
-            <div class="relative bg-white border border-gray-200 shadow-sm transition-all duration-300 p-6 overflow-hidden"
-                 :class="teamMemberHovered === 'role' ? 'shadow-lg -translate-y-1' : ''">
-              
-              <!-- Top accent -->
-              <div class="absolute top-0 left-0 right-0 h-1 transition-all duration-300"
-                   :class="[
-                     institutionColors[getInstitutionColor(1)].bg,
-                     teamMemberHovered === 'role' ? 'w-full' : 'w-12'
-                   ]"></div>
-              
-              <!-- Icon and content -->
-              <div class="relative">
-                <div class="flex items-start gap-3 mb-3">
-                  <div class="w-10 h-10 flex items-center justify-center transition-all duration-300 text-white flex-shrink-0 mt-1"
-                       :class="institutionColors[getInstitutionColor(1)].bg">
-                    <UIcon name="i-heroicons-information-circle" class="w-5 h-5" />
-                  </div>
-                  <div class="flex-1">
-                    <h4 class="font-bold text-gray-900 text-sm mb-2 font-poppins transition-colors duration-300"
-                        :class="teamMemberHovered === 'role' ? institutionColors[getInstitutionColor(1)].text.replace('text-white', 'text-orange-600') : ''">
-                      Institutional Role
-                    </h4>
-                    <p class="text-sm text-gray-700 leading-relaxed font-inter">
-                      {{ description }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Key Contribution -->
-          <div class="border-t border-gray-200 pt-4">
-            <h4 class="font-bold text-gray-900 mb-3 text-sm font-poppins">Key Contributions</h4>
-            <div class="space-y-2">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2" :class="institutionColors[getInstitutionColor(0)].bg"></div>
-                <span class="text-sm text-gray-700 font-inter">Expertise in youth development</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2" :class="institutionColors[getInstitutionColor(1)].bg"></div>
-                <span class="text-sm text-gray-700 font-inter">Local implementation support</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2" :class="institutionColors[getInstitutionColor(2)].bg"></div>
-                <span class="text-sm text-gray-700 font-inter">Research and evaluation</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Partnership Details -->
-          <div class="mt-6 p-4 border-l-4"
-               :class="institutionColors[getInstitutionColor(0)].border + ' ' + institutionColors[getInstitutionColor(0)].bgLight">
-            <div class="flex items-start gap-3">
-              <UIcon name="i-heroicons-handshake" class="w-5 h-5 mt-0.5 flex-shrink-0"
-                     :class="institutionColors[getInstitutionColor(0)].text.replace('text-white', 'text-blue-600')" />
-              <div>
-                <h5 class="font-bold text-sm font-poppins mb-1"
-                    :class="institutionColors[getInstitutionColor(0)].text.replace('text-white', 'text-blue-600')">
-                  Partnership Status
-                </h5>
-                <p class="text-xs text-gray-700 font-inter">
-                  Active partner since 2023 • Contributing to program implementation and evaluation
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Team Photos -->
-        <div class="lg:col-span-7">
-          <!-- Team Header -->
-          <div class="mb-6 pb-4 border-b border-gray-200">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h4 class="text-lg font-bold text-gray-900 font-poppins">Team Members</h4>
-                <p class="text-sm text-gray-600 font-inter mt-1">Key contributors from {{ institution }}</p>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-medium text-gray-700 font-inter">Active Since</div>
-                <div class="text-lg font-bold text-blue-600 font-poppins">
-                  2023
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Team Grid -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <div 
-              v-for="(person, index) in team" 
-              :key="person.name"
-              class="group relative transition-all duration-300"
-              @mouseenter="teamMemberHovered = index"
-              @mouseleave="teamMemberHovered = null"
-              :aria-label="`Team member: ${person.name}, ${person.title}`"
-            >
-              <!-- Main card -->
-              <div class="relative bg-white border border-gray-200 shadow-sm transition-all duration-300 p-3 overflow-hidden h-full flex flex-col"
-                   :class="teamMemberHovered === index ? 'shadow-lg -translate-y-1' : ''">
-                
-                <!-- Top accent -->
-                <div class="absolute top-0 left-0 right-0 h-1 transition-all duration-300"
-                     :class="[
-                       institutionColors[getInstitutionColor(index % 4)].bg,
-                       teamMemberHovered === index ? 'w-full' : 'w-0'
-                     ]"></div>
-                
-                <!-- Photo Container -->
-                <div class="relative mb-3 overflow-hidden aspect-square bg-gray-100">
-                  <!-- Fallback for missing images -->
-                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                    <UIcon name="i-heroicons-user" class="w-12 h-12 text-gray-400" />
-                  </div>
-                  
-                  <!-- Optional: Actual image if available -->
-                  <NuxtImg
-                    v-if="true"
-                    :src="person.photo"
-                    :alt="person.name"
-                    class="w-full h-full object-cover transform transition-transform duration-500"
-                    :class="teamMemberHovered === index ? 'scale-110' : 'scale-100'"
-                    loading="lazy"
-                    format="webp"
-                    quality="85"
-                  />
-                </div>
-                
-                <!-- Info -->
-                <div class="relative flex-1 flex flex-col">
-                  <div class="font-bold text-gray-900 text-sm leading-tight font-poppins transition-colors duration-300"
-                       :class="teamMemberHovered === index ? institutionColors[getInstitutionColor(index % 4)].text.replace('text-white', 'text-' + getInstitutionColor(index % 4) + '-600') : ''">
-                    {{ person.name }}
-                  </div>
-                  
-                  <div v-if="person.title" class="text-xs text-gray-600 font-inter mt-1 flex-1">
-                    {{ person.title }}
-                  </div>
-                  
-                  <!-- Role badge -->
-                  <!-- <div v-if="person.role" class="mt-2">
-                    <span class="inline-block px-2 py-1 text-xs font-medium border"
-                          :class="institutionColors[getInstitutionColor(index % 4)].bgLight + ' ' + institutionColors[getInstitutionColor(index % 4)].text.replace('text-white', 'text-' + getInstitutionColor(index % 4) + '-600') + ' ' + institutionColors[getInstitutionColor(index % 4)].border">
-                      {{ person.role }}
-                    </span>
-                  </div> -->
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Team Footer -->
-          <div class="mt-6 pt-4 border-t border-gray-200">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div class="text-sm text-gray-600 font-inter">
-                Contributing to PEGISUS program implementation and research
-              </div>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-heroicons-check-badge" class="w-4 h-4 text-green-600" />
-                <span class="text-sm font-medium text-gray-900 font-poppins">Verified Partner</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Partner Categories -->
-          <div class="mt-4 flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium font-inter border border-gray-200">
-              Research Partner
-            </span>
-            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium font-inter border border-gray-200">
-              Implementation
-            </span>
-            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium font-inter border border-gray-200">
-              Evaluation
-            </span>
-            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium font-inter border border-gray-200">
-              Capacity Building
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Border -->
-      <div class="mt-8 pt-6 border-t border-gray-200">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="text-sm text-gray-600 font-inter">
-            Partnership established through SOR4D funding program
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="text-xs px-3 py-1 bg-blue-50 text-blue-700 font-medium font-inter border border-blue-200">
-              Research Partner
-            </span>
-            <span class="text-xs px-3 py-1 bg-orange-50 text-orange-700 font-medium font-inter border border-orange-200">
-              Implementation
-            </span>
-            <span class="text-xs px-3 py-1 bg-green-50 text-green-700 font-medium font-inter border border-green-200">
-              Evaluation
-            </span>
           </div>
         </div>
       </div>
@@ -352,8 +223,9 @@ const teamMemberHovered = ref<number | string | null>(null)
 }
 
 /* WCAG-compliant focus styles */
-button:focus {
-  outline: 2px solid #1E3A8A;
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #004887;
   outline-offset: 2px;
 }
 
@@ -378,6 +250,18 @@ button:focus {
   .group:hover {
     transform: none !important;
   }
+  
+  .group-hover\:translate-y-0 {
+    transform: translateY(0) !important;
+  }
+  
+  .group-hover\:scale-125 {
+    transform: scale(1) !important;
+  }
+  
+  .group-hover\:opacity-100 {
+    opacity: 0 !important;
+  }
 }
 
 /* Print styles */
@@ -387,27 +271,20 @@ button:focus {
     border: 1px solid #e5e7eb !important;
   }
   
-  .bg-blue-600,
-  .bg-orange-500,
-  .bg-green-500,
-  .bg-purple-500 {
+  .bg-indigo-600,
+  .bg-teal-600,
+  .bg-emerald-600,
+  .bg-navy-600,
+  .bg-brand-medium {
     background-color: #f8fafc !important;
     -webkit-print-color-adjust: exact;
   }
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
-  .lg\:col-span-5,
-  .lg\:col-span-7 {
-    grid-column: span 12;
-  }
-}
-
 @media (max-width: 768px) {
-  .grid-cols-4,
-  .grid-cols-3 {
-    grid-template-columns: repeat(2, 1fr);
+  .aspect-\[4\/5\] {
+    aspect-ratio: 1 / 1;
   }
 }
 
@@ -416,17 +293,25 @@ button:focus {
     grid-template-columns: 1fr;
   }
   
-  .text-3xl {
+  .text-4xl {
     font-size: 1.75rem;
   }
   
-  .text-2xl {
+  .text-3xl {
     font-size: 1.5rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.25rem;
   }
 }
 
 /* Image loading fallback */
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+.bg-gradient-to-t {
+  background-image: linear-gradient(to top, var(--tw-gradient-stops));
 }
 </style>

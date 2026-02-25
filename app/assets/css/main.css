@@ -1,6 +1,232 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* ==============================
+   Tailwind v4 Theme Configuration
+   ============================== */
+@theme {
+  /* Custom Font Sizes */
+  --font-size-6xl: 2.5rem;
+  --font-size-5xl: 2.25rem;
+  --font-size-4xl: 2rem;
+  --font-size-3xl: 1.75rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-xl: 1.25rem;
+  --font-size-lg: 1.125rem;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-xs: 0.75rem;
+
+  /* ======================================
+     PEGISUS Color Palette
+     70% Blues + 30% Greens with Minor Accents
+     ====================================== */
+  
+  /* --- PRIMARY BLUES (70%) --- */
+  /* Deep Blues - Navy family */
+  --color-navy-950: #0a1628;
+  --color-navy-900: #0a192f;
+  --color-navy-800: #112240;
+  --color-navy-700: #1a2f4a;
+  --color-navy-600: #233b5f;
+  --color-navy-500: #2c4a75;
+  
+  /* Indigo/Blue family */
+  --color-indigo-900: #1e3a5f;
+  --color-indigo-800: #234b7a;
+  --color-indigo-700: #2c5c96;
+  --color-indigo-600: #356db3;
+  --color-indigo-500: #3e7ecf;
+  --color-indigo-400: #5a9adb;
+  --color-indigo-300: #7cb4e6;
+  --color-indigo-200: #a8ccef;
+  --color-indigo-100: #cde2ee;
+  --color-indigo-50: #e8f1f7;
+  
+  /* Cobalt */
+  --color-cobalt-700: #0047ab;
+  --color-cobalt-600: #0055c4;
+  --color-cobalt-500: #0066dd;
+  --color-cobalt-400: #3385e0;
+  --color-cobalt-300: #66a3e6;
+  --color-cobalt-200: #99c2ec;
+  --color-cobalt-100: #cce0f3;
+  
+  /* Steel Blue */
+  --color-steel-700: #3a5f7a;
+  --color-steel-600: #4682b4;
+  --color-steel-500: #5a9fc5;
+  --color-steel-400: #73b4d4;
+  --color-steel-300: #8fc7e2;
+  --color-steel-200: #afd6ec;
+  --color-steel-100: #d4e9f5;
+  
+  /* Azure/Sky Blue family */
+  --color-azure-700: #0055aa;
+  --color-azure-600: #0078d4;
+  --color-azure-500: #007fff;
+  --color-azure-400: #3399ff;
+  --color-azure-300: #66b3ff;
+  --color-azure-200: #99ccff;
+  --color-azure-100: #cce5ff;
+  --color-azure-50: #eaf4ff;
+  
+  /* Sky Blue */
+  --color-sky-600: #4a90c2;
+  --color-sky-500: #5ba0d4;
+  --color-sky-400: #87ceeb;
+  --color-sky-300: #a0d8ef;
+  --color-sky-200: #bde2f2;
+  --color-sky-100: #d9eef7;
+  
+  /* Light Sky Blue */
+  --color-light-sky-500: #b0e0e6;
+  --color-light-sky-400: #c5e8ed;
+  --color-light-sky-300: #d5ecf0;
+  --color-light-sky-200: #e5f2f4;
+  --color-light-sky-100: #f0f7f9;
+  
+  /* Teal (Blue-Green) */
+  --color-teal-700: #004d4d;
+  --color-teal-600: #006666;
+  --color-teal-500: #008080;
+  --color-teal-400: #26a69a;
+  --color-teal-300: #4db6ac;
+  --color-teal-200: #80cbc4;
+  --color-teal-100: #b2dfdb;
+  --color-teal-50: #e0f2f1;
+  
+  /* Turquoise */
+  --color-turquoise-600: #008b8b;
+  --color-turquoise-500: #00ced1;
+  --color-turquoise-400: #40e0d0;
+  --color-turquoise-300: #5eead4;
+  --color-turquoise-200: #7ee8de;
+  --color-turquoise-100: #b8f0ea;
+  --color-turquoise-50: #dff9f5;
+
+  /* --- SECONDARY GREENS (30%) --- */
+  /* Forest/Dark Green */
+  --color-forest-800: #0d3d0d;
+  --color-forest-700: #145214;
+  --color-forest-600: #1b6b1b;
+  --color-forest-500: #228b22;
+  --color-forest-400: #3a9e3a;
+  --color-forest-300: #5ab55a;
+  --color-forest-200: #8ccb8c;
+  --color-forest-100: #c2e0c2;
+  
+  /* Emerald */
+  --color-emerald-700: #046307;
+  --color-emerald-600: #0d8a0d;
+  --color-emerald-500: #50c878;
+  --color-emerald-400: #6dd18d;
+  --color-emerald-300: #8edca6;
+  --color-emerald-200: #b4e8c2;
+  --color-emerald-100: #d6f2dd;
+  
+  /* Sage */
+  --color-sage-700: #5c6b4a;
+  --color-sage-600: #6d7f59;
+  --color-sage-500: #9dc183;
+  --color-sage-400: #b0cca0;
+  --color-sage-300: #c2d6b8;
+  --color-sage-200: #d4e2ce;
+  --color-sage-100: #e5ede3;
+  
+  /* Olive */
+  --color-olive-700: #404000;
+  --color-olive-600: #555500;
+  --color-olive-500: #808000;
+  --color-olive-400: #99991a;
+  --color-olive-300: #b3b333;
+  --color-olive-200: #cccc66;
+  --color-olive-100: #e6e699;
+  
+  /* Jade */
+  --color-jade-600: #007854;
+  --color-jade-500: #00a86b;
+  --color-jade-400: #2eb88a;
+  --color-jade-300: #5ccaad;
+  --color-jade-200: #94dbc9;
+  --color-jade-100: #c3ebe0;
+  
+  /* Seafoam */
+  --color-seafoam-600: #178a7a;
+  --color-seafoam-500: #20b2aa;
+  --color-seafoam-400: #3ec1b5;
+  --color-seafoam-300: #6dcec7;
+  --color-seafoam-200: #9ddbd6;
+  --color-seafoam-100: #cce9e6;
+  
+  /* Moss */
+  --color-moss-600: #5a6b3d;
+  --color-moss-500: #8a9a5b;
+  --color-moss-400: #9eab78;
+  --color-moss-300: #b2bc95;
+  --color-moss-200: #c6cdb2;
+  --color-moss-100: #d9decf;
+  
+  /* Mint */
+  --color-mint-500: #98ff98;
+  --color-mint-400: #adffad;
+  --color-mint-300: #c2ffc2;
+  --color-mint-200: #d7ffd7;
+  --color-mint-100: #ebffeb;
+  
+  /* Pale Mint */
+  --color-pale-mint-400: #c8f5d8;
+  --color-pale-mint-300: #daf8e3;
+  --color-pale-mint-200: #ecf9ed;
+  --color-pale-mint-100: #f3faf5;
+
+  /* --- MINOR ACCENT COLORS --- */
+  /* Warm accents to complement blue-green */
+  --color-coral-500: #fa8072;
+  --color-coral-400: #fb9385;
+  --color-coral-300: #fcafa7;
+  --color-coral-200: #fdcbc4;
+  --color-coral-100: #fee2df;
+  
+  --color-amber-500: #ffc107;
+  --color-amber-400: #ffca28;
+  --color-amber-300: #ffd54f;
+  --color-amber-200: #ffe082;
+  --color-amber-100: #ffecb3;
+  
+  --color-peach-500: #ffdab9;
+  --color-peach-400: #ffe4c9;
+  --color-peach-300: #ffeddb;
+  --color-peach-200: #fff3e8;
+  
+  --color-lavender-500: #e6e6fa;
+  --color-lavender-400: #f0f0ff;
+  --color-lavender-300: #f5f5ff;
+  
+  --color-warm-white: #faf5ef;
+  --color-cream: #fdfbf7;
+
+  /* Brand Colors - Main */
+
+  --color-brand-lightest: #cde2ee;
+  --color-brand-light: #a8daf9;
+  --color-brand-lighter: #d9e7f4;
+  --color-brand-medium: #0078c1;
+  --color-brand-dark: #004887;
+  --color-brand-darkest: #002d54;
+  --color-brand: var(--color-brand-medium);
+
+  /* Brand Colors - Secondary/Minor */
+  --color-brand-accent-green: #daf8e3;
+  --color-brand-accent-teal: #97ebdb;
+
+  /* Custom dark mode colors */
+  --color-dark-900: #0f172a;
+  --color-dark-800: #1e293b;
+  --color-dark-700: #334155;
+  --color-dark-600: #475569;
+}
+
 /**
  * PEGISUS Design System - Design Tokens
  * Following UNICEF compliance and best practices
@@ -10,17 +236,29 @@
    CSS Custom Properties (Design Tokens)
    ============================== */
 :root {
-  /* Color System */
-  --color-primary: #06b6d4; /* cyan-500 */
-  --color-primary-dark: #0891b2; /* cyan-600 */
-  --color-primary-darker: #0e7490; /* cyan-700 */
-  --color-secondary: #1e3a8a; /* blue-900 */
-  --color-secondary-light: #3b82f6; /* blue-500 */
+  /* Brand Color System - PEGISUS */
+  /* Main Brand Colors */
+  --brand-lightest: #cde2ee;
+  --brand-light: #a8daf9;
+  --brand-medium: #0078c1;
+  --brand-dark: #004887;
+  --brand-darkest: #002d54;
   
-  /* Accent Colors */
-  --color-accent-green: #10b981; /* emerald-500 */
-  --color-accent-orange: #f97316; /* orange-500 */
-  --color-accent-red: #ef4444; /* red-500 */
+  /* Secondary/Minor Brand Colors */
+  --brand-accent-green: #daf8e3;
+  --brand-teal: #0d9488;
+  
+  /* Color System - Mapped to Brand Colors */
+  --color-primary: var(--brand-medium);
+  --color-primary-dark: var(--brand-dark);
+  --color-primary-darker: var(--brand-darkest);
+  --color-secondary: var(--brand-dark);
+  --color-secondary-light: var(--brand-light);
+  
+  /* Accent Colors - Using Brand Variants */
+  --color-accent-green: var(--brand-teal);
+  --color-accent-orange: var(--brand-light);
+  --color-accent-red: #ef4444;
   
   /* Neutral Colors */
   --color-gray-50: #f9fafb;

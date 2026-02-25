@@ -275,7 +275,7 @@ const scrollToTop = () => {
       </div>
 
       <!-- Middle section - Partner institutions -->
-      <!-- <div class="border-b border-gray-800/50">
+      <div class="border-b border-gray-800/50">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div class="text-center mb-6">
             <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">
@@ -292,7 +292,7 @@ const scrollToTop = () => {
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Bottom section -->
       <div class="py-8">

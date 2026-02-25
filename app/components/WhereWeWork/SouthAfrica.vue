@@ -5,18 +5,17 @@ const mainText = `We work across multiple disadvantaged communities (Vrygrond, C
 
 const partnerText = `We have partnered with the SOZO Foundation, which offers 10-month vocational training programs to young people in areas such as construction, baking, or hairstyling, for a period of 10 months. SOZO provides job shadowing and assists beneficiaries with finding employment opportunities. SOZO also teaches their beneficiaries other life skills such as goal setting, financial management, and sexual health.`
 
-const images: [string, string] = [
-  '/img/countries/south-africa/community_1.png',
-  '/img/countries/south-africa/community_2.jpg'
+const images: string[] = [
+  // '/img/countries/south-africa/community_1.png',
+   'https://picsum.photos/640/640?random=1',
+  'https://picsum.photos/640/640?random=2',
+  'https://picsum.photos/640/640?random=3',
+  'https://picsum.photos/640/640?random=4',
+  'https://picsum.photos/640/640?random=5',
+  'https://picsum.photos/640/640?random=6'
 ]
 
-
-const stats = [
-  { label: 'Youth Unemployment', value: '35%', color: 'text-red-600' },
-  { label: 'Training Duration', value: '10 months', color: 'text-cyan-600' },
-  { label: 'Communities', value: '4+', color: 'text-blue-600' },
-  { label: 'Life Skills', value: 'Comprehensive', color: 'text-green-600' }
-]
+const countryMap ='/img/countries/south-africa/south-africaMap.png'
 
 const communities = [
   'Vrygrond', 'Capricorn Park', 'Lavender Hill', 'Steenberg', 'Cape Flats'
@@ -29,7 +28,7 @@ const communities = [
     :main-text="mainText"
     :partner-text="partnerText"
     :images="images"
-    :stats="stats"
+    :country-map="countryMap"
     :communities="communities"
     svg-icon="/img/countries/south-africa/south-africa.svg"  
   />

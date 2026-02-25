@@ -3,9 +3,9 @@ const youthFutureData = {
     backgroundImage: '/img/honeycomb.png',
     impactApproachImage: '/img/impact-approach.jpg',
     stats: [
-        { value: '60%', label: 'of Africa\'s Population', color: 'from-cyan-500 to-blue-900' },
-        { value: '1B+', label: 'Young People in Africa', color: 'from-cyan-500 to-blue-700' },
-        { value: '75%', label: 'Under 35 Years Old', color: 'from-green-500 to-emerald-600' }
+        { value: '60%', label: 'of Africa\'s Population', color: 'from-brand-light to-brand-darkest' },
+        { value: '1B+', label: 'Young People in Africa', color: 'from-brand-light to-brand-medium' },
+        { value: '75%', label: 'Under 35 Years Old', color: 'from-brand-teal to-brand-dark' }
     ]
 }
 
@@ -20,7 +20,7 @@ const supportData = {
             stat: "1 in 7",
             reason: "Young people aged 5 - 19 experiences some form of mental health disorder",
             source: "UN/WHO",
-            gradient: ["#f3f6f4", "#45818e"]
+            gradient: ["#cde2ee", "#004887"]
         },
          {
             title: "Meaningful Work",
@@ -30,7 +30,7 @@ const supportData = {
             stat: "264 million",
             reason: "Young people aged 15 - 24 are not in education, employment or training",
             source: "UN/ILO",
-            gradient: ["#0090c0", "#000b15"]
+            gradient: ["#a8daf9", "#002d54"]
         },
         {
             title: "Zero Substance Abuse",
@@ -40,7 +40,7 @@ const supportData = {
             stat: "78 million",
             reason: "Young people aged 12 - 24 are affected by substance abuse worldwide",
             source: "UN/ILO",
-            gradient: ["#ff0000", "#000000"]
+            gradient: ["#daf8e3", "#0078c1"]
         },
         {
             title: "Equality and Justice",
@@ -50,7 +50,7 @@ const supportData = {
             stat: "400 million",
             reason: "Young people face discrimination because of ethnicity and religion",
             source: "UN/ILO",
-            gradient: ["#e9e6d5", "#0a3e34"]
+            gradient: ["#97ebdb", "#004887"]
         }
        
     ]
@@ -68,7 +68,7 @@ const storiesData = {
       quote: "The coding skills changed my life. I now develop apps for local businesses.",
       image: "/img/tech_story.jpg",
       tags: ["Technology", "Entrepreneurship"],
-      color: "linear-gradient(135deg, #06b6d4, #1e3a8a)",
+      color: "linear-gradient(135deg, #0078c1, #002d54)",
       icon: "i-heroicons-code-bracket"
     },
     {
@@ -80,7 +80,7 @@ const storiesData = {
       quote: "I'm helping fight substance abuse through peer education.",
       image: "/img/utsanana_story.jpg",
       tags: ["Health", "Leadership"],
-      color: "linear-gradient(135deg, #06b6d4, #1e3a8a)", // cyan-500 to blue-900
+      color: "linear-gradient(135deg, #0078c1, #002d54)", // Brand colors
       icon: "i-heroicons-heart" // Using Heroicons
     },
     {
@@ -92,7 +92,7 @@ const storiesData = {
       quote: "Agricultural training helped me turn barren land into a thriving farm.",
       image: "/img/farmer_story.jpg",
       tags: ["Agriculture", "Sustainability"],
-      color: "linear-gradient(135deg, #06b6d4, #1e3a8a)", // cyan-500 to blue-900
+      color: "linear-gradient(135deg, #0078c1, #002d54)", // Brand colors
       icon: "i-heroicons-leaf" // Using Heroicons
     },
     {
@@ -104,7 +104,7 @@ const storiesData = {
       quote: "I learned how to fix cars, any type of car, and now I run my own garage.",
       image: "/img/motor_story.webp",
       tags: ["Marketing", "Business"],
-      color: "linear-gradient(135deg, #06b6d4, #1e3a8a)", // cyan-500 to blue-900
+      color: "linear-gradient(135deg, #0078c1, #002d54)", // Brand colors
       icon: "i-heroicons-chart-bar" // Using Heroicons
     },
     {
@@ -116,7 +116,7 @@ const storiesData = {
       quote: "The design program helped me launch my own clothing line.",
       image: "/img/fashion_story.jpg",
       tags: ["Design", "Creativity"],
-      color: "linear-gradient(135deg, #06b6d4, #1e3a8a)", // cyan-500 to blue-900
+      color: "linear-gradient(135deg, #0078c1, #002d54)", // Brand colors
       icon: "i-heroicons-scissors" // Using Heroicons
     }
   ]

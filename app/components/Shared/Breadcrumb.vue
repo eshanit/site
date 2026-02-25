@@ -72,47 +72,92 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .breadcrumb-nav {
-  @apply py-3 px-4 sm:px-6 lg:px-8;
+  padding: 0.75rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .breadcrumb-nav {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .breadcrumb-nav {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .breadcrumb-list {
-  @apply flex flex-wrap items-center space-x-1 text-sm;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .breadcrumb-item {
-  @apply flex items-center;
+  display: flex;
+  align-items: center;
 }
 
 .breadcrumb-icon {
-  @apply w-4 h-4 text-gray-500 hover:text-cyan-600 transition-colors duration-200;
+  width: 1rem;
+  height: 1rem;
+  color: #6b7280;
+  transition: color 0.2s;
+}
+
+.breadcrumb-icon:hover {
+  color: #0078c1;
 }
 
 .breadcrumb-separator {
-  @apply w-3 h-3 text-gray-400 mx-1;
+  width: 0.75rem;
+  height: 0.75rem;
+  color: #9ca3af;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .breadcrumb-link {
-  @apply text-gray-600 hover:text-cyan-600 transition-colors duration-200 font-medium;
+  color: #6b7280;
+  font-weight: 500;
+  transition: color 0.2s;
+  text-decoration: none;
 }
 
 .breadcrumb-link:hover {
-  @apply underline;
+  color: #0078c1;
+  text-decoration: underline;
 }
 
 .breadcrumb-current {
-  @apply text-gray-900 font-semibold cursor-default;
+  color: #111827;
+  font-weight: 600;
+  cursor: default;
 }
 
 .sr-only {
-  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* Focus styles for accessibility */
 .breadcrumb-link:focus-visible {
-  @apply outline-none ring-2 ring-cyan-500 ring-offset-2;
+  outline: none;
+  box-shadow: 0 0 0 2px #0078c1;
+  outline-offset: 2px;
 }
 </style>

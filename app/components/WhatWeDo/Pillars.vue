@@ -23,8 +23,8 @@ const pillars = [
       'Our approach fosters inclusive environments where all individuals feel valued and respected regardless of gender identity.'
     ],
     icon: 'i-heroicons-scale',
-    color: 'orange',
-    dotColor: 'bg-orange-500'
+    color: 'blue',
+    dotColor: 'bg-brand-medium'
   },
   {
     title: 'Vocational Integration',
@@ -34,8 +34,8 @@ const pillars = [
       'Our vocational support includes resume building, interview preparation, and workplace etiquette training for long-term success.'
     ],
     icon: 'i-heroicons-briefcase',
-    color: 'green',
-    dotColor: 'bg-green-500'
+    color: 'teal',
+    dotColor: 'bg-forest-600'
   },
   {
     title: 'Peer Support',
@@ -45,40 +45,33 @@ const pillars = [
       'Our peer support model emphasizes empowerment, with experienced participants mentoring newcomers to create a cycle of positive change.'
     ],
     icon: 'i-heroicons-user-group',
-    color: 'purple',
-    dotColor: 'bg-purple-500'
+    color: 'dark',
+    dotColor: 'bg-brand-dark'
   }
 ]
 
 // Color mapping from design system
 const colorClasses = {
   blue: {
-    bg: 'bg-blue-600',
-    text: 'text-blue-600',
-    border: 'border-blue-600',
-    bgLight: 'bg-blue-50',
-    fromTo: 'from-blue-500 to-blue-700'
+    bg: 'bg-brand-medium',
+    text: 'text-brand-medium',
+    border: 'border-brand-medium',
+    bgLight: 'bg-brand-lightest',
+    fromTo: 'from-brand-light to-brand-medium'
   },
-  orange: {
-    bg: 'bg-orange-500',
-    text: 'text-orange-600',
-    border: 'border-orange-500',
-    bgLight: 'bg-orange-50',
-    fromTo: 'from-orange-400 to-orange-600'
+  teal: {
+    bg: 'bg-forest-600',
+    text: 'text-forest-700',
+    border: 'border-forest-600',
+    bgLight: 'bg-forest-100',
+    fromTo: 'from-forest-600 to-forest-700'
   },
-  green: {
-    bg: 'bg-green-500',
-    text: 'text-green-600',
-    border: 'border-green-500',
-    bgLight: 'bg-green-50',
-    fromTo: 'from-green-400 to-green-600'
-  },
-  purple: {
-    bg: 'bg-purple-500',
-    text: 'text-purple-600',
-    border: 'border-purple-500',
-    bgLight: 'bg-purple-50',
-    fromTo: 'from-purple-400 to-purple-600'
+  dark: {
+    bg: 'bg-brand-dark',
+    text: 'text-brand-darkest',
+    border: 'border-brand-dark',
+    bgLight: 'bg-brand-light',
+    fromTo: 'from-brand-dark to-brand-darkest'
   }
 }
 
@@ -415,7 +408,7 @@ onUnmounted(() => {
         <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <NuxtLink
             to="/resources"
-            class="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-blue-900 font-bold font-poppins shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-3 group"
+            class="px-8 py-4 bg-cobalt-600 hover:bg-cobalt-700 text-white font-bold font-poppins shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-3 group"
             aria-label="Download implementation resources"
           >
             <UIcon name="i-heroicons-document-arrow-down" class="w-5 h-5" />
@@ -527,10 +520,9 @@ button:focus {
     transform: none !important;
   }
   
-  .bg-orange-500,
-  .bg-blue-600,
-  .bg-green-500,
-  .bg-purple-500 {
+  .bg-brand-medium,
+  .bg-brand-teal,
+  .bg-brand-dark {
     background-color: #f8fafc !important;
     -webkit-print-color-adjust: exact;
   }

@@ -122,7 +122,7 @@ const helpId = computed(() => `${inputId.value}-help`);
 .form-input {
   @apply w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500;
   @apply transition-all duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500;
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-light/30 focus:border-brand-medium;
 }
 
 .form-input-error {

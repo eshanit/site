@@ -4,16 +4,19 @@ const mainText = `We work in the urban communities of Masvingo district, in the 
 
 const partnerText = `We have partnered with Masvingo Polytechnic, which offers a wide range of practical skills-based programs for learners to increase opportunities for future employment.`
 
-const images: [string, string] = [
-  '/img/countries/zimbabwe/community_1.jpg',
-  '/img/countries/zimbabwe/community_2.jpg'
+const images: string[] = [
+  // '/img/countries/zimbabwe/community_1.jpg',
+  // '/img/countries/zimbabwe/community_2.jpg'
+     'https://picsum.photos/640/640?random=1',
+  'https://picsum.photos/640/640?random=2',
+  'https://picsum.photos/640/640?random=3',
+  'https://picsum.photos/640/640?random=4',
+  'https://picsum.photos/640/640?random=5',
+  'https://picsum.photos/640/640?random=6'
 ]
-const stats = [
-  { label: 'Wealth Index', value: '38.2', color: 'text-cyan-600' },
-  { label: 'Human Development', value: '30th %ile', color: 'text-amber-600' },
-  { label: 'Basic Needs Met', value: 'Low', color: 'text-red-600' },
-  { label: 'Youth Engagement', value: 'High', color: 'text-green-600' }
-]
+
+const countryMap ='/img/countries/zimbabwe/zimbabweMap.png'
+
 
 const communities = [
   'Masvingo Urban Communities'
@@ -26,7 +29,7 @@ const communities = [
     :main-text="mainText"
     :partner-text="partnerText"
     :images="images"
-    :stats="stats"
+    :country-map="countryMap"
     :communities="communities"
     svg-icon="/img/countries/zimbabwe/zimbabwe.svg"
     :is-reversed="true"

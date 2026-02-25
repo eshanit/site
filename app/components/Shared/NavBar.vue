@@ -110,13 +110,42 @@ const menuItems = computed(() => {
     },
     {
       name: 'What We Do',
-      href: '/what-we-do',
+      href: '/what-we-do/overview',
       current: route.path.startsWith('/what-we-do'),
+      // submenu: [
+      //   {
+      //     name: 'Overview',
+      //     href: '/what-we-do/overview',
+      //     current: route.path === '/what-we-do/overview',
+      //   },
+      //   {
+      //     name: 'Our Framework',
+      //     href: '/what-we-do/framework',
+      //     current: route.path === '/what-we-do/framework',
+      //   },
+      //   {
+      //     name: 'Our Programs',
+      //     href: '/what-we-do/programs',
+      //     current: route.path === '/what-we-do/programs',
+      //   }
+      // ]
     },
     {
       name: 'Who We Are',
-      href: '/who-we-are',
+      href: '/who-we-are/team',
       current: route.path.startsWith('/who-we-are'),
+      submenu: [
+        {
+          name: 'Our Team',
+          href: '/who-we-are/team',
+          current: route.path === '/who-we-are/team',
+        },
+        {
+          name: 'Our Partners',
+          href: '/who-we-are/partners',
+          current: route.path === '/who-we-are/partners',
+        }
+      ]
     },
     {
       name: 'Where We Work',
@@ -145,6 +174,12 @@ const closeMobileMenu = () => {
 
 const toggleSubmenu = (menuName: string) => {
   openSubmenu.value = openSubmenu.value === menuName ? null : menuName;
+};
+
+// Handle submenu click - close menus on click
+const handleSubmenuClick = (href: string) => {
+  openSubmenu.value = null;
+  closeMobileMenu();
 };
 
 // Handle keyboard navigation for menu items
@@ -177,26 +212,32 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
 </script>
 
 <template>
-  <nav 
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans bg-white/95 backdrop-blur-sm"
-    role="navigation"
-    aria-label="Main navigation"
-    :class="[isScrolled ? 'shadow-lg border-b border-gray-100' : '']"
+  <header 
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans"
+    :class="[
+      isScrolled 
+        ? 'bg-white/98 shadow-md backdrop-blur-md' 
+        : 'bg-white/95 backdrop-blur-sm'
+    ]"
+    role="banner"
   >
     <!-- Skip to main content link for accessibility -->
     <a 
       href="#main-content" 
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 bg-blue-700 text-white px-4 py-3 z-[99999] font-medium text-sm rounded-none"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 bg-blue-700 text-white px-4 py-3 z-[99999] font-medium text-sm"
       @keydown.tab="closeMobileMenu"
     >
       Skip to main content
     </a>
 
-    <!-- Full width container -->
-    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
-        <!-- Logo -->
-        <div class="flex items-center">
+    <!-- Top accent bar -->
+    <div class="h-1 bg-gradient-to-r from-brand-darkest via-brand-medium to-brand-light"></div>
+
+    <!-- Main navigation container - Full width -->
+    <div class="w-full px-4 md:px-6 lg:px-8 xl:px-12">
+      <div class="flex items-center justify-between py-4 lg:py-5">
+        <!-- Logo Section -->
+        <div class="flex-shrink-0">
           <NuxtLink 
             to="/" 
             class="flex items-center group"
@@ -208,48 +249,87 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
         </div>
 
         <!-- Desktop Navigation Menu -->
-        <div class="hidden lg:flex items-center space-x-1">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item.name" 
-            class="relative"
-          >
-            <NuxtLink
-              :to="item.href"
-              :class="[
-                'px-5 py-2 font-medium text-gray-700 transition-colors duration-200 relative group/navitem',
-                'hover:text-blue-700',
-                item.current ? 'text-blue-700' : ''
-              ]"
-              :aria-current="item.current ? 'page' : undefined"
-              @keydown="(e) => handleMenuKeydown(e, index)"
-              role="menuitem"
-              tabindex="0"
+        <nav class="hidden lg:flex items-center" aria-label="Main navigation">
+          <ul class="flex items-center gap-1">
+            <li 
+              v-for="(item, index) in menuItems" 
+              :key="item.name" 
+              class="relative"
+              @mouseenter="item.submenu ? openSubmenu = item.name : null"
+              @mouseleave="item.submenu ? openSubmenu = null : null"
             >
-              <span class="text-base font-bold tracking-wide text-blue-800 hover:text-cyan-600 transition-colors duration-200">
-                {{ item.name }}
-              </span>
-              
-              <!-- Active/Hover indicator -->
-              <div 
-                class="absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-200 origin-left"
-                :class="[
-                  item.current 
-                    ? 'bg-blue-700 scale-x-100' 
-                    : 'bg-blue-700 scale-x-0 group-hover/navitem:scale-x-100'
-                ]"
-                aria-hidden="true"
-              ></div>
-            </NuxtLink>
-          </div>
-        </div>
+              <NuxtLink
+                :to="item.href"
+                class="relative px-5 py-3 font-medium text-gray-700 transition-all duration-200 flex items-center gap-2 group"
+                :class="{ 'text-blue-700': item.current }"
+                :aria-current="item.current ? 'page' : undefined"
+                :aria-expanded="item.submenu ? openSubmenu === item.name : undefined"
+                :aria-haspopup="item.submenu ? 'true' : undefined"
+                @keydown="(e) => handleMenuKeydown(e, index)"
+                @click="item.submenu ? toggleSubmenu(item.name) : null"
+                role="menuitem"
+                tabindex="0"
+              >
+                <span class="text-base font-semibold tracking-wide">{{ item.name }}</span>
+                <UIcon 
+                  v-if="item.submenu" 
+                  name="i-heroicons-chevron-down" 
+                  class="w-4 h-4 transition-transform duration-200"
+                  :class="openSubmenu === item.name ? 'rotate-180' : ''"
+                />
+                
+                <!-- Animated underline -->
+                <span 
+                  class="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-brand-dark to-brand-light transition-all duration-300"
+                  :class="item.current ? 'w-full' : 'w-0 group-hover:w-full'"
+                  aria-hidden="true"
+                ></span>
+              </NuxtLink>
+
+              <!-- Dropdown Submenu -->
+              <Transition
+                enter-active-class="transition-all duration-200 ease-out"
+                enter-from-class="opacity-0 -translate-y-2"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition-all duration-150 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-2"
+              >
+                <div 
+                  v-if="item.submenu && openSubmenu === item.name"
+                  class="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl border border-gray-100 py-2 z-50"
+                  role="menu"
+                  aria-label="Submenu"
+                >
+                  <div class="absolute -top-2 left-4 w-4 h-4 bg-white border-l border-t border-gray-100 transform rotate-45"></div>
+                  <NuxtLink
+                    v-for="subitem in item.submenu"
+                    :key="subitem.name"
+                    :to="subitem.href"
+                    class="relative block px-5 py-3 text-sm transition-all duration-150 border-l-4"
+                    :class="[
+                      subitem.current 
+                        ? 'text-blue-700 bg-blue-50 border-blue-700' 
+                        : 'text-gray-700 hover:text-blue-700 hover:bg-gray-50 hover:border-blue-300 border-transparent'
+                    ]"
+                    role="menuitem"
+                    tabindex="0"
+                    @click="handleSubmenuClick(subitem.href)"
+                  >
+                    {{ subitem.name }}
+                  </NuxtLink>
+                </div>
+              </Transition>
+            </li>
+          </ul>
+        </nav>
 
         <!-- Right side actions -->
-        <div class="flex items-center space-x-4">
-          <!-- Search button (mobile first) -->
+        <div class="flex items-center gap-3">
+          <!-- Search button (mobile) -->
           <button
             @click="isSearchOpen = !isSearchOpen"
-            class="lg:hidden p-2 text-gray-600 hover:text-blue-700 transition-colors"
+            class="lg:hidden p-2.5 text-gray-600 hover:text-blue-700 hover:bg-gray-100 transition-all duration-200"
             :aria-label="isSearchOpen ? 'Close search' : 'Open search'"
           >
             <UIcon 
@@ -259,18 +339,18 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
           </button>
 
           <!-- Search input (desktop) -->
-          <div class="hidden lg:block relative">
-            <div class="relative">
+          <div class="hidden lg:block">
+            <div class="relative group">
               <input
                 v-model="searchQuery"
                 type="text"
                 placeholder="Search..."
-                class="w-48 px-4 py-2 pl-10 border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-gray-800 transition-all duration-200"
+                class="w-52 px-4 py-2.5 pl-10 border border-gray-200 bg-gray-50/50 focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-800 transition-all duration-200"
                 @keydown="handleSearchKeydown"
               />
               <UIcon 
                 name="i-heroicons-magnifying-glass" 
-                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" 
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" 
               />
             </div>
           </div>
@@ -278,7 +358,7 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
           <!-- Dark/Light Mode Toggle -->
           <button
             @click="toggleDarkMode"
-            class="p-2 text-gray-600 hover:text-blue-700 transition-colors"
+            class="p-2.5 text-gray-600 hover:text-blue-700 hover:bg-gray-100 transition-all duration-200"
             :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
             :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
           >
@@ -291,12 +371,8 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
           <!-- Mobile menu button -->
           <button 
             @click="toggleMenu"
-            :class="[
-              'lg:hidden p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2',
-              isMenuOpen 
-                ? 'text-blue-700' 
-                : 'text-gray-600 hover:text-blue-700'
-            ]"
+            class="lg:hidden p-2.5 transition-all duration-200 hover:bg-gray-100"
+            :class="isMenuOpen ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'"
             :aria-label="isMenuOpen ? 'Close main menu' : 'Open main menu'"
             :aria-expanded="isMenuOpen"
             :aria-controls="'mobile-menu'"
@@ -320,22 +396,22 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
       <!-- Mobile Search (appears when toggled) -->
       <Transition
         enter-active-class="transition-all duration-200 ease-out"
-        enter-from-class="opacity-0 -translate-y-4"
-        enter-to-class="opacity-100 translate-y-0"
+        enter-from-class="opacity-0 max-h-0"
+        enter-to-class="opacity-100 max-h-20"
         leave-active-class="transition-all duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-4"
+        leave-from-class="opacity-100 max-h-20"
+        leave-to-class="opacity-0 max-h-0"
       >
         <div 
           v-if="isSearchOpen"
-          class="lg:hidden pb-4"
+          class="lg:hidden overflow-hidden pb-4"
         >
           <div class="relative">
             <input
               v-model="searchQuery"
               type="text"
               placeholder="Search..."
-              class="w-full px-4 py-3 pl-12 border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-gray-800"
+              class="w-full px-4 py-3.5 pl-12 border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               @keydown="handleSearchKeydown"
             />
             <UIcon 
@@ -344,21 +420,21 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
             />
             <button
               @click="handleSearch"
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-700 font-medium"
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-700 text-white px-4 py-1.5 text-sm font-medium hover:bg-blue-800 transition-colors"
             >
-              Go
+              Search
             </button>
           </div>
         </div>
       </Transition>
 
-      <!-- Scroll indicator -->
+      <!-- Scroll progress indicator -->
       <div
         v-if="isScrolled"
-        class="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700/20 origin-left transition-transform duration-200"
+        class="h-0.5 bg-gradient-to-r from-brand-dark via-brand-light to-brand-dark origin-left"
         :style="{ 
-          transform: `scaleX(${scrollProgress})`,
-          transition: 'transform 0.1s ease-out'
+          width: `${scrollProgress * 100}%`,
+          transition: 'width 0.1s ease-out'
         }"
         aria-hidden="true"
       ></div>
@@ -366,30 +442,88 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
 
     <!-- Mobile Navigation Menu -->
     <Transition
-      enter-active-class="transition-all duration-200 ease-out"
-      enter-from-class="opacity-0 -translate-y-4"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition-all duration-150 ease-in"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 -translate-y-4"
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="opacity-0 max-h-0"
+      enter-to-class="opacity-100 max-h-screen"
+      leave-active-class="transition-all duration-200 ease-in"
+      leave-from-class="opacity-100 max-h-screen"
+      leave-to-class="opacity-0 max-h-0"
     >
       <div 
         v-show="isMenuOpen"
         id="mobile-menu"
-        class="lg:hidden bg-white border-t border-gray-100 shadow-lg"
+        class="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-hidden"
         role="menu"
         aria-label="Mobile navigation"
       >
-        <div class="py-2">
+        <nav class="py-2">
           <div 
             v-for="(item, index) in menuItems" 
             :key="item.name"
             role="none"
           >
+            <!-- Main menu item with expandable submenu -->
+            <div v-if="item.submenu">
+              <button
+                @click="toggleSubmenu(item.name)"
+                class="w-full text-left px-6 py-4 text-base font-medium transition-all duration-150 border-l-4 flex items-center justify-between"
+                :class="[
+                  item.current 
+                    ? 'text-blue-700 bg-blue-50 border-blue-700' 
+                    : 'text-gray-700 hover:text-blue-700 hover:bg-gray-50 border-transparent'
+                ]"
+                :aria-expanded="openSubmenu === item.name"
+                role="menuitem"
+                tabindex="0"
+              >
+                <span class="font-semibold">{{ item.name }}</span>
+                <UIcon 
+                  name="i-heroicons-chevron-down" 
+                  class="w-5 h-5 transition-transform duration-200"
+                  :class="openSubmenu === item.name ? 'rotate-180' : ''"
+                />
+              </button>
+              
+              <!-- Mobile submenu items -->
+              <Transition
+                enter-active-class="transition-all duration-200 ease-out"
+                enter-from-class="opacity-0 max-h-0"
+                enter-to-class="opacity-100 max-h-40"
+                leave-active-class="transition-all duration-150 ease-in"
+                leave-from-class="opacity-100 max-h-40"
+                leave-to-class="opacity-0 max-h-0"
+              >
+                <div 
+                  v-if="openSubmenu === item.name"
+                  class="bg-gray-50 overflow-hidden"
+                  role="menu"
+                >
+                  <NuxtLink
+                    v-for="subitem in item.submenu"
+                    :key="subitem.name"
+                    :to="subitem.href"
+                    class="block pl-12 pr-6 py-3.5 text-sm transition-all duration-150 border-l-4"
+                    :class="[
+                      subitem.current 
+                        ? 'text-blue-700 bg-blue-50 border-blue-700' 
+                        : 'text-gray-700 hover:text-blue-700 hover:bg-gray-100 border-transparent'
+                    ]"
+                    role="menuitem"
+                    tabindex="0"
+                    @click="handleSubmenuClick(subitem.href)"
+                  >
+                    {{ subitem.name }}
+                  </NuxtLink>
+                </div>
+              </Transition>
+            </div>
+
+            <!-- Regular menu item without submenu -->
             <NuxtLink
+              v-else
               :to="item.href"
+              class="block px-6 py-4 text-base font-semibold transition-all duration-150 border-l-4"
               :class="[
-                'block px-6 py-4 text-base font-medium transition-colors duration-150 border-l-4',
                 item.current 
                   ? 'text-blue-700 bg-blue-50 border-blue-700' 
                   : 'text-gray-700 hover:text-blue-700 hover:bg-gray-50 border-transparent'
@@ -402,14 +536,14 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
               {{ item.name }}
             </NuxtLink>
           </div>
-        </div>
+        </nav>
       </div>
     </Transition>
-  </nav>
+  </header>
 </template>
 
 <style scoped>
-/* Use design system tokens and follow UNICEF guidelines */
+/* Design system styles */
 
 /* Remove all border-radius as per original requirement */
 * {
@@ -421,28 +555,28 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* WCAG-compliant focus styles with design system colors */
+/* WCAG-compliant focus styles */
 a:focus,
 button:focus,
 input:focus {
-  outline: 2px solid #1e3a8a; /* black */
+  outline: 2px solid #0078c1;
   outline-offset: 2px;
 }
 
 /* Ensure keyboard navigation support */
 [role="menuitem"]:focus {
-  outline: 0.5px solid #fff;
+  outline: 2px solid #0078c1;
   outline-offset: -2px;
 }
 
-/* Smooth transitions following design system */
+/* Smooth transitions */
 * {
   transition-property: color, background-color, border-color, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
 
-/* Reduced motion preference following accessibility guidelines */
+/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -457,68 +591,60 @@ input:focus {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .border-gray-100 {
-    border-color: var(--color-gray-900);
+    border-color: #111827;
   }
   
-  .text-gray-600 {
-    color: var(--color-gray-900);
-  }
-  
+  .text-gray-600,
   .text-gray-700 {
-    color: var(--color-gray-900);
+    color: #111827;
   }
 }
 
 /* Dark mode support */
-.dark nav {
-  background-color: #111827; /* gray-900 */
-  border-color: #374151; /* gray-700 */
+.dark header {
+  background-color: #111827;
+  border-color: #374151;
 }
 
 .dark .bg-white {
-  background-color: #1f2937; /* gray-800 */
+  background-color: #1f2937;
 }
 
 .dark .text-gray-700 {
-  color: #d1d5db; /* gray-300 */
+  color: #d1d5db;
 }
 
 .dark .text-gray-600 {
-  color: #9ca3af; /* gray-400 */
+  color: #9ca3af;
 }
 
-.dark .border-gray-100 {
-  border-color: #374151; /* gray-700 */
+.dark .border-gray-100,
+.dark .border-gray-200 {
+  border-color: #374151;
 }
 
 .dark .bg-gray-50 {
-  background-color: #374151; /* gray-700 */
+  background-color: #374151;
 }
 
-.dark .hover\:bg-gray-50:hover {
-  background-color: #4b5563; /* gray-600 */
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover {
+  background-color: #4b5563;
 }
 
 .dark .bg-blue-50 {
-  background-color: rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
+  background-color: rgba(59, 130, 246, 0.15);
 }
 
-/* Ensure z-index stacking for accessibility */
-nav {
+/* Ensure z-index stacking */
+header {
   z-index: 50;
 }
 
-/* Print styles for accessibility */
+/* Print styles */
 @media print {
-  nav {
+  header {
     display: none;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .max-w-7xl {
-    max-width: 100%;
   }
 }
 
@@ -532,20 +658,20 @@ nav {
 }
 
 /* Right-to-left language support */
-[dir="rtl"] .space-x-1 > :not([hidden]) ~ :not([hidden]) {
+[dir="rtl"] .gap-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 1;
 }
 
-[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+[dir="rtl"] .gap-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 1;
 }
 
 /* Backdrop blur fallback for older browsers */
 @supports not (backdrop-filter: blur(8px)) {
-  nav {
+  header {
     background-color: white;
   }
-  .dark nav {
+  .dark header {
     background-color: #111827;
   }
 }

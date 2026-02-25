@@ -13,7 +13,7 @@ const programItems = [
     label: 'Sustainable Change Through Peer Groups',
     icon: 'i-heroicons-users',
     content: `Importantly, we want these changes to be sustainable. To accomplish this, we deliver PEGISUS to peer groups. Young people and friends from their community take part in the program together so they can support each other as they make healthier lifestyle changes.`,
-    color: 'orange'
+    color: 'azure'
   },
   {
     id: 'vocational-integration',
@@ -27,7 +27,7 @@ const programItems = [
     label: 'RAD-PAL Program',
     icon: 'i-heroicons-shield-check',
     content: `RAD-PAL is a substance use reduction program designed for younger South African adolescents, developed by team member Dr. Tara Carney. The program teaches behavioral skills to help young people identify their own motivation for reducing substance use, what triggers their use, and problem-solving to identify alternative behaviors outside of using substances.`,
-    color: 'purple'
+    color: 'teal'
   },
   {
     id: 'manhood-2',
@@ -41,7 +41,7 @@ const programItems = [
     label: 'Program Development Process',
     icon: 'i-heroicons-beaker',
     content: `To turn RAD-PAL and Manhood 2.0 into PEGISUS, we solicited feedback using focus group discussions with young people living in the local community and from our youth advisory boards. We received feedback on the program's content, activities, and language to make sure it was appropriate for young people aged 16 – 24 and their peers.`,
-    color: 'orange'
+    color: 'azure'
   },
   {
     id: 'clinical-trial',
@@ -55,36 +55,36 @@ const programItems = [
 // Color mapping from design system
 const colorClasses = {
   blue: {
-    bg: 'bg-blue-600',
-    text: 'text-blue-600',
-    border: 'border-blue-600',
-    bgLight: 'bg-blue-50',
-    hover: 'hover:bg-blue-50',
-    fromTo: 'from-blue-500 to-blue-700'
+    bg: 'bg-brand-medium',
+    text: 'text-brand-medium',
+    border: 'border-brand-medium',
+    bgLight: 'bg-brand-lightest',
+    hover: 'hover:bg-brand-lightest',
+    fromTo: 'from-brand-light to-brand-medium'
   },
-  orange: {
-    bg: 'bg-orange-500',
-    text: 'text-orange-600',
-    border: 'border-orange-500',
-    bgLight: 'bg-orange-50',
-    hover: 'hover:bg-orange-50',
-    fromTo: 'from-orange-400 to-orange-600'
+  azure: {
+    bg: 'bg-cobalt-600',
+    text: 'text-cobalt-600',
+    border: 'border-cobalt-600',
+    bgLight: 'bg-cobalt-100',
+    hover: 'hover:bg-cobalt-50',
+    fromTo: 'from-cobalt-500 to-cobalt-700'
+  },
+  teal: {
+    bg: 'bg-forest-600',
+    text: 'text-forest-700',
+    border: 'border-forest-600',
+    bgLight: 'bg-forest-100',
+    hover: 'hover:bg-forest-50',
+    fromTo: 'from-forest-600 to-forest-700'
   },
   green: {
-    bg: 'bg-green-500',
-    text: 'text-green-600',
-    border: 'border-green-500',
-    bgLight: 'bg-green-50',
-    hover: 'hover:bg-green-50',
-    fromTo: 'from-green-400 to-green-600'
-  },
-  purple: {
-    bg: 'bg-purple-500',
-    text: 'text-purple-600',
-    border: 'border-purple-500',
-    bgLight: 'bg-purple-50',
-    hover: 'hover:bg-purple-50',
-    fromTo: 'from-purple-400 to-purple-600'
+    bg: 'bg-emerald-600',
+    text: 'text-emerald-600',
+    border: 'border-emerald-600',
+    bgLight: 'bg-emerald-50',
+    hover: 'hover:bg-emerald-50',
+    fromTo: 'from-emerald-500 to-emerald-700'
   }
 };
 
@@ -98,9 +98,9 @@ const getColorClass = (color: string | undefined, type: keyof typeof colorClasse
 // Core Components display data
 const coreComponents = [
   { title: '8', subtitle: 'Sessions', description: 'Complete program structure', icon: 'i-heroicons-calendar', color: 'blue' },
-  { title: '16-24', subtitle: 'Age Range', description: 'Target youth demographic', icon: 'i-heroicons-users', color: 'orange' },
+  { title: '16-24', subtitle: 'Age Range', description: 'Target youth demographic', icon: 'i-heroicons-users', color: 'azure' },
   { title: '3', subtitle: 'Core Areas', description: 'Substance use, gender, employment', icon: 'i-heroicons-star', color: 'green' },
-  { title: '2', subtitle: 'Foundational Programs', description: 'RAD-PAL & Manhood 2.0', icon: 'i-heroicons-beaker', color: 'purple' }
+  { title: '2', subtitle: 'Foundational Programs', description: 'RAD-PAL & Manhood 2.0', icon: 'i-heroicons-beaker', color: 'teal' }
 ];
 
 // Interactive state
@@ -352,45 +352,9 @@ const componentHovered = ref<number | null>(null);
         </div>
       </div>
 
-      <!-- Quote -->
-      <div class="border border-gray-200 p-8 bg-white mb-16">
-        <div class="flex items-start gap-4">
-          <UIcon name="i-heroicons-chat-bubble-left-right" class="w-8 h-8 text-blue-600 flex-shrink-0 mt-1" />
-          <div>
-            <blockquote class="text-gray-800 italic leading-relaxed font-inter mb-4">
-              "PEGISUS helps young people build healthier habits, stronger peer support, and practical skills to succeed in life and work."
-            </blockquote>
-            <div class="text-sm text-gray-600 font-semibold font-poppins">— Program Implementation Team</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Program Stats -->
-      <div class="border-t border-gray-200 pt-8">
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h5 class="font-bold text-gray-900 font-poppins mb-2">Program Resources & Impact</h5>
-            <p class="text-sm text-gray-600 font-inter">Complete documentation, implementation materials, and impact data available.</p>
-          </div>
-          
-          <div class="grid grid-cols-3 gap-4">
-            <div class="text-center p-4 bg-blue-50">
-              <div class="text-xl font-bold font-poppins text-blue-600">7</div>
-              <div class="text-xs text-gray-600 font-inter mt-1">Core Components</div>
-            </div>
-            
-            <div class="text-center p-4 bg-orange-50">
-              <div class="text-xl font-bold font-poppins text-orange-600">8</div>
-              <div class="text-xs text-gray-600 font-inter mt-1">Session Modules</div>
-            </div>
-            
-            <div class="text-center p-4 bg-green-50">
-              <div class="text-xl font-bold font-poppins text-green-600">500+</div>
-              <div class="text-xs text-gray-600 font-inter mt-1">Youth Impacted</div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
     </div>
   </section>
 </template>
@@ -443,9 +407,10 @@ a:focus {
 /* Print styles */
 @media print {
   .bg-blue-600,
-  .bg-orange-500,
-  .bg-green-500,
-  .bg-purple-500,
+  .bg-cobalt-600,
+  .bg-emerald-600,
+  .bg-forest-600,
+  .bg-brand-teal,
   .bg-gradient-to-r {
     background-color: #f8fafc !important;
     -webkit-print-color-adjust: exact;

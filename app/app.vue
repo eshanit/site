@@ -7,7 +7,7 @@ useSeoMeta({
   ogDescription: 'Empowering youth through evidence-based programs, vocational training, and community-led solutions in Southern Africa.',
   ogImage: '/img/pegi_logo.png',
   twitterCard: 'summary_large_image',
-  themeColor: '#06b6d4',
+  themeColor: '#0078c1',
 });
 
 // Structured Data for Organization (JSON-LD)
@@ -76,7 +76,7 @@ useHead({
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #06b6d4;
+  background: #0078c1;
   color: white;
   padding: 12px 24px;
   z-index: 9999;
@@ -88,7 +88,7 @@ useHead({
 
 .skip-link:focus {
   top: 0;
-  outline: 2px solid #1e3a8a;
+  outline: 2px solid #004887;
   outline-offset: 2px;
 }
 
@@ -113,7 +113,7 @@ useHead({
   overflow: visible;
   clip: auto;
   white-space: normal;
-  background: #06b6d4;
+  background: #0078c1;
   color: white;
   z-index: 9999;
 }

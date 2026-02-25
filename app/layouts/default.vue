@@ -24,7 +24,7 @@ main {
 }
 
 main:focus-visible {
-  outline: 2px solid #06b6d4;
+  outline: 2px solid #0078c1;
   outline-offset: -2px;
 }
 </style>
