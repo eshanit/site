@@ -4,41 +4,41 @@ const searchQuery = computed(() => (route.query.q as string) || '');
 
 // PEGISUS Program Pillars (from Details.vue)
 const programPillars = [
-  { title: 'PEGISUS Overview', path: '/what-we-do#pegisus-overview', content: 'Peer Education for Gender Inclusion and Substance Use in Southern Africa - An 8-session program for youth aged 16-24' },
-  { title: 'Sustainable Change Through Peer Groups', path: '/what-we-do#sustainable-change', content: 'Changes are sustainable through peer groups - young people and community friends take part together' },
-  { title: 'Integration with Vocational Training', path: '/what-we-do#vocational-integration', content: 'Delivered within vocational training programs to support employment and healthy lifestyles' },
-  { title: 'RAD-PAL Program', path: '/what-we-do#rad-pal', content: 'Substance use reduction program for younger South African adolescents using behavioral skills training' },
-  { title: 'Manhood 2.0 Program', content: 'Gender-transformative program for adolescent boys and young men to develop equitable gender beliefs' },
-  { title: 'Program Development Process', path: '/what-we-do#development-process', content: 'Feedback from focus group discussions with young people and youth advisory boards' },
-  { title: 'Clinical Trial & Testing', path: '/what-we-do#clinical-trial', content: 'Randomized controlled trial comparing vocational training with and without PEGISUS' }
+  { title: 'PEGISUS Overview', path: '/what-we-do/overview#what-is-pegisus', content: 'Peer Education for Gender Inclusion and Substance Use in Southern Africa - An 8-session program for youth aged 16-24' },
+  { title: 'Sustainable Change Through Peer Groups', path: '/what-we-do/overview', content: 'Changes are sustainable through peer groups - young people and community friends take part together' },
+  { title: 'Integration with Vocational Training', path: '/what-we-do/overview', content: 'Delivered within vocational training programs to support employment and healthy lifestyles' },
+  { title: 'RAD-PAL Program', path: '/what-we-do/programs#rad-pal', content: 'Substance use reduction program for younger South African adolescents using behavioral skills training' },
+  { title: 'Manhood 2.0 Program', path: '/what-we-do/programs#manhood-2-0', content: 'Gender-transformative program for adolescent boys and young men to develop equitable gender beliefs' },
+  { title: 'Program Development Process', path: '/what-we-do/overview#program-development', content: 'Feedback from focus group discussions with young people and youth advisory boards' },
+  { title: 'Clinical Trial & Testing', path: '/what-we-do/overview#testing', content: 'Randomized controlled trial comparing vocational training with and without PEGISUS' }
 ];
 
 // Sessions data (from Details.vue - 8 sessions)
 const sessions = [
-  { title: 'Session 1: Introduction to PEGISUS', path: '/what-we-do#session-1', content: 'Introduction to the program, peer education, and healthy lifestyle goals' },
-  { title: 'Session 2: Substance Use Awareness', path: '/what-we-do#session-2', content: 'Understanding substance use triggers, motivations for reduction, and behavioral skills' },
-  { title: 'Session 3: Gender Identity Exploration', path: '/what-we-do#session-3', content: 'Exploring gender concepts, power dynamics in relationships, and healthy communication' },
-  { title: 'Session 4: Emotional Intelligence', path: '/what-we-do#session-4', content: 'Understanding emotions, emotional regulation, and healthy expression' },
-  { title: 'Session 5: Peer Support Skills', path: '/what-we-do#session-5', content: 'Building skills to support peers in making healthier lifestyle choices' },
-  { title: 'Session 6: Employment Readiness', path: '/what-we-do#session-6', content: 'Linking program content to vocational training and employment opportunities' },
-  { title: 'Session 7: Community Action Planning', path: '/what-we-do#session-7', content: 'Planning sustainable peer support initiatives in local communities' },
-  { title: 'Session 8: Program Completion & Evaluation', path: '/what-we-do#session-8', content: 'Review, evaluation, and planning for continued peer support' }
+  { title: 'Session 1: Introduction to PEGISUS', path: '/what-we-do/overview', content: 'Introduction to the program, peer education, and healthy lifestyle goals' },
+  { title: 'Session 2: Substance Use Awareness', path: '/what-we-do/overview', content: 'Understanding substance use triggers, motivations for reduction, and behavioral skills' },
+  { title: 'Session 3: Gender Identity Exploration', path: '/what-we-do/overview', content: 'Exploring gender concepts, power dynamics in relationships, and healthy communication' },
+  { title: 'Session 4: Emotional Intelligence', path: '/what-we-do/overview', content: 'Understanding emotions, emotional regulation, and healthy expression' },
+  { title: 'Session 5: Peer Support Skills', path: '/what-we-do/overview', content: 'Building skills to support peers in making healthier lifestyle choices' },
+  { title: 'Session 6: Employment Readiness', path: '/what-we-do/overview', content: 'Linking program content to vocational training and employment opportunities' },
+  { title: 'Session 7: Community Action Planning', path: '/what-we-do/overview', content: 'Planning sustainable peer support initiatives in local communities' },
+  { title: 'Session 8: Program Completion & Evaluation', path: '/what-we-do/overview', content: 'Review, evaluation, and planning for continued peer support' }
 ];
 
 // Partners data (from various WhoWeAre pages)
 const partners = [
-  { title: 'University Hospital Basel', path: '/who-we-are#university-hospital-basel', content: 'Leading Swiss academic medical center - PEGISUS research partner' },
-  { title: 'South African Medical Research Council (SAMRC)', path: '/who-we-are#samrc', content: 'South African Medical Research Council - Local research implementation partner' },
-  { title: 'SolidarMed Zambia', path: '/who-we-are#solidar-med-zambia', content: 'Swiss NGO working to improve health in rural Zambia - Implementation partner' },
-  { title: 'SolidarMed Zimbabwe', path: '/who-we-are#solidar-med-zimbabwe', content: 'Swiss NGO improving healthcare access in Zimbabwe - Implementation partner' },
-  { title: 'University of Zambia', path: '/who-we-are#university-of-zambia', content: 'Academic institution - Research and training partner in Zambia' }
+  { title: 'University Hospital Basel', path: '/who-we-are/partners', content: 'Leading Swiss academic medical center - PEGISUS research partner' },
+  { title: 'South African Medical Research Council (SAMRC)', path: '/who-we-are/partners', content: 'South African Medical Research Council - Local research implementation partner' },
+  { title: 'SolidarMed Zambia', path: '/who-we-are/partners', content: 'Swiss NGO working to improve health in rural Zambia - Implementation partner' },
+  { title: 'SolidarMed Zimbabwe', path: '/who-we-are/partners', content: 'Swiss NGO improving healthcare access in Zimbabwe - Implementation partner' },
+  { title: 'University of Zambia', path: '/who-we-are/partners', content: 'Academic institution - Research and training partner in Zambia' }
 ];
 
 // Funders data (from Fundedby.vue)
 const funders = [
-  { title: 'SOR4D', path: '/#funders', content: 'Solution-oriented Research for Development Programme - Lead funder of PEGISUS research' },
-  { title: 'SDC', path: '/#funders', content: 'Swiss Agency for Development and Cooperation - Development partnership and implementation support' },
-  { title: 'SNF', path: '/#funders', content: 'Swiss National Science Foundation - Research quality and methodological rigor funding' }
+  { title: 'SOR4D', path: '/', content: 'Solution-oriented Research for Development Programme - Lead funder of PEGISUS research' },
+  { title: 'SDC', path: '/', content: 'Swiss Agency for Development and Cooperation - Development partnership and implementation support' },
+  { title: 'SNF', path: '/', content: 'Swiss National Science Foundation - Research quality and methodological rigor funding' }
 ];
 
 // All searchable content

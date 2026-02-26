@@ -31,10 +31,12 @@ const socialLinks = [
 
 // Quick links
 const quickLinks = [
-  { name: 'Program Overview', href: '/what-we-do/overview' },
-  { name: 'Our Partners', href: '/who-we-are/partners' },
+  { name: 'Program Overview', href: '/program' },
+  { name: 'Our Partners', href: '/who-we-are' },
   { name: 'Where We Work', href: '/where-we-work' },
-  { name: 'Get Involved', href: '/contact' }
+  { name: 'Research & Evidence', href: '/research' },
+  { name: 'Get Involved', href: '/contact' },
+  { name: 'Privacy Policy', href: '#' }
 ]
 
 // Contact information
@@ -58,6 +60,8 @@ const contactInfo = [
     href: 'tel:+27211234567'
   }
 ]
+
+
 
 // Newsletter subscription
 const email = ref('')
@@ -138,7 +142,7 @@ const scrollToTop = () => {
               </p>
 
               <!-- Social links -->
-              <!-- <div class="pt-4">
+              <div class="pt-4">
                 <div class="text-sm text-gray-400 font-semibold mb-3">FOLLOW US</div>
                 <div class="flex space-x-2">
                   <NuxtLink
@@ -154,7 +158,7 @@ const scrollToTop = () => {
                     <UIcon :name="social.icon" class="w-4 h-4" />
                   </NuxtLink>
                 </div>
-              </div> -->
+              </div>
             </div>
 
             <!-- Quick links -->
@@ -192,8 +196,8 @@ const scrollToTop = () => {
                   :href="contact.href"
                   class="flex items-start space-x-3 text-gray-400 hover:text-brand-light transition-colors duration-300 group"
                 >
-                  <div class="w-8 h-8 bg-gradient-to-br from-brand-medium/20 to-brand-dark/20 flex items-center justify-center flex-shrink-0 group-hover:from-brand-medium/30 group-hover:to-brand-dark/30 transition-all">
-                    <UIcon :name="contact.icon" class="w-4 h-4 text-brand-light" />
+                  <div class="w-8 h-8 bg-gradient-to-br from-cyan-500/20 to-blue-900/20 flex items-center justify-center flex-shrink-0 group-hover:from-cyan-500/30 group-hover:to-blue-900/30 transition-all">
+                    <UIcon :name="contact.icon" class="w-4 h-4 text-cyan-400" />
                   </div>
                   <div>
                     <div class="text-sm font-medium text-white">{{ contact.title }}</div>
@@ -220,10 +224,10 @@ const scrollToTop = () => {
                 class="bg-gradient-to-r from-brand-teal/20 to-brand-accent-green/20 border border-brand-teal/30 p-4"
               >
                 <div class="flex items-center space-x-3">
-                  <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-brand-teal flex-shrink-0" />
+                  <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-green-400 flex-shrink-0" />
                   <div>
-                    <div class="font-semibold text-brand-teal">Added to mailing list!</div>
-                    <div class="text-sm text-brand-teal/80 mt-1">
+                    <div class="font-semibold text-green-300">Added to mailing list!</div>
+                    <div class="text-sm text-green-400/80 mt-1">
                       Thank you for reaching out to us.
                     </div>
                   </div>
@@ -263,6 +267,26 @@ const scrollToTop = () => {
         </div>
       </div>
 
+      <!-- Middle section - Partner institutions -->
+      <!-- <div class="border-b border-gray-800/50">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="text-center mb-6">
+            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              <span class="text-brand-light">In Partnership With</span>
+            </h4>
+            <div class="flex flex-wrap justify-center items-center gap-8">
+              <span 
+                v-for="institution in partnerInstitutions" 
+                :key="institution"
+                class="text-gray-400 hover:text-brand-light transition-colors duration-300 text-sm"
+              >
+                {{ institution }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
       <!-- Bottom section -->
       <div class="py-8">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -276,25 +300,25 @@ const scrollToTop = () => {
             <div class="flex items-center space-x-6">
               <NuxtLink 
                 to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
               >
                 Privacy Policy
               </NuxtLink>
               <NuxtLink 
                 to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
               >
                 Terms of Service
               </NuxtLink>
               <NuxtLink 
                 to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
               >
                 Accessibility
               </NuxtLink>
               <NuxtLink 
                 to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
+                class="text-gray-500 hover:text-cyan-300 transition-colors duration-300 text-sm"
               >
                 Sitemap
               </NuxtLink>
@@ -303,7 +327,7 @@ const scrollToTop = () => {
             <!-- Back to top -->
             <button
               @click="scrollToTop"
-              class="flex items-center space-x-2 text-gray-500 hover:text-brand-light transition-colors duration-300 group"
+              class="flex items-center space-x-2 text-gray-500 hover:text-cyan-300 transition-colors duration-300 group"
             >
               <span class="text-sm">Back to top</span>
               <UIcon 

@@ -195,14 +195,14 @@ const handleSubmit = async () => {
 
             <!-- Action buttons -->
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
-              <NuxtLink
+              <!-- <NuxtLink
                 to="/what-we-do"
                 class="group relative px-8 py-4 bg-brand-medium hover:bg-brand-dark text-white font-bold font-poppins shadow-md hover:shadow-lg transform transition-all duration-300 text-lg text-center flex items-center justify-center gap-3"
                 aria-label="Learn about PEGISUS programs"
               >
                 Learn About PEGISUS
                 <UIcon name="i-heroicons-arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </NuxtLink>
+              </NuxtLink> -->
 
               <button
                 @click="$el.querySelector('#contact-form')?.scrollIntoView({ behavior: 'smooth' })"
@@ -535,14 +535,14 @@ const handleSubmit = async () => {
                 aria-label="See where we work"
               >
                 <UIcon name="i-heroicons-map" class="w-5 h-5" />
-                <span>See Where We Work</span>
+                <span class="text-white">See Where We Work</span>
               </NuxtLink>
             </div>
           </div>
         </div>
         
         <!-- Contact Stats -->
-        <div class="mt-12 pt-8 border-t border-gray-300">
+        <!-- <div class="mt-12 pt-8 border-t border-gray-300">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="text-center">
               <div class="text-lg font-bold font-poppins bg-gradient-to-r from-brand-medium to-brand-dark bg-clip-text text-transparent">24-48h</div>
@@ -561,7 +561,7 @@ const handleSubmit = async () => {
               <div class="text-xs text-gray-600 font-inter">Active Since</div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
