@@ -20,7 +20,7 @@ onMounted(() => {
       loading="lazy"
     />
     <!-- Overlay for background color effect -->
-    <div class="absolute inset-0 bg-white/40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-white/70 pointer-events-none"></div>
     
     <!-- Content Container -->
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
