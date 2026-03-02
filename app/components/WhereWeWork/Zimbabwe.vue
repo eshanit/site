@@ -15,7 +15,7 @@ const images: string[] = [
   'https://picsum.photos/640/640?random=6'
 ]
 
-const countryMap ='/img/countries/zimbabwe/zimbabweMap.png'
+const countryMap ='/img/countries/zimbabwe/ZimbabweMap.png'
 
 
 const communities = [

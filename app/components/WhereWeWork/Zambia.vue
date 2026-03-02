@@ -15,7 +15,7 @@ const images: string[] = [
   'https://picsum.photos/640/640?random=6'
 ]
 
-const countryMap ='/img/countries/zambia/zambiaMap.png'
+const countryMap ='/img/countries/zambia/ZambiaMap.png'
 
 const communities = [
   'Matero', 'Lilanda', '6-mile', '15-mile', 'Heroes Stadium Area'
