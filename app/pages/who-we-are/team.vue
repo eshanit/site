@@ -23,19 +23,45 @@ const breadcrumbs = [
 const sectionVisible = ref(false)
 const sectionRef = ref<HTMLElement | null>(null)
 
+// onMounted(() => {
+//   useIntersectionObserver(
+//     sectionRef,
+//     (entries) => {
+//       entries.forEach(e => {
+//         if (e.isIntersecting) {
+//           sectionVisible.value = true
+//         }
+//       })
+//     },
+//     { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+//   )
+// })
+
 onMounted(() => {
-  useIntersectionObserver(
-    sectionRef,
-    (entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          sectionVisible.value = true
-        }
-      })
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-  )
-})
+  // Fallback: show content after 1s if observer hasn't fired
+  const timeout = setTimeout(() => {
+    sectionVisible.value = true;
+  }, 1000);
+
+  if (window.IntersectionObserver) {
+    useIntersectionObserver(
+      sectionRef,
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            sectionVisible.value = true;
+            clearTimeout(timeout); // observer succeeded, cancel fallback
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px 0px 0px' } // simpler margin
+    );
+  } else {
+    // No observer support: show content immediately
+    sectionVisible.value = true;
+    clearTimeout(timeout);
+  }
+});
 </script>
 
 <template>
