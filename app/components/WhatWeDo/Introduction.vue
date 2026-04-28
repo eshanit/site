@@ -99,10 +99,13 @@ onMounted(() => {
     <section id="intro-hero" class="relative w-full">
       <div class="relative w-full h-[70vh] min-h-[500px] max-h-[700px] overflow-hidden">
         <!-- Main Image with Parallax Effect -->
-        <img
+        <NuxtImg
           src="/img/workshops.webp"
           alt="Youth participants engaging in peer education sessions in Southern Africa"
           class="w-full h-full object-cover object-center transition-all duration-1000 transform scale-105 hover:scale-100"
+          loading="eager"
+          width="1920"
+          height="1080"
           :class="isLoaded ? 'opacity-100' : 'opacity-0'"
           @load="handleImageLoad"
         />
@@ -201,9 +204,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
 .font-poppins {
   font-family: 'Poppins', sans-serif;
 }

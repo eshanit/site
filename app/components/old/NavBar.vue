@@ -230,16 +230,16 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
     <!-- Main navigation container - Full width -->
     <div class="w-full px-4 md:px-6 lg:px-8 xl:px-12">
       <!-- <div class="flex items-center justify-between py-4 lg:py-5"> -->
-      <div class="flex items-center justify-between min-h-[92px] lg:min-h-[112px] py-2 lg:py-3">
+      <div class="flex items-center justify-between">
         <!-- Logo Section -->
-        <div class="flex-shrink-0 overflow-visible">
+        <div class="flex-shrink-0">
           <NuxtLink to="/" class="flex items-center group" aria-label="PEGISUS Home" @click="closeMobileMenu">
             <AppLogo size="navbar" />
           </NuxtLink>
         </div>
 
         <!-- Desktop Navigation Menu -->
-        <nav class="hidden lg:flex items-center ml-6" aria-label="Main navigation">
+        <nav class="hidden lg:flex items-center" aria-label="Main navigation">
           <ul class="flex items-center gap-1">
             <li v-for="(item, index) in menuItems" :key="item.name" class="relative"
               @mouseenter="item.submenu ? openSubmenu = item.name : null"

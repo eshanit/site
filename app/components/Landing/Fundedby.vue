@@ -111,15 +111,17 @@ const getFunderStyle = (index: number): { bg: string; border: string; text: stri
 
               <!-- Logo -->
               <div class="relative h-16 w-full flex items-center justify-center">
-                <img 
-                  :src="funder.logo" 
+                <NuxtImg
+                  :src="funder.logo"
                   :alt="`${funder.name} - ${funder.fullName}`"
                   class="h-full w-auto max-w-full object-contain transition-all duration-500 mx-auto"
                   :class="[
                     'opacity-90 group-hover:opacity-100',
                     hoveredFunder === index ? 'scale-110' : 'scale-100'
-                  ]" 
+                  ]"
                   loading="lazy"
+                  width="200"
+                  height="64"
                 />
               </div>
             </div>

@@ -14,7 +14,7 @@ const team = [
     :team-members="4"
     description="A public health organisation that works to ensure better access to quality healthcare for marginalised rural areas."
     :team="team"
-    icon="i-heroicons-plus-circle"
+    icon="i-heroicons-heart"
     :is-even="true"
   />
 </template>

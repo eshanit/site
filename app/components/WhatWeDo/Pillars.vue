@@ -164,6 +164,14 @@ const createObservers = async () => {
   })
 }
 
+// Scroll to pillar with smooth behavior
+const scrollToPillar = (index: number) => {
+  if (typeof window === 'undefined' || !containerRef.value) return
+  const containerHeight = Number(containerRect.height?.value ?? 0)
+  const scrollPosition = containerPageTop.value + (index * (containerHeight / pillars.length))
+  window.scrollTo({ top: scrollPosition, behavior: 'smooth' })
+}
+
 onMounted(() => {
   createObservers()
 })
@@ -368,14 +376,14 @@ onUnmounted(() => {
             class="flex flex-col items-center"
           >
             <button
-              @click="activePillar = index; window.scrollTo({ top: containerPageTop + (index * (containerRect.height / pillars.length)), behavior: 'smooth' })"
+              @click="scrollToPillar(index)"
               :class="[
                 'w-10 h-10 flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2',
                 index <= activePillar ? getColorClass(pillar.color, 'bg') + ' text-white' : 'bg-gray-100 text-gray-400',
                 index === activePillar ? 'ring-2 ' + getColorClass(pillar.color, 'bg') : ''
               ]"
               :aria-label="`Jump to ${pillar.title} pillar`"
-              :aria-current="index === activePillar ? 'step' : null"
+              :aria-current="index === activePillar ? 'step' : undefined"
             >
               <UIcon :name="pillar.icon" class="w-5 h-5" />
             </button>

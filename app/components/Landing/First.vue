@@ -41,12 +41,14 @@ const handleImageLoad = () => {
       <!-- Image Container with Creative Layout -->
       <div class="relative w-full h-[85vh] min-h-[600px] max-h-[800px] overflow-hidden">
         <!-- Background Image -->
-        <img
+        <NuxtImg
           v-if="backgroundImage"
           :src="backgroundImage"
           :alt="titleLine1 + ' ' + titleLine2"
           class="w-full h-full object-cover object-center"
           loading="eager"
+          width="1920"
+          height="1080"
           :class="isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'"
           @load="handleImageLoad"
         />
@@ -55,10 +57,10 @@ const handleImageLoad = () => {
         <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
         
         <!-- Overlay with Creative Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-        
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/45"></div>
+
         <!-- Decorative Elements -->
-        <div class="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-black/30 to-transparent pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/65 to-transparent pointer-events-none"></div>
         <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-brand-light/20 via-transparent to-transparent pointer-events-none"></div>
       </div>
@@ -79,8 +81,8 @@ const handleImageLoad = () => {
               </div>
               
               <!-- Main Title with Tagline as Primary Focus -->
-              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white font-poppins leading-tight mb-4">
-                <span class="block">{{ titleLine1 }}</span>
+              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins leading-tight mb-4">
+                <span class="block title-line-1 landscape:max-lg:text-blue-300">{{ titleLine1 }}</span>
                 <span class="block text-blue-300">{{ titleLine2 }}</span>
               </h1>
               
@@ -102,9 +104,6 @@ const handleImageLoad = () => {
 </template>
 
 <style scoped>
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
 .font-poppins {
   font-family: 'Poppins', sans-serif;
 }
@@ -154,6 +153,13 @@ a:focus,
 button:focus {
   outline: 2px solid #004887;
   outline-offset: 2px;
+}
+
+/* Mobile landscape orientation - titleLine1 blue styling */
+@media (max-width: 768px) and (orientation: landscape) {
+  .title-line-1 {
+    color: rgb(147, 197, 253); /* text-blue-300 */
+  }
 }
 
 /* Print styles */

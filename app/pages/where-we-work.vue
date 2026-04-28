@@ -12,6 +12,13 @@ const countryComponents = {
 }
 
 const selectedCountry = ref<string | null>(null) // null = show default map
+const contentRef = ref<HTMLElement | null>(null)
+
+watch(selectedCountry, (val) => {
+  if (val && contentRef.value && window.innerWidth < 1024) {
+    nextTick(() => contentRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
+})
 
 const countries = [
   { 
@@ -89,8 +96,28 @@ const selectCountry = (id: string) => {
         
         <!-- Left: country selectors (4 cols) -->
         <div class="lg:col-span-4 space-y-6">
-          <div 
-            v-for="country in countries" 
+          <!-- Reset to all-countries view -->
+          <Transition
+            enter-active-class="transition-all duration-200 ease-out"
+            enter-from-class="opacity-0 -translate-y-1"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition-all duration-150 ease-in"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 -translate-y-1"
+          >
+            <button
+              v-if="selectedCountry !== null"
+              @click="selectedCountry = null"
+              class="flex items-center gap-2 w-full px-4 py-3 border border-brand-medium text-brand-medium hover:bg-brand-lightest transition-all duration-200 text-sm font-semibold font-poppins"
+              aria-label="View all countries"
+            >
+              <UIcon name="i-heroicons-arrow-left" class="w-4 h-4" />
+              View All Countries
+            </button>
+          </Transition>
+
+          <div
+            v-for="country in countries"
             :key="country.id"
             class="group transform transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             @click="selectCountry(country.id)"
@@ -112,7 +139,7 @@ const selectCountry = (id: string) => {
               <div class="flex items-center gap-4">
                 <span class="text-3xl">{{ country.flag }}</span>
                 <div class="flex-1">
-                  <h2 class="text-3xl font-bold font-poppins mb-1">{{ country.name }}</h2>
+                  <h2 class="text-xl md:text-3xl font-bold font-poppins mb-1">{{ country.name }}</h2>
                   <p class="text-sm font-inter opacity-80">{{ country.stats }}</p>
                 </div>
                 <!-- Arrow indicator on hover (only when not selected) -->
@@ -125,34 +152,19 @@ const selectCountry = (id: string) => {
             </div>
           </div>
 
-          <!-- Regional Context Panel (enhanced) -->
-          <div class="mt-10 pt-8 border-t border-gray-200">
-            <div class="bg-gray-50 p-6">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-8 h-8 bg-brand-lightest flex items-center justify-center">
-                  <UIcon name="i-heroicons-globe-alt" class="w-5 h-5 text-brand-medium" />
-                </div>
-                <span class="text-sm font-semibold text-brand-dark font-poppins uppercase tracking-wider">
-                  Regional Context
-                </span>
-              </div>
-              <p class="text-gray-600 font-inter text-sm leading-relaxed mb-4">
-                Working directly with communities to address substance use, gender equity, and youth employment across Southern Africa.
-              </p>
-  
-            </div>
-          </div>
         </div>
 
         <!-- Right: dynamic content (8 cols) with transition -->
-        <div class="lg:col-span-8">
+        <div ref="contentRef" class="lg:col-span-8">
           <transition name="fade" mode="out-in">
             <!-- Default: stylized map with pins -->
-            <div v-if="!selectedCountry" key="map" class="bg-gray-50 p-8 flex flex-col items-center min-h-[500px] relative">
-              <img 
-                src="/img/countries/map.png" 
+            <div v-if="!selectedCountry" key="map" class="bg-gray-50 p-8 flex flex-col items-center min-h-70 sm:min-h-125 relative">
+              <NuxtImg
+                src="/img/countries/map.png"
                 alt="Map of PEGISUS locations in Southern Africa"
                 class="w-full h-auto max-h-[400px] object-contain mb-6"
+                loading="lazy"
+                width="800"
               />
               <!-- Country pins (positioned roughly, could be enhanced with absolute positioning) -->
               <div class="flex justify-center gap-8 text-sm font-inter">
@@ -162,7 +174,7 @@ const selectCountry = (id: string) => {
                 </div>
               </div>
               <!-- Optional quick stats overlay -->
-              <div class="mt-8 grid grid-cols-3 gap-6 w-full max-w-md border-t border-gray-200 pt-6">
+              <div class="mt-8 grid grid-cols-3 gap-2 sm:gap-6 w-full max-w-md border-t border-gray-200 pt-6">
                 <div class="text-center">
                   <div class="text-2xl font-bold font-poppins text-brand-medium">8</div>
                   <div class="text-xs text-gray-500">Sessions per program</div>

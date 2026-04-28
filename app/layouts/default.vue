@@ -9,7 +9,7 @@
     <SharedNavBar />
 
     <!-- Main Content Area with ID for skip link -->
-    <main id="main-content" class="grow" tabindex="-1">
+    <main id="main-content" class="grow pt-14 lg:pt-12" tabindex="-1">
       <slot />
     </main>
 

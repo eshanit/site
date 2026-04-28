@@ -85,188 +85,130 @@ const pageResults = computed(() => searchResults.value.filter(r =>
 const handleSearch = (query: string) => {
   navigateTo(`/search?q=${encodeURIComponent(query)}`);
 };
+
+// Category config — all brand blues
+const categories = [
+  { key: 'pillars', label: 'Program', icon: 'i-heroicons-beaker', results: pillarResults },
+  { key: 'sessions', label: 'Sessions', icon: 'i-heroicons-calendar', results: sessionResults },
+  { key: 'partners', label: 'Partners', icon: 'i-heroicons-user-group', results: partnerResults },
+  { key: 'funders', label: 'Funders', icon: 'i-heroicons-banknotes', results: funderResults },
+  { key: 'pages', label: 'Pages', icon: 'i-heroicons-document-text', results: pageResults },
+] as const;
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50">
-    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
       <!-- Search Header -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-4">Search Results</h1>
-        
-        <!-- Search Form -->
-        <form @submit.prevent="handleSearch(searchQuery)" class="max-w-2xl">
-          <div class="relative">
-            <input
-              :value="searchQuery"
-              type="text"
-              placeholder="Search PEGISUS..."
-              class="w-full px-4 py-3 pl-12 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent text-gray-800"
-              @input="handleSearch(($event.target as HTMLInputElement).value)"
-            />
-            <svg
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </div>
-        </form>
+      <div class="mb-10">
+        <h1 class="text-3xl font-bold text-gray-900 font-poppins mb-2">Search</h1>
+        <div class="h-1 w-12 bg-brand-medium mb-6"></div>
+
+        <!-- Search input -->
+        <div class="relative max-w-2xl">
+          <input
+            :value="searchQuery"
+            type="search"
+            placeholder="Search PEGISUS..."
+            class="w-full px-4 py-3 pl-12 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-medium focus:border-brand-medium text-gray-800 font-inter"
+            @input="handleSearch(($event.target as HTMLInputElement).value)"
+          />
+          <UIcon
+            name="i-heroicons-magnifying-glass"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+          />
+        </div>
       </div>
 
-      <!-- Search Query Display -->
+      <!-- Results count -->
       <div v-if="searchQuery" class="mb-6">
-        <p class="text-gray-600">
-          Showing results for: <span class="font-semibold text-gray-900">"{{ searchQuery }}"</span>
+        <p class="text-gray-600 font-inter">
+          <span v-if="searchResults.length > 0">
+            {{ searchResults.length }} result{{ searchResults.length !== 1 ? 's' : '' }} for
+          </span>
+          <span v-else>No results for </span>
+          <span class="font-semibold text-gray-900">"{{ searchQuery }}"</span>
         </p>
       </div>
 
       <!-- Search Results -->
       <div v-if="searchQuery">
-        <!-- Results found -->
-        <div v-if="searchResults.length > 0" class="space-y-8">
-          <!-- Program Pillars -->
-          <div v-if="pillarResults.length > 0">
-            <h2 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2">
-              <UIcon name="i-heroicons-beaker" class="w-5 h-5" />
-              Program Pillars
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NuxtLink
-                v-for="result in pillarResults"
-                :key="result.title"
-                :to="result.path || '#'"
-                class="block bg-white p-4 rounded border border-gray-200 hover:border-blue-700 hover:shadow-md transition-all duration-200"
-              >
-                <h3 class="font-semibold text-blue-700 mb-1">{{ result.title }}</h3>
-                <p class="text-sm text-gray-600">{{ result.content }}</p>
-              </NuxtLink>
+        <div v-if="searchResults.length > 0" class="space-y-10">
+          <template v-for="cat in categories" :key="cat.key">
+            <div v-if="cat.results.value.length > 0">
+              <!-- Category heading — brand blue -->
+              <h2 class="flex items-center gap-2 text-lg font-bold text-brand-dark font-poppins mb-4 pb-2 border-b border-gray-200">
+                <UIcon :name="cat.icon" class="w-5 h-5 text-brand-medium" />
+                {{ cat.label }}
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <NuxtLink
+                  v-for="result in cat.results.value"
+                  :key="result.title"
+                  :to="result.path || '#'"
+                  class="block bg-white p-4 border border-gray-200 hover:border-brand-medium hover:shadow-md transition-all duration-200 group"
+                >
+                  <h3 class="font-semibold text-brand-medium group-hover:text-brand-dark mb-1 font-poppins">{{ result.title }}</h3>
+                  <p class="text-sm text-gray-600 font-inter">{{ result.content }}</p>
+                </NuxtLink>
+              </div>
             </div>
-          </div>
-
-          <!-- Sessions -->
-          <div v-if="sessionResults.length > 0">
-            <h2 class="text-xl font-bold text-green-600 mb-4 flex items-center gap-2">
-              <UIcon name="i-heroicons-calendar" class="w-5 h-5" />
-              Sessions
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NuxtLink
-                v-for="result in sessionResults"
-                :key="result.title"
-                :to="result.path || '#'"
-                class="block bg-white p-4 rounded border border-gray-200 hover:border-green-600 hover:shadow-md transition-all duration-200"
-              >
-                <h3 class="font-semibold text-green-600 mb-1">{{ result.title }}</h3>
-                <p class="text-sm text-gray-600">{{ result.content }}</p>
-              </NuxtLink>
-            </div>
-          </div>
-
-          <!-- Partners -->
-          <div v-if="partnerResults.length > 0">
-            <h2 class="text-xl font-bold text-orange-600 mb-4 flex items-center gap-2">
-              <UIcon name="i-heroicons-user-group" class="w-5 h-5" />
-              Partners
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NuxtLink
-                v-for="result in partnerResults"
-                :key="result.title"
-                :to="result.path || '#'"
-                class="block bg-white p-4 rounded border border-gray-200 hover:border-orange-600 hover:shadow-md transition-all duration-200"
-              >
-                <h3 class="font-semibold text-orange-600 mb-1">{{ result.title }}</h3>
-                <p class="text-sm text-gray-600">{{ result.content }}</p>
-              </NuxtLink>
-            </div>
-          </div>
-
-          <!-- Funders -->
-          <div v-if="funderResults.length > 0">
-            <h2 class="text-xl font-bold text-purple-600 mb-4 flex items-center gap-2">
-              <UIcon name="i-heroicons-banknotes" class="w-5 h-5" />
-              Funders
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NuxtLink
-                v-for="result in funderResults"
-                :key="result.title"
-                :to="result.path || '#'"
-                class="block bg-white p-4 rounded border border-gray-200 hover:border-purple-600 hover:shadow-md transition-all duration-200"
-              >
-                <h3 class="font-semibold text-purple-600 mb-1">{{ result.title }}</h3>
-                <p class="text-sm text-gray-600">{{ result.content }}</p>
-              </NuxtLink>
-            </div>
-          </div>
-
-          <!-- General Pages -->
-          <div v-if="pageResults.length > 0">
-            <h2 class="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
-              <UIcon name="i-heroicons-document-text" class="w-5 h-5" />
-              Pages
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NuxtLink
-                v-for="result in pageResults"
-                :key="result.title"
-                :to="result.path || '#'"
-                class="block bg-white p-4 rounded border border-gray-200 hover:border-gray-700 hover:shadow-md transition-all duration-200"
-              >
-                <h3 class="font-semibold text-gray-900 mb-1">{{ result.title }}</h3>
-                <p class="text-sm text-gray-600">{{ result.content }}</p>
-              </NuxtLink>
-            </div>
-          </div>
+          </template>
         </div>
-        
-        <!-- No results found -->
-        <div v-else class="text-center py-12">
-          <svg
-            class="mx-auto h-12 w-12 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+
+        <!-- No results -->
+        <div v-else class="text-center py-16">
+          <UIcon name="i-heroicons-magnifying-glass" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
+          <h3 class="text-lg font-semibold text-gray-900 font-poppins">No results found</h3>
+          <p class="mt-1 text-gray-500 font-inter">Try different keywords or browse our pages.</p>
+        </div>
+      </div>
+
+      <!-- Empty state — no query yet -->
+      <div v-else class="text-center py-16">
+        <UIcon name="i-heroicons-magnifying-glass" class="w-14 h-14 text-gray-300 mx-auto mb-4" />
+        <h3 class="text-lg font-semibold text-gray-900 font-poppins mb-1">Start your search</h3>
+        <p class="text-gray-500 font-inter mb-8">Search for programs, sessions, partners, funders, or any page.</p>
+
+        <!-- Quick suggestions -->
+        <div class="flex flex-wrap justify-center gap-2">
+          <button
+            v-for="term in ['PEGISUS', 'sessions', 'partners', 'funders', 'RAD-PAL', 'Manhood 2.0']"
+            :key="term"
+            @click="handleSearch(term)"
+            class="px-4 py-2 bg-brand-lightest text-brand-dark border border-brand-light hover:bg-brand-light hover:text-brand-darkest transition-colors duration-150 text-sm font-inter"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h3 class="mt-2 text-lg font-medium text-gray-900">No results found</h3>
-          <p class="mt-1 text-gray-500">Try different keywords or browse our pages.</p>
+            {{ term }}
+          </button>
         </div>
       </div>
 
-      <!-- No Search Query -->
-      <div v-else class="text-center py-12">
-        <svg
-          class="mx-auto h-16 w-16 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-        <h3 class="mt-4 text-lg font-medium text-gray-900">Start your search</h3>
-        <p class="mt-1 text-gray-500">Search for pillars, sessions, partners, funders, or any content on our website.</p>
-        
-        <!-- Quick Search Suggestions -->
-        <div class="mt-8">
-          <p class="text-sm text-gray-600 mb-4">Try searching for:</p>
-          <div class="flex flex-wrap justify-center gap-2">
-            <button @click="handleSearch('PEGISUS')" class="px-4 py-2 bg-blue-50 text-blue-700 rounded border border-blue-200 hover:bg-blue-100 transition-colors">PEGISUS</button>
-            <button @click="handleSearch('sessions')" class="px-4 py-2 bg-green-50 text-green-700 rounded border border-green-200 hover:bg-green-100 transition-colors">Sessions</button>
-            <button @click="handleSearch('partners')" class="px-4 py-2 bg-orange-50 text-orange-700 rounded border border-orange-200 hover:bg-orange-100 transition-colors">Partners</button>
-            <button @click="handleSearch('funders')" class="px-4 py-2 bg-purple-50 text-purple-700 rounded border border-purple-200 hover:bg-purple-100 transition-colors">Funders</button>
-            <button @click="handleSearch('RAD-PAL')" class="px-4 py-2 bg-gray-50 text-gray-700 rounded border border-gray-200 hover:bg-gray-100 transition-colors">RAD-PAL</button>
-            <button @click="handleSearch('Manhood 2.0')" class="px-4 py-2 bg-gray-50 text-gray-700 rounded border border-gray-200 hover:bg-gray-100 transition-colors">Manhood 2.0</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+* {
+  border-radius: 0 !important;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #004887;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>

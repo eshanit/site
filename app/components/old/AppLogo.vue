@@ -19,23 +19,24 @@ const sizeClasses = {
     text: 'text-base'
   },
   navbar: {
-    container: 'max-w-44 md:max-w-56',
+    container: 'w-36',
     text: 'text-xs'
   }
 };
 </script>
 
 <template>
-  <div class="flex items-center leading-none">
-    <AppLogoIcon
-      v-if="size === 'navbar'"
-      size="navbar"
-      :class="sizeClasses[size].container"
+  <div class="flex items-center">
+    <!-- For navbar, use fixed width to maintain consistency -->
+    <AppLogoIcon 
+      v-if="size === 'navbar'" 
+      size="navbar" 
+      :class="sizeClasses[size].container" 
     />
-
-    <AppLogoIcon
-      v-else
-      :size="size"
+    <!-- For other sizes, use the constrained version -->
+    <AppLogoIcon 
+      v-else 
+      :size="size" 
       :class="sizeClasses[size]?.container"
     />
   </div>

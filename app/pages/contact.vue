@@ -165,7 +165,7 @@ const handleSubmit = async () => {
     <!-- Hero Section -->
     <div 
       ref="heroRef" 
-      class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-32 md:py-32 lg:py-32 bg-cover bg-center bg-no-repeat" 
+      class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 sm:py-24 lg:py-32 bg-cover bg-center bg-no-repeat"
       :class="heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
     >
       <div class="w-full max-w-7xl mx-auto">
@@ -520,7 +520,7 @@ const handleSubmit = async () => {
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <NuxtLink
-                to="/what-we-do"
+                to="/what-we-do/overview"
                 class="px-8 py-3 bg-white text-brand-medium font-bold font-poppins shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-3"
                 aria-label="Learn about PEGISUS programs"
               >
@@ -568,9 +568,6 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-/* Import fonts following design system */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
 .font-poppins {
   font-family: 'Poppins', sans-serif;
 }

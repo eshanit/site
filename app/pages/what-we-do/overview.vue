@@ -159,7 +159,7 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
 
           <!-- Left column: Image with subtle overlay and facts badge -->
-          <div class="relative h-80 lg:h-full min-h-[500px] w-full overflow-hidden">
+          <div class="relative h-80 lg:h-full lg:min-h-125 w-full overflow-hidden">
             <NuxtImg src="/img/workshops.webp" alt="PEGISUS workshop participants" class="w-full h-full object-cover" />
             <div class="grid grid-cols-3">
               <div class="bg-blue-900 p-2">
@@ -228,7 +228,7 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Preheading and heading (above grid) -->
         <div class="inline-flex items-center gap-3 mb-4">
-          <div class="w-3 h-3 bg-brand-teal"></div>
+          <div class="w-3 h-3 bg-brand-medium"></div>
           <span class="text-sm font-semibold text-brand-dark font-poppins uppercase tracking-wider">
             Program Development
           </span>
@@ -285,7 +285,7 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
           </div>
 
           <!-- Right column: image -->
-          <div class="relative h-80 lg:h-full min-h-[500px] w-full overflow-hidden">
+          <div class="relative h-80 lg:h-full lg:min-h-125 w-full overflow-hidden">
             <NuxtImg src="/img/youth.jpg" alt="Youth participating in PEGISUS program"
               class="w-full h-full object-cover" />
             <div class="grid grid-cols-3">
@@ -346,9 +346,9 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
           <a href="https://clinicaltrials.gov/study/NCT06489899?term=PEGISUS&rank=1" target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-2 px-6 py-3 mt-8 bg-white text-brand-dark font-bold font-poppins border-2 border-white hover:bg-brand-lightest hover:text-brand-dark transition-all duration-300 no-underline"
-            aria-label="Read more about the clinical trial (opens in new tab)">
+            aria-label="Read more about our study on clinicaltrials.gov (opens in new tab)">
             <UIcon name="i-heroicons-document-text" class="w-5 h-5" />
-            <span>Read More</span>
+            <span>Read more about our study on clinicaltrials.gov</span>
             <UIcon name="i-heroicons-arrow-up-right" class="w-4 h-4" />
           </a>
         </div>

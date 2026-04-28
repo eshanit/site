@@ -272,34 +272,6 @@ const scrollToTop = () => {
               © {{ new Date().getFullYear() }} PEGISUS Program. All rights reserved.
             </div>
 
-            <!-- Legal links -->
-            <div class="flex items-center space-x-6">
-              <NuxtLink 
-                to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
-              >
-                Privacy Policy
-              </NuxtLink>
-              <NuxtLink 
-                to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
-              >
-                Terms of Service
-              </NuxtLink>
-              <NuxtLink 
-                to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
-              >
-                Accessibility
-              </NuxtLink>
-              <NuxtLink 
-                to="#"
-                class="text-gray-500 hover:text-brand-light transition-colors duration-300 text-sm"
-              >
-                Sitemap
-              </NuxtLink>
-            </div>
-
             <!-- Back to top -->
             <button
               @click="scrollToTop"

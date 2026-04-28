@@ -7,7 +7,7 @@
         <div class="space-y-4">
           <div class="flex items-center gap-4">
             <div class="w-14 h-14 border border-gray-300 p-1 flex items-center justify-center">
-              <img :src="svgIcon" :alt="`${country} flag`" class="w-full h-full object-cover" />
+              <img :src="svgIcon" :alt="`${country} flag`" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div>
               <h3 class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins">
@@ -36,7 +36,7 @@
           <!-- Country Map Image -->
           <div class="md:col-span-6">
             <div class="w-full flex-shrink-0 bg-gray-100 flex items-center justify-center p-8">
-              <img :src="countryMap" :alt="`Map of ${country}`" class="max-h-[400px] object-contain" />
+              <NuxtImg :src="countryMap" :alt="`Map of ${country}`" class="max-h-[400px] object-contain" loading="lazy" width="400" height="400" />
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <div v-if="images && images.length > 0" class="mt-8">
           <UCarousel v-slot="{ item }" :items="items" loop arrows :autoplay="{ delay: 5000 }" wheel-gestures
             :prev="{ variant: 'solid' }" :next="{ variant: 'solid' }" :ui="{ item: 'basis-1/3' }">
-            <img :src="item" width="520" height="520" class="rounded-lg">
+            <NuxtImg :src="item" width="520" height="520" class="rounded-lg" loading="lazy" />
           </UCarousel>
         </div>
 
@@ -108,9 +108,6 @@ const items = computed(() => props.images || [])
 </script>
 
 <style scoped>
-/* Import fonts (same as before) */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
-
 .font-poppins {
   font-family: 'Poppins', sans-serif;
 }

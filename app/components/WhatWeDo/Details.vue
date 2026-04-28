@@ -344,10 +344,11 @@ const componentHovered = ref<number | null>(null);
             target="_blank"
             rel="noopener noreferrer"
             class="px-6 py-3 bg-white text-blue-600 border-2 border-white font-bold font-poppins hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2"
-            aria-label="Read more about the clinical trial"
+            aria-label="Read more about our study on clinicaltrials.gov (opens in new tab)"
           >
             <UIcon name="i-heroicons-document-text" class="w-5 h-5" />
-            <span>Read More</span>
+            <span>Read more about our study on clinicaltrials.gov</span>
+            <UIcon name="i-heroicons-arrow-up-right" class="w-4 h-4" />
           </a>
         </div>
       </div>

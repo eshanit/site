@@ -86,14 +86,6 @@ onMounted(() => {
         <div class="mb-16">
           <div class="grid lg:grid-cols-12 gap-8 items-center">
             <div class="lg:col-span-8">
-              <!-- Badge with brand colors -->
-              <div class="inline-flex items-center gap-3 mb-4">
-                <div class="w-3 h-3 bg-brand-medium"></div>
-                <span class="text-sm font-semibold text-brand-dark font-poppins uppercase tracking-wider">
-                  Our Teams
-                </span>
-              </div>
-              
               <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-poppins mb-6">
                 Our Stakeholder Partners
               </h2>

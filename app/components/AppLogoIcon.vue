@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false })
+
 const props = withDefaults(defineProps<{
   className?: string;
   href?: string;
@@ -14,18 +16,26 @@ const sizeClasses = {
   md: 'h-12',
   lg: 'h-16',
   xl: 'h-20',
-  navbar: 'h-16' // Consistent with navbar height
+  // Bigger desktop logo, controlled mobile size
+  //navbar: 'h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36'
+  navbar: 'h-12 md:h-16'
 };
 </script>
 
 <template>
-  <component :is="href ? 'NuxtLink' : 'div'" :to="href || undefined" class="inline-block">
-    <!-- In Nuxt, public files are served from /public directory -->
+  <component
+    :is="href ? 'NuxtLink' : 'div'"
+    :to="href || undefined"
+    class="inline-block leading-none"
+    v-bind="$attrs"
+  >
     <NuxtImg
-      src="/img/pegi_logo_large.png"
-      alt="Peer Education Center"
-      :class="[sizeClasses[size], 'w-auto', className]"
-      v-bind="$attrs"
+      src="/img/pegi_logo_navbar.png"
+      alt="PEGISUS"
+      :class="[sizeClasses[size], 'w-auto object-contain align-middle', className]"
+      format="webp"
+      quality="95"
+      preload
     />
   </component>
 </template>
