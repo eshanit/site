@@ -5,14 +5,18 @@ const mainText = `We work in the Matero, Lilanda, and 6-mile to 15-mile communit
 const partnerText = `We have partnered with Build It International, a vocational training program focused mainly on teaching skilled trades, such as rough carpentry, steel fixing, bricklaying, and plastering.`
 
 const images: string[] = [
-  // '/img/countries/zambia/community_1.jpg',
-  // '/img/countries/zambia/community_2.jpg'
-     'https://picsum.photos/640/640?random=1',
-  'https://picsum.photos/640/640?random=2',
-  'https://picsum.photos/640/640?random=3',
-  'https://picsum.photos/640/640?random=4',
-  'https://picsum.photos/640/640?random=5',
-  'https://picsum.photos/640/640?random=6'
+  '/img/countries/zambia/gallery/image_1.jpg',
+  '/img/countries/zambia/gallery/image_2.jpg',
+  '/img/countries/zambia/gallery/image_3.jpg',
+  '/img/countries/zambia/gallery/image_4.jpg',  
+  '/img/countries/zambia/gallery/image_5.jpg',
+
+  //    'https://picsum.photos/640/640?random=1',
+  // 'https://picsum.photos/640/640?random=2',
+  // 'https://picsum.photos/640/640?random=3',
+  // 'https://picsum.photos/640/640?random=4',
+  // 'https://picsum.photos/640/640?random=5',
+  // 'https://picsum.photos/640/640?random=6'
 ]
 
 const countryMap ='/img/countries/zambia/ZambiaMap.png'

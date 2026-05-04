@@ -100,7 +100,7 @@ onMounted(() => {
       <div class="relative w-full h-[70vh] min-h-[500px] max-h-[700px] overflow-hidden">
         <!-- Main Image with Parallax Effect -->
         <NuxtImg
-          src="/img/workshops.webp"
+          src="/img/workshops.jpg"
           alt="Youth participants engaging in peer education sessions in Southern Africa"
           class="w-full h-full object-cover object-center transition-all duration-1000 transform scale-105 hover:scale-100"
           loading="eager"

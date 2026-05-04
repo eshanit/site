@@ -5,14 +5,21 @@ const mainText = `We work in the urban communities of Masvingo district, in the 
 const partnerText = `We have partnered with Masvingo Polytechnic, which offers a wide range of practical skills-based programs for learners to increase opportunities for future employment.`
 
 const images: string[] = [
+
+  '/img/countries/zimbabwe/gallery/image_1.jpg',
+  '/img/countries/zimbabwe/gallery/image_2.jpg',
+  '/img/countries/zimbabwe/gallery/image_3.jpg',
+  '/img/countries/zimbabwe/gallery/image_4.jpg',  
+  '/img/countries/zimbabwe/gallery/image_5.jpg',
+
   // '/img/countries/zimbabwe/community_1.jpg',
   // '/img/countries/zimbabwe/community_2.jpg'
-     'https://picsum.photos/640/640?random=1',
-  'https://picsum.photos/640/640?random=2',
-  'https://picsum.photos/640/640?random=3',
-  'https://picsum.photos/640/640?random=4',
-  'https://picsum.photos/640/640?random=5',
-  'https://picsum.photos/640/640?random=6'
+  // 'https://picsum.photos/640/640?random=1',
+  // 'https://picsum.photos/640/640?random=2',
+  // 'https://picsum.photos/640/640?random=3',
+  // 'https://picsum.photos/640/640?random=4',
+  // 'https://picsum.photos/640/640?random=5',
+  // 'https://picsum.photos/640/640?random=6'
 ]
 
 const countryMap ='/img/countries/zimbabwe/ZimbabweMap.png'

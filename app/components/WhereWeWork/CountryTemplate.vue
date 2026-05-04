@@ -45,8 +45,12 @@
         <div v-if="images && images.length > 0" class="mt-8">
           <UCarousel v-slot="{ item }" :items="items" loop arrows :autoplay="{ delay: 5000 }" wheel-gestures
             :prev="{ variant: 'solid' }" :next="{ variant: 'solid' }" :ui="{ item: 'basis-1/3' }">
-            <NuxtImg :src="item" width="520" height="520" class="rounded-lg" loading="lazy" />
+            <NuxtImg :src="item" width="520" height="520" class="rounded-lg cursor-pointer hover:opacity-90 transition-opacity" loading="lazy" @click="openImageModal(item)" />
           </UCarousel>
+          <p class="mt-2 text-xs text-gray-400 text-center flex items-center justify-center gap-1 font-inter">
+            <UIcon name="i-heroicons-magnifying-glass-plus" class="w-3.5 h-3.5" />
+            Click any photo to enlarge
+          </p>
         </div>
 
         <!-- Communities List -->
@@ -83,11 +87,23 @@
         </div>
       </div>
     </div>
+
+    <!-- Image Lightbox Overlay -->
+    <Teleport to="body">
+      <Transition name="lightbox">
+        <div v-if="isModalOpen" class="fixed inset-0 z-9999 flex items-center justify-center bg-black/85" @click.self="closeImageModal" @keydown.esc="closeImageModal">
+          <button @click="closeImageModal" class="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors">
+            <UIcon name="i-heroicons-x-mark" class="w-6 h-6" />
+          </button>
+          <NuxtImg v-if="selectedImage" :src="selectedImage" alt="Expanded image" class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl" loading="lazy" />
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 interface Props {
   country: string
@@ -103,8 +119,23 @@ interface Props {
 
 const props = defineProps<Props>()
 
+// Modal state for image expansion
+const isModalOpen = ref(false)
+const selectedImage = ref('')
+
 // Computed property for carousel items (remaining images beyond mainText and countryMap)
 const items = computed(() => props.images || [])
+
+// Methods
+const openImageModal = (imageSrc: string) => {
+  selectedImage.value = imageSrc
+  isModalOpen.value = true
+}
+
+const closeImageModal = () => {
+  isModalOpen.value = false
+  selectedImage.value = ''
+}
 </script>
 
 <style scoped>
@@ -172,6 +203,16 @@ button:focus {
   * {
     transition: none !important;
   }
+}
+
+/* Lightbox transition */
+.lightbox-enter-active,
+.lightbox-leave-active {
+  transition: opacity 200ms ease;
+}
+.lightbox-enter-from,
+.lightbox-leave-to {
+  opacity: 0;
 }
 
 /* Responsive adjustments */

@@ -4,13 +4,17 @@ const mainText = `We work across multiple disadvantaged communities (Vrygrond, C
 const partnerText = `We have partnered with the SOZO Foundation, which offers 10-month vocational training programs to young people in areas such as construction, baking, or hairstyling, for a period of 10 months. SOZO provides job shadowing and assists beneficiaries with finding employment opportunities. SOZO also teaches their beneficiaries other life skills such as goal setting, financial management, and sexual health.`
 
 const images: string[] = [
+  
+  '/img/countries/south-africa/gallery/image_1.jpg',
+  '/img/countries/south-africa/gallery/image_2.jpg',
+  '/img/countries/south-africa/gallery/image_3.jpg',
   // '/img/countries/south-africa/community_1.png',
-   'https://picsum.photos/640/640?random=1',
-  'https://picsum.photos/640/640?random=2',
-  'https://picsum.photos/640/640?random=3',
-  'https://picsum.photos/640/640?random=4',
-  'https://picsum.photos/640/640?random=5',
-  'https://picsum.photos/640/640?random=6'
+  //  'https://picsum.photos/640/640?random=1',
+  // 'https://picsum.photos/640/640?random=2',
+  // 'https://picsum.photos/640/640?random=3',
+  // 'https://picsum.photos/640/640?random=4',
+  // 'https://picsum.photos/640/640?random=5',
+  // 'https://picsum.photos/640/640?random=6'
 ]
 
 const countryMap ='/img/countries/south-africa/south-africaMap.png'

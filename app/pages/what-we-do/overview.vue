@@ -160,7 +160,7 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
 
           <!-- Left column: Image with subtle overlay and facts badge -->
           <div class="relative h-80 lg:h-full lg:min-h-125 w-full overflow-hidden">
-            <NuxtImg src="/img/workshops.webp" alt="PEGISUS workshop participants" class="w-full h-full object-cover" />
+            <NuxtImg src="/img/workshops.jpg" alt="PEGISUS workshop participants" class="w-full h-full object-cover" />
             <div class="grid grid-cols-3">
               <div class="bg-blue-900 p-2">
               </div>

@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   titleLine2?: string;
   subtitle?: string;
 }>(), {
-  backgroundImage: '/img/youth.webp',
+  backgroundImage: '/img/landing.jpg',
   ctaText: 'Explore Our Programs',
   videoText: 'Watch Our Impact',
   titleLine1: 'Empowering Youth Through',
@@ -57,7 +57,7 @@ const handleImageLoad = () => {
         <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
         
         <!-- Overlay with Creative Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/45"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-black/25 to-black/15"></div>
 
         <!-- Decorative Elements -->
         <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/65 to-transparent pointer-events-none"></div>
@@ -71,7 +71,7 @@ const handleImageLoad = () => {
           <div class="h-full flex flex-col justify-center">
             <!-- Main Content - Left Aligned with Better Positioning -->
             <div 
-              class="max-w-3xl transform transition-all duration-1000 delay-300"
+              class="max-w-3xl transform transition-all duration-1000 delay-300 pt-12 sm:pt-16 md:pt-0"
               :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
             >
               <!-- Badge -->
@@ -82,7 +82,7 @@ const handleImageLoad = () => {
               
               <!-- Main Title with Tagline as Primary Focus -->
               <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins leading-tight mb-4">
-                <span class="block title-line-1 landscape:max-lg:text-blue-300">{{ titleLine1 }}</span>
+                <span class="block title-line-1 text-blue-300">{{ titleLine1 }}</span>
                 <span class="block text-blue-300">{{ titleLine2 }}</span>
               </h1>
               
