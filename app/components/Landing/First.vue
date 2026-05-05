@@ -45,7 +45,7 @@ const handleImageLoad = () => {
           v-if="backgroundImage"
           :src="backgroundImage"
           :alt="titleLine1 + ' ' + titleLine2"
-          class="w-full h-full object-cover object-center"
+          class="w-full h-full object-cover object-[center_70%]"
           loading="eager"
           width="1920"
           height="1080"
