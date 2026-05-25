@@ -99,17 +99,16 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
             </div> -->
           </div>
           <!-- Decorative image -->
-          <div class="hidden md:block md:w-1/3">
+          <!-- <div class="hidden md:block md:w-1/3">
             <div class="relative h-80 w-full overflow-hidden">
               <NuxtImg
                 src="/img/afrogirl2.png"
                 alt="Young African woman"
                 class="w-full h-full object-cover"
               />
-              <!-- Color correction overlay to neutralize purple tint -->
               <div class="absolute inset-0 bg-cyan-50/15 pointer-events-none"></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>

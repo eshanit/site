@@ -11,6 +11,11 @@ const images: string[] = [
   '/img/countries/zambia/gallery/image_3.jpg',
   '/img/countries/zambia/gallery/image_4.jpg',  
   '/img/countries/zambia/gallery/image_5.jpg',
+  '/img/countries/zambia/gallery/image_6.jpg',
+  '/img/countries/zambia/gallery/image_7.jpg',
+  '/img/countries/zambia/gallery/image_8.jpg',
+  '/img/countries/zambia/gallery/image_9.jpg',
+  '/img/countries/zambia/gallery/image_10.jpg',
 
   //    'https://picsum.photos/640/640?random=1',
   // 'https://picsum.photos/640/640?random=2',
