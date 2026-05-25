@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const partners = [
-  { name: 'South African Medical Research Council', logo: '/img/partners/samrc-logo_0.png', color: 'indigo' },
   { name: 'SolidarMed', logo: '/img/partners/SM.png', color: 'teal' },
   { name: 'University of Zambia', logo: '/img/partners/unza.png', color: 'emerald' },
+  { name: 'South African Medical Research Council', logo: '/img/partners/samrc-logo_0.png', color: 'indigo' },
   { name: 'University Hospital Basel', logo: '/img/partners/USB.png', color: 'blue-dark' },
 ]
 

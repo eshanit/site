@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   videoText: 'Watch Our Impact',
   titleLine1: 'Empowering Youth Through',
   titleLine2: 'Skills & Community',
-  subtitle: 'A peer-led intervention integrating substance use prevention and gender equity into vocational training across Zambia, Zimbabwe, and South Africa.'
+  subtitle: 'A peer group intervention addressing substance use and gender equity in vocational training and gender equity into vocational training across Zambia, Zimbabwe, and South Africa.'
 });
 
 

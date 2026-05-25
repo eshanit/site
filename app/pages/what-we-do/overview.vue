@@ -35,7 +35,7 @@ const focusAreas: { title: string; description: string; icon: string; color: Col
   },
   {
     title: 'Gender Inclusion',
-    description: 'Addressing systemic barriers and fostering equitable participation for all genders in development programs.',
+    description: 'Addressing systemic barriers and fostering equitable participation for everyone in all walks of life.',
     icon: 'i-heroicons-scale',
     color: 'emerald'
   }

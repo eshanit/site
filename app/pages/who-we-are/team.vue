@@ -114,9 +114,9 @@ onMounted(() => {
           <!-- These components should already use brand colors; if not, they'll need updates -->
           <WhoWeAreSolidarMedZambia />
           <WhoWeAreSolidarMedZimbabwe />
-          <WhoWeAreUniversityOfZambia />
-          <WhoWeAreUniversityHospitalBasel />
           <WhoWeAreSAMRC />
+          <WhoWeAreUniversityHospitalBasel />
+          <WhoWeAreUniversityOfZambia />
         </div>
       </div>
     </section>

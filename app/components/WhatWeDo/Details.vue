@@ -5,7 +5,7 @@ const programItems = [
     id: 'pegisus-overview',
     label: 'What is the PEGISUS Program?',
     icon: 'i-heroicons-academic-cap',
-    content: `Peer Education for Gender Inclusion and Substance Use in Southern Africa (PEGISUS) is an 8-session program to help young people aged 16 to 24 lead healthier lives now and better prepare them for the future. PEGISUS is built upon two other science-backed programs: RAD-PAL to reduce alcohol and drug use and Manhood 2.0 to develop more flexible and equitable beliefs about gender.`,
+    content: `Peer Education for Gender Inclusion and Substance Use in Southern Africa (PEGISUS) is an 8-session program to help young people aged 16 to 24 lead healthier lives now and better prepare them for the future. PEGISUS is built upon two other science-backed programs: RAD-PAL to reduce substance use and Manhood 2.0 to develop more flexible and equitable beliefs about gender.`,
     color: 'blue'
   },
   {

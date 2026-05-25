@@ -41,7 +41,7 @@ onMounted(() => {
         </div>
         
         <p class="mt-8 text-lg md:text-xl text-gray-600 font-inter max-w-3xl">
-          Addressing critical challenges through the PEGISUS framework: integrating substance use prevention, gender belief transformation, and vocational training across Southern Africa.
+          Addressing critical challenges through the PEGISUS framework: Integrating a curriculum on substance use, gender belief transformation, and vocational training across Southern Africa.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ onMounted(() => {
                       <UIcon name="i-heroicons-user-group" class="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                      <h4 class="font-bold text-lg font-poppins text-blue-700 mb-1">Peer-Led Approach</h4>
+                      <h4 class="font-bold text-lg font-poppins text-blue-700 mb-1">Peer group Approach</h4>
                       <p class="text-gray-700 text-sm font-inter">Youth-to-youth mentorship creating sustainable, community-owned change</p>
                     </div>
                   </div>
