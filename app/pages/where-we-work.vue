@@ -174,7 +174,7 @@ const selectCountry = (id: string) => {
                 </div>
               </div>
               <!-- Optional quick stats overlay -->
-              <div class="mt-8 grid grid-cols-3 gap-2 sm:gap-6 w-full max-w-md border-t border-gray-200 pt-6">
+              <!-- <div class="mt-8 grid grid-cols-3 gap-2 sm:gap-6 w-full max-w-md border-t border-gray-200 pt-6">
                 <div class="text-center">
                   <div class="text-2xl font-bold font-poppins text-brand-medium">8</div>
                   <div class="text-xs text-gray-500">Sessions per program</div>
@@ -187,7 +187,7 @@ const selectCountry = (id: string) => {
                   <div class="text-2xl font-bold font-poppins text-brand-teal">Peer</div>
                   <div class="text-xs text-gray-500">Group-based</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <!-- Selected country component -->

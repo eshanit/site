@@ -113,10 +113,10 @@ onMounted(() => {
         <div class="space-y-8">
           <!-- These components should already use brand colors; if not, they'll need updates -->
           <WhoWeAreSolidarMedZambia />
+          <WhoWeAreUniversityOfZambia />
           <WhoWeAreSolidarMedZimbabwe />
           <WhoWeAreSAMRC />
           <WhoWeAreUniversityHospitalBasel />
-          <WhoWeAreUniversityOfZambia />
         </div>
       </div>
     </section>

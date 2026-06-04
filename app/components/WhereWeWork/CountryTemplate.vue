@@ -81,7 +81,7 @@
             </div>
             <div>
               <h4 class="font-bold text-gray-900 text-lg mb-2 font-poppins">Our Partnership</h4>
-              <p class="text-gray-700 text-sm leading-relaxed font-inter">{{ partnerText }}</p>
+              <p class="text-gray-700 text-sm leading-relaxed font-inter" v-html="partnerText"></p>
             </div>
           </div>
         </div>

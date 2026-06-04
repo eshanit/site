@@ -182,12 +182,19 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
               <div>
                 <p class="text-gray-700 font-inter">
                   PEGISUS is built upon two other science-backed programs:
-                  <span
-                    class="inline-block bg-indigo-50 px-2 py-0.5 text-indigo-800 font-semibold text-sm mx-1 border-l-2 border-indigo-600">RAD-PAL</span>
+                  <a
+                    href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ijop.12668"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-block bg-indigo-50 px-2 py-0.5 text-indigo-800 font-semibold text-sm mx-1 border-l-2 border-indigo-600"
+                  >RAD-PAL</a>
                   to reduce alcohol and drug use and
-                  <span
-                    class="inline-block bg-teal-50 px-2 py-0.5 text-teal-800 font-semibold text-sm mx-1 border-l-2 border-teal-600">Manhood
-                    2.0</span>
+                  <a
+                    href="https://www.equimundo.org/programs/manhood-2-0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-block bg-teal-50 px-2 py-0.5 text-teal-800 font-semibold text-sm mx-1 border-l-2 border-teal-600"
+                  >Manhood 2.0</a>
                   to develop more flexible and equitable beliefs about gender.
                 </p>
               </div>
@@ -246,12 +253,19 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
               </div>
               <p class="text-gray-700 font-inter">
                 To develop PEGISUS, we started with two science-backed programs:
-                <span
-                  class="inline-block bg-indigo-50 px-2 py-0.5 text-indigo-800 font-semibold text-sm mx-1 border-l-2 border-indigo-600">RAD-PAL</span>
+                <a
+                  href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ijop.12668"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block bg-indigo-50 px-2 py-0.5 text-indigo-800 font-semibold text-sm mx-1 border-l-2 border-indigo-600"
+                >RAD-PAL</a>
                 and
-                <span
-                  class="inline-block bg-teal-50 px-2 py-0.5 text-teal-800 font-semibold text-sm mx-1 border-l-2 border-teal-600">Manhood
-                  2.0</span>.
+                <a
+                  href="https://www.equimundo.org/programs/manhood-2-0/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block bg-teal-50 px-2 py-0.5 text-teal-800 font-semibold text-sm mx-1 border-l-2 border-teal-600"
+                >Manhood 2.0</a>.
               </p>
             </div>
 
@@ -285,7 +299,7 @@ const colorMap: Record<ColorKey, { bg: string; border: string; text: string; hov
 
           <!-- Right column: image -->
           <div class="relative h-80 lg:h-full lg:min-h-125 w-full overflow-hidden">
-            <NuxtImg src="/img/youth.jpg" alt="Youth participating in PEGISUS program"
+            <NuxtImg src="/img/workshops.webp" alt="Youth participating in PEGISUS program"
               class="w-full h-full object-cover" />
             <div class="grid grid-cols-3">
               <div class="bg-blue-900 p-2">

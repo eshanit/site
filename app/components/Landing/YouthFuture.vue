@@ -57,7 +57,7 @@ onMounted(() => {
             </div>
             <p class="text-gray-700 text-lg leading-relaxed font-inter">
               <span class="font-bold text-brand-dark">Africa's youth population represents both a challenge and an opportunity.</span> 
-              With over <span class="font-bold text-brand-medium">60% of the population under 25</span>, young people face emerging health threats, economic instability, and growing inequities that require innovative, community-led solutions.
+              With over <span class="font-bold text-brand-dark">60% of the population under 25</span>, young people face emerging health threats, economic instability, and growing inequities that require innovative, community-led solutions.
             </p>
           </div>
 
@@ -104,7 +104,7 @@ onMounted(() => {
                     </div>
                     <div>
                       <h4 class="font-bold text-lg font-poppins text-blue-700 mb-1">Peer group Approach</h4>
-                      <p class="text-gray-700 text-sm font-inter">Youth-to-youth mentorship creating sustainable, community-owned change</p>
+                      <p class="text-gray-700 text-lg font-inter">Youth-to-youth mentorship creating sustainable, community-owned change</p>
                     </div>
                   </div>
                   
@@ -114,7 +114,7 @@ onMounted(() => {
                     </div>
                     <div>
                       <h4 class="font-bold text-lg font-poppins text-brand-dark mb-1">Evidence-Based</h4>
-                      <p class="text-gray-700 text-sm font-inter">Rigorous research methodology ensuring measurable outcomes</p>
+                      <p class="text-gray-700 text-lg font-inter">Rigorous research methodology ensuring measurable outcomes</p>
                     </div>
                   </div>
                   
@@ -124,7 +124,7 @@ onMounted(() => {
                     </div>
                     <div>
                       <h4 class="font-bold text-lg font-poppins text-brand-dark mb-1">Scalable Solutions</h4>
-                      <p class="text-gray-700 text-sm font-inter">Adaptable framework across diverse Southern African contexts</p>
+                      <p class="text-gray-700 text-lg font-inter">Adaptable framework across diverse Southern African contexts</p>
                     </div>
                   </div>
                 </div>

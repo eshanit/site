@@ -9,12 +9,13 @@ const team = [
   { name: 'Giuliana Samaniego Sanchez, PhD', photo: '/img/basel/SanchezSamaniegoGiuliana.jpg', title: 'Senior Technical Advisor (Swiss Tropical and Public Health Institute)', role: 'Content Development' },
   // { name: 'Irene Falgas-Bague, MD, PhD', photo: '/img/basel/FalgasBagueIrene.jpg', title: 'Data Scientist', role: 'Analysis' },
   // { name: 'Gwendolyn Ciletti- Dougherty', photo: '/img/basel/GwendolynDougherty.jpg', title: 'Masters Student', role: 'Coordination' },
-  { name: 'Joana Falcao, PHD Student', photo: '/img/basel/FalcaoJoana.png', title: 'PHD Student', role: 'Evaluation' }
+  { name: 'Joana Falcao, Research Manager', photo: '/img/basel/FalcaoJoana.png', title: 'Research Manager', role: 'Evaluation' },
+   { name: 'Chika Nwaka, PHD Student', photo: '/img/basel/ChikaNwaka.jpg', title: 'PHD Student', role: 'Evaluation' }
 ]
 </script>
 <template>
   <WhoWeAreStakeholderTemplate
-    institution="University Hospital Basel"
+    institution="University Hospital Basel and  University of Zurich"
     country="Switzerland"
     :team-members="6"
     description="Leading research institution providing scientific expertise and program design leadership for PEGISUS implementation across Southern Africa."
