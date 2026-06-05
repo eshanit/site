@@ -103,11 +103,6 @@ onUnmounted(() => {
 // Navigation menu
 const menuItems = computed(() => {
   const items: MenuItem[] = [
-        {
-      name: 'Home',
-      href: '/',
-      current: route.path === '/',
-    },
     {
       name: 'Home',
       href: '/',
@@ -246,16 +241,16 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
         <!-- Desktop Navigation Menu -->
         <nav class="hidden lg:flex items-center ml-6" aria-label="Main navigation">
           <ul class="flex items-center gap-1">
-            <li v-for="(item, index) in menuItems" :key="item.name" class="relative" v-show="index !== 0"
+            <li v-for="(item, index) in menuItems" :key="item.name" class="relative"
               @mouseenter="item.submenu ? openSubmenu = item.name : null"
               @mouseleave="item.submenu ? openSubmenu = null : null">
               <NuxtLink :to="item.href"
-                class="relative h-10 px-4 font-medium text-gray-700 transition-all duration-200 flex items-center gap-2 group leading-none"
+                class="relative px-4 py-2 font-medium text-gray-700 transition-all duration-200 flex items-center gap-2 group"
                 :class="{ 'text-blue-700': item.current }" :aria-current="item.current ? 'page' : undefined"
                 :aria-expanded="item.submenu ? openSubmenu === item.name : undefined"
                 :aria-haspopup="item.submenu ? 'true' : undefined" @keydown="(e) => handleMenuKeydown(e, index)"
                 @click="item.submenu ? toggleSubmenu(item.name) : null" role="menuitem" tabindex="0">
-                <span class="inline-flex h-full items-center text-sm font-semibold tracking-wide leading-none">{{ item.name }}</span>
+                <span class="text-sm font-semibold tracking-wide">{{ item.name }}</span>
                 <UIcon v-if="item.submenu" name="i-heroicons-chevron-down"
                   class="w-4 h-4 transition-transform duration-200"
                   :class="openSubmenu === item.name ? 'rotate-180' : ''" />
@@ -365,7 +360,7 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
         class="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-hidden" role="menu"
         aria-label="Mobile navigation">
         <nav class="py-2">
-          <div v-for="(item, index) in menuItems" :key="item.name" role="none" v-show="index !== 0">
+          <div v-for="(item, index) in menuItems" :key="item.name" role="none">
             <!-- Main menu item with expandable submenu -->
             <div v-if="item.submenu">
               <button @click="toggleSubmenu(item.name)"
@@ -399,7 +394,7 @@ const handleMenuKeydown = (event: KeyboardEvent, index: number) => {
 
             <!-- Regular menu item without submenu -->
             <NuxtLink v-else :to="item.href"
-              class="block px-6 py-4 text-base font-semibold transition-all duration-150 border-l-4 leading-none" :class="[
+              class="block px-6 py-4 text-base font-semibold transition-all duration-150 border-l-4" :class="[
                 item.current
                   ? 'text-blue-700 bg-blue-50 border-blue-700'
                   : 'text-gray-700 hover:text-blue-700 hover:bg-gray-50 border-transparent'
