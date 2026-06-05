@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
 // Social media links matching the navbar
 const socialLinks = [
@@ -58,27 +57,6 @@ const contactInfo = [
   //   href: 'tel:+27211234567'
   // }
 ]
-
-// Newsletter subscription
-const email = ref('')
-const isSubscribed = ref(false)
-const isSubmitting = ref(false)
-
-const handleSubscribe = async () => {
-  if (!email.value.trim()) return
-
-  isSubmitting.value = true
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  isSubscribed.value = true
-  email.value = ''
-  isSubmitting.value = false
-
-  // Reset success message after 5 seconds
-  setTimeout(() => {
-    isSubscribed.value = false
-  }, 5000)
-}
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -195,46 +173,40 @@ const scrollToTop = () => {
               </div>
             </div>
 
-            <!-- Newsletter -->
-            <!-- <div class="space-y-6">
+            <div class="space-y-6">
               <h3 class="text-lg font-bold text-white flex items-center">
-                <UIcon name="i-heroicons-newspaper" class="w-5 h-5 mr-2 text-brand-light" />
-                <span class="text-brand-light">Stay Updated</span>
+                <UIcon name="i-heroicons-flag" class="w-5 h-5 mr-2 text-brand-light" />
+                <span class="text-brand-light">Our Reach</span>
               </h3>
 
               <p class="text-gray-400 text-sm">
-                For more information about the latest research, program updates, workshops, programes and impact
-                stories, fill in your email below.
+                PEGISUS is currently active in these Southern African countries.
               </p>
 
-              <div v-if="isSubscribed"
-                class="bg-gradient-to-r from-brand-teal/20 to-brand-accent-green/20 border border-brand-teal/30 p-4">
-                <div class="flex items-center space-x-3">
-                  <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-brand-teal flex-shrink-0" />
-                  <div>
-                    <div class="font-semibold text-brand-teal">Added to mailing list!</div>
-                    <div class="text-sm text-brand-teal/80 mt-1">
-                      Thank you for reaching out to us.
-                    </div>
-                  </div>
-                </div>
+              <div class="grid grid-cols-1 gap-3">
+                <NuxtLink
+                  to="/where-we-work"
+                  class="inline-flex items-center justify-between rounded-lg border border-gray-800 bg-gray-900/80 px-4 py-3 text-sm text-gray-200 hover:border-brand-light hover:text-white transition-colors duration-200"
+                >
+                  <span>South Africa</span>
+                  <span class="text-brand-light">View</span>
+                </NuxtLink>
+                <NuxtLink
+                  to="/where-we-work"
+                  class="inline-flex items-center justify-between rounded-lg border border-gray-800 bg-gray-900/80 px-4 py-3 text-sm text-gray-200 hover:border-brand-light hover:text-white transition-colors duration-200"
+                >
+                  <span>Zambia</span>
+                  <span class="text-brand-light">View</span>
+                </NuxtLink>
+                <NuxtLink
+                  to="/where-we-work"
+                  class="inline-flex items-center justify-between rounded-lg border border-gray-800 bg-gray-900/80 px-4 py-3 text-sm text-gray-200 hover:border-brand-light hover:text-white transition-colors duration-200"
+                >
+                  <span>Zimbabwe</span>
+                  <span class="text-brand-light">View</span>
+                </NuxtLink>
               </div>
-
-              <form @submit.prevent="handleSubscribe" class="space-y-3">
-                <div class="relative">
-                  <input v-model="email" type="email" placeholder="Your email address" required
-                    class="w-full px-4 py-3 pl-11 bg-gray-800/50 backdrop-blur-sm border border-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-light/30 focus:border-brand-light/50 text-white placeholder-gray-500 transition-all" />
-                  <UIcon name="i-heroicons-envelope"
-                    class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
-                </div>
-                <button type="submit" :disabled="isSubmitting"
-                  class="w-full px-4 py-3 bg-gradient-to-r from-brand-medium to-brand-darkest text-white font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                  <span>{{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}</span>
-                  <UIcon :name="isSubmitting ? 'i-heroicons-arrow-path' : 'i-heroicons-arrow-right'" class="w-4 h-4"
-                    :class="isSubmitting ? 'animate-spin' : ''" />
-                </button>
-              </form>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
