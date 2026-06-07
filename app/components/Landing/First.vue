@@ -82,8 +82,8 @@ const handleImageLoad = () => {
               
               <!-- Main Title with Tagline as Primary Focus -->
               <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins leading-tight mb-4">
-                <span class="block title-line-1 text-blue-300">{{ titleLine1 }}</span>
-                <span class="block text-blue-300">{{ titleLine2 }}</span>
+                <span class="block title-line-1 text-blue-600">{{ titleLine1 }}</span>
+                <span class="block text-blue-600">{{ titleLine2 }}</span>
               </h1>
               
               <!-- Animated Underline -->

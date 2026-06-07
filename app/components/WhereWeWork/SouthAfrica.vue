@@ -1,10 +1,14 @@
 <script setup lang="ts">
-const mainText = `We work across multiple disadvantaged communities (Vrygrond, Capricorn Park, Lavender Hill, Steenberg) in and around the Cape Flats area. In Cape Town, more than a third of young people aged 15-24 are unemployed, with high levels of poverty, crime, substance use, mental health issues, and social instability. Use of substances in many communities leads to various health and social problems.`
+const mainText = `We work across multiple disadvantaged
+
+communities (Vrygrond, Capricorn Park,Lavender Hill, Steenberg) in and around the Cape Flats area. In Cape Town, more than a third of young people aged 15-24 are unemployed, with high levels of poverty, crime, substance use, mental
+health issues, and social instability.Rates of substance use within this age group in South Africa  is increasing and higher compared to any other older age group. Use of substances in many communities leads to
+various health and social problems.`
 
 const partnerText = `We have partnered with <a href="https://sozo.org.za/" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">SOZO Foundation</a>, which offers 10-month vocational training programs to young people in areas such as construction, baking, or hairstyling, for a period of 10 months. SOZO provides job shadowing and assists beneficiaries with finding employment opportunities. SOZO also teaches their beneficiaries other life skills such as goal setting, financial management, and sexual health.`
 
 const images: string[] = [
-  
+
   '/img/countries/south-africa/gallery/image_1.jpg',
   '/img/countries/south-africa/gallery/image_2.jpg',
   '/img/countries/south-africa/gallery/image_3.jpg',
@@ -23,22 +27,14 @@ const images: string[] = [
   // 'https://picsum.photos/640/640?random=6'
 ]
 
-const countryMap ='/img/countries/south-africa/south-africaMap.png'
+const countryMap = '/img/countries/south-africa/south-africaMap.png'
 
 const communities = [
   'Vrygrond', 'Capricorn Park', 'Lavender Hill', 'Steenberg', 'Cape Flats'
 ]
 </script>
 <template>
-  <WhereWeWorkCountryTemplate
-    country="South Africa"
-    region="Cape Town - Cape Flats"
-    :main-text="mainText"
-    :partner-text="partnerText"
-    :images="images"
-    :country-map="countryMap"
-    :communities="communities"
-    svg-icon="/img/countries/south-africa/south-africa.svg"  
-  />
+  <WhereWeWorkCountryTemplate country="South Africa" region="Cape Town - Cape Flats" :main-text="mainText"
+    :partner-text="partnerText" :images="images" :country-map="countryMap" :communities="communities"
+    svg-icon="/img/countries/south-africa/south-africa.svg" />
 </template>
-

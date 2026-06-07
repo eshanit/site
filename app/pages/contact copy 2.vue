@@ -116,20 +116,10 @@ const submitMessage = async () => {
     <!-- Hero Section - Minimal -->
     <div 
       ref="heroRef" 
-      class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 sm:py-24 lg:py-32 bg-cover bg-center bg-no-repeat overflow-hidden"
+      class="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 sm:py-24 lg:py-32 bg-cover bg-center bg-no-repeat"
       :class="heroVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
     >
-      <!-- Image overlay on left 1/3 -->
-      <div class="absolute right-0 top-0 bottom-0 w-1/3 overflow-hidden">
-        <NuxtImg
-          src="/img/pegi_tree_.webp"
-          alt="Decorative tree illustration"
-          class="w-full h-full object-cover opacity-40"
-          loading="lazy"
-        />
-      </div>
-
-      <div class="w-full max-w-4xl mx-auto text-center relative z-10">
+      <div class="w-full max-w-4xl mx-auto text-center">
         <!-- Contact Badge -->
         <div class="inline-flex items-center gap-2 bg-brand-lightest px-4 py-2 border-l-4 border-brand-medium mb-6">
           <UIcon name="i-heroicons-envelope" class="w-4 h-4 text-brand-medium" />

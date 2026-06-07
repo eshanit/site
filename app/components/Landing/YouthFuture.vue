@@ -68,7 +68,7 @@ onMounted(() => {
               <h3 class="text-2xl font-bold text-gray-900 font-poppins">Our Evidence-Based Approach</h3>
             </div>
             <p class="text-gray-700 text-lg leading-relaxed font-inter">
-              The <span class="font-bold text-blue-800 font-poppins">PEGISUS framework</span> implements peer-led interventions that address:
+              The <span class="font-bold text-brand-dark font-poppins">PEGISUS framework</span> implements peer-led interventions that address:
             </p>
             
             <ul class="space-y-3 mt-4 font-inter">
