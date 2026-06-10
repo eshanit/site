@@ -41,8 +41,8 @@ const contactInfo = [
   {
     icon: 'i-heroicons-envelope',
     title: 'General Inquiries',
-    value: 'info@pegisus.org',
-    href: 'mailto:info@pegisus.org'
+    value: 'Contact Us',
+    href: '/contact'
   },
   // {
   //   icon: 'i-heroicons-academic-cap',

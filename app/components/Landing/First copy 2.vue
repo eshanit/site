@@ -57,10 +57,10 @@ const handleImageLoad = () => {
         <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
         
         <!-- Overlay with Left-to-Right Dark Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
 
         <!-- Decorative Elements -->
-        <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/60 to-transparent pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/45 to-transparent pointer-events-none"></div>
         <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-brand-light/20 via-transparent to-transparent pointer-events-none"></div>
       </div>
@@ -83,8 +83,8 @@ const handleImageLoad = () => {
               
               <!-- Main Title with Tagline as Primary Focus -->
               <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins hero-text-shadow leading-tight mb-4">
-                <span class="block title-line-1 text-blue-600 font-extrabold">{{ titleLine1 }}</span>
-                <span class="block text-blue-600 font-extrabold">{{ titleLine2 }}</span>
+                <span class="block title-line-1 text-blue-600">{{ titleLine1 }}</span>
+                <span class="block text-blue-600">{{ titleLine2 }}</span>
               </h1>
               
               <!-- Animated Underline -->

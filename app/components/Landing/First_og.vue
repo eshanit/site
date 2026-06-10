@@ -56,11 +56,11 @@ const handleImageLoad = () => {
         <!-- Loading Skeleton -->
         <div v-if="!isLoaded" class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse"></div>
         
-        <!-- Overlay with Left-to-Right Dark Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+        <!-- Overlay with Creative Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-black/25 to-black/15"></div>
 
         <!-- Decorative Elements -->
-        <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/60 to-transparent pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-black/65 to-transparent pointer-events-none"></div>
         <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-brand-light/20 via-transparent to-transparent pointer-events-none"></div>
       </div>
@@ -71,10 +71,9 @@ const handleImageLoad = () => {
           <div class="h-full flex flex-col justify-center">
             <!-- Main Content - Left Aligned with Better Positioning -->
             <div 
-              class="max-w-3xl relative -top-4 transform transition-all duration-1000 delay-300 pt-8 sm:pt-12 md:pt-0"
+              class="max-w-3xl transform transition-all duration-1000 delay-300 pt-12 sm:pt-16 md:pt-0"
               :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'"
             >
-              <div class="glass-panel px-6 py-10">
               <!-- Badge -->
               <div class="inline-flex items-center gap-2 bg-blue-600/90 backdrop-blur-sm px-4 py-2 mb-6">
                 <UIcon name="i-heroicons-academic-cap" class="w-4 h-4 text-white" />
@@ -82,9 +81,9 @@ const handleImageLoad = () => {
               </div>
               
               <!-- Main Title with Tagline as Primary Focus -->
-              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins hero-text-shadow leading-tight mb-4">
-                <span class="block title-line-1 text-blue-600 font-extrabold">{{ titleLine1 }}</span>
-                <span class="block text-blue-600 font-extrabold">{{ titleLine2 }}</span>
+              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white max-md:text-blue-300! font-poppins leading-tight mb-4">
+                <span class="block title-line-1 text-blue-600">{{ titleLine1 }}</span>
+                <span class="block text-blue-600">{{ titleLine2 }}</span>
               </h1>
               
               <!-- Animated Underline -->
@@ -92,12 +91,11 @@ const handleImageLoad = () => {
               
               <!-- Enhanced Tagline - Primary Focus -->
               <div class="mb-10">
-                <p class="text-2xl md:text-3xl lg:text-4xl font-bold text-white font-poppins hero-text-shadow leading-relaxed max-w-4xl">
+                <p class="text-2xl md:text-3xl lg:text-4xl font-bold text-white font-poppins leading-relaxed max-w-4xl drop-shadow-lg">
                   {{ subtitle }}
                 </p>
               </div>
             </div>
-              </div>
           </div>
         </div>
       </div>
@@ -112,10 +110,6 @@ const handleImageLoad = () => {
 
 .font-inter {
   font-family: 'Inter', sans-serif;
-}
-
-.hero-text-shadow {
-  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.32);
 }
 
 /* Remove all border-radius */

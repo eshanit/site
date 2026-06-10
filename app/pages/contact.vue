@@ -112,7 +112,7 @@ const submitMessage = async () => {
 </script>
 
 <template>
-  <div class="w-full bg-white min-h-screen">
+  <div class="w-full bg-white min-h-full">
     <!-- Hero Section - Minimal -->
     <div 
       ref="heroRef" 
