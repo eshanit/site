@@ -199,7 +199,7 @@ const submitMessage = async () => {
                 <div>
                   <div class="font-bold text-gray-900 font-poppins">Message Sent!</div>
                   <div class="text-sm text-gray-600 mt-1 font-inter">
-                    Your message has been sent to Jennifer. We'll respond within 2-3 business days.
+                    Your message has been sent to Jennifer Belus. We'll respond within 2-3 business days.
                   </div>
                 </div>
               </div>
